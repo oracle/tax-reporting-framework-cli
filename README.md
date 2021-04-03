@@ -4,8 +4,8 @@ CLI for creating reports in TRF
 
 ```
  trf -p my-awesome-report -t suiteql
- TRF CLI
- creating project: my-awesome-report
- project type: suiteql
- project is created!
+ Creating your project...🚀🚀🚀
+✅ Creating project: my-awesome-project
+✅ Project type: suiteql
+✨ Done in 0.005s!
 ```

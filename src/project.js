@@ -20,7 +20,7 @@ class project {
     this.createUUIDFile(projectPath, this._uuid);
     this.createComponents(srcPath, this._uuid);
     // this.createProcessor(type);
-    this.createRecords(type);
+    // this.createRecords(type);
     // this.createSchema(type);
   }
 
