@@ -14,10 +14,14 @@
 ## Commands
 ```
 trf --help
+Usage: trf [options]
+
+🚀 TRF CLI 🚀
+
 Options:
   -V, --version                output the version number
   -d, --debug                  debug mode
   -p, --project <projectName>  your project name without spaces (default: "my-awesome-report")
   -t, --type <projectType>     report type (suiteql, nquery, search) (default: "suiteql")
-  -h, --help                   output usage information
+  -h, --help                   output usage information                output usage information
 ```

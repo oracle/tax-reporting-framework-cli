@@ -4,7 +4,7 @@
  * @NScriptType SDFInstallationScript
  */
 define(['N/task'], function (task) {
-  var APP_GUID = 'CTR_UUID';
+  var APP_GUID = 'UUID';
 
   function run() {
     installBundle();

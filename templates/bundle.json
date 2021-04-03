@@ -1,0 +1,6 @@
+{
+    "name": "PROJECT",
+    "guid": "UUID",
+    "countries": ["COUNTRY"],
+    "requiredFeatures": []
+}

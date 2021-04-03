@@ -16,7 +16,7 @@
     "commander": "^2.20.0",
     "uuid": "^8.3.2"
   },
-  "main": "cli.js",
+  "main": "trf.js",
   "scripts": {
     "test": "jest"
   },

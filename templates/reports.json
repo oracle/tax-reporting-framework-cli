@@ -1,0 +1,22 @@
+{
+  "list": [
+    {
+      "name": "Tax Report Template",
+      "country": "COUNTRY",
+      "report": "TAF",
+      "isCountryDefault": true,
+      "uuid": "UUID",
+      "createdBy": "com.netsuite.PROJECT",
+      "details": [
+        {
+          "type": "Summary",
+          "schema": "VAT_REPORT_SUMMARY.json"
+        },
+        {
+          "type": "META",
+          "schema": "VAT_REPORT_META.json"
+        }
+      ]
+    }
+  ]
+}

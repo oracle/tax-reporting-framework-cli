@@ -15,12 +15,17 @@ class project {
     const srcPath =
       projectPath + FILECABINET_FOLDER + options.project + SRC_FOLDER;
 
+    options.uuid = this._uuid;
+    options.srcPath = srcPath;
+
     await this.createProjectFolder(projectPath);
     await this.createSrcFolder(srcPath);
     this.createUUIDFile(projectPath, this._uuid);
-    this.createComponents(srcPath, this._uuid);
+    this.createComponents(options);
     // this.createProcessor(type);
-    // this.createRecords(type);
+    this.createBundleRecord(options);
+    this.createReportsRecord(options);
+    this.createSearchesRecord(options);
     // this.createSchema(type);
   }
 
@@ -36,14 +41,61 @@ class project {
     this._fs.createFile(srcPath + uuid);
   }
 
-  async createComponents(srcPath, uuid) {
-    const contents = await this._fs.readFile('./templates/SchemaInstaller.txt');
-    const componentsFolder = srcPath + 'components/';
-    await this._fs.createFolder(componentsFolder);
-    this._fs.createFile(
-      componentsFolder + 'SchemaInstaller.js',
-      contents.replace('CTR_UUID', uuid)
-    );
+  async createComponents(options) {
+    const opts = {
+      filename: 'SchemaInstaller.js',
+      folder: options.srcPath + 'components/',
+      replaceContents: [['UUID', options.uuid]]
+    };
+    await this.createFileFromTemplate(opts);
+  }
+
+  async createBundleRecord(options) {
+    const opts = {
+      filename: 'bundle.json',
+      folder: options.srcPath + 'records/',
+      replaceContents: [
+        ['UUID', options.uuid],
+        ['COUNTRY', options.country],
+        ['PROJECT', options.project]
+      ]
+    };
+    await this.createFileFromTemplate(opts);
+  }
+
+  async createReportsRecord(options) {
+    const opts = {
+      filename: 'reports.json',
+      folder: options.srcPath + 'records/',
+      replaceContents: [
+        ['UUID', options.uuid],
+        ['COUNTRY', options.country],
+        ['PROJECT', options.project]
+      ]
+    };
+    await this.createFileFromTemplate(opts);
+  }
+
+  async createSearchesRecord(options) {
+    const opts = {
+      filename: 'searches.json',
+      folder: options.srcPath + 'records/',
+      replaceContents: [
+        ['UUID', options.uuid],
+        ['COUNTRY', options.country],
+        ['PROJECT', options.project]
+      ]
+    };
+    await this.createFileFromTemplate(opts);
+  }
+
+  async createFileFromTemplate(options) {
+    let contents = await this._fs.readFile('./templates/' + options.filename);
+    await this._fs.createFolder(options.folder);
+    options.replaceContents.forEach((el) => {
+      contents = contents.replace(...el);
+    });
+    this._fs.createFile(options.folder + options.filename, contents);
   }
 }
 

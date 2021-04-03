@@ -4,7 +4,7 @@ const { Command } = require('commander');
 const chalk = require('chalk');
 const project = require('./project');
 
-class cli {
+class trfCLI {
   constructor() {}
   start() {
     try {
@@ -12,6 +12,7 @@ class cli {
       program.version('1.0.0');
 
       program
+        .description(chalk.blue('🚀 TRF CLI 🚀'))
         .option('-d, --debug', 'debug mode')
         .option(
           '-p, --project <projectName>',
@@ -22,8 +23,13 @@ class cli {
           '-t, --type <projectType>',
           'report type (suiteql, nquery, search)',
           'suiteql'
-        );
-      program.parse(process.argv);
+        )
+        .option(
+          '-country, --country <countrycode>',
+          'countrycode (PH, GB, CZ)',
+          'PH'
+        )
+        .parse(process.argv);
       //   TODO: add validation of project name
       //   TODO: add validation of project type
 
@@ -35,6 +41,7 @@ class cli {
       console.log(chalk.blue('Creating your project...🚀🚀🚀'));
       console.log(`✅ Creating project: ${chalk.green(options.project)}`);
       console.log(`✅ Project type: ${chalk.green(options.type)}`);
+      console.log(`✅ Country: ${chalk.green(options.type)}`);
       new project().create(options);
 
       const elapsed = (new Date().getTime() - start) / 1000;
@@ -45,4 +52,4 @@ class cli {
   }
 }
 
-new cli().start();
+new trfCLI().start();
