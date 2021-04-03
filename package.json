@@ -1,0 +1,28 @@
+{
+  "name": "tax-reporting-framework-cli",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "Tax Reporting Framework CLI for Node.js",
+  "keywords": [
+    "NetSuite",
+    "TRF",
+    "Tax",
+    "Reporting",
+    "Framework"
+  ],
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "cli-spinner": "^0.2.10",
+    "commander": "^2.20.0",
+    "uuid": "^8.3.2"
+  },
+  "main": "cli.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.eng.netsuite.com/ksamsin/tax-reporting-framework-cli.git"
+  },
+  "author": "ksamsin"
+}
