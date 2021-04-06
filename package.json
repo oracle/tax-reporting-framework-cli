@@ -10,13 +10,19 @@
     "Reporting",
     "Framework"
   ],
+  "preferGlobal": true,
   "dependencies": {
     "chalk": "^4.1.0",
     "cli-spinner": "^0.2.10",
     "commander": "^2.20.0",
+    "inquirer": "^8.0.0",
+    "inquirer-file-path": "^1.0.1",
     "uuid": "^8.3.2"
   },
   "main": "trf.js",
+  "bin": {
+    "trf": "./src/trf.js"
+  },
   "scripts": {
     "test": "jest"
   },

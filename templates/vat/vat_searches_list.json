@@ -1,0 +1,470 @@
+{
+  "list": [
+    {
+      "title": "Sales by Tax Code (Details)",
+      "id": "customsearch_str_salesbytaxcode_details",
+      "type": "transaction",
+      "columns": [
+        {
+          "name": "custbody_ste_transaction_type",
+          "summary": "GROUP"
+        },
+        {
+          "name": "custitem_ste_item_taxitem_type",
+          "join": "item",
+          "summary": "GROUP"
+        },
+        {
+          "name": "type",
+          "summary": "GROUP"
+        },
+        {
+          "name": "taxcode",
+          "join": "taxDetail",
+          "summary": "GROUP",
+          "sort": "ASC"
+        },
+        {
+          "name": "netamount",
+          "summary": "SUM"
+        },
+        {
+          "name": "taxamount",
+          "join": "taxDetail",
+          "summary": "SUM"
+        },
+        {
+          "name": "trandate",
+          "summary": "GROUP",
+          "sort": "ASC"
+        },
+        {
+          "name": "companyname",
+          "join": "customer",
+          "summary": "GROUP"
+        },
+        {
+          "name": "isperson",
+          "join": "customer",
+          "summary": "GROUP"
+        },
+        {
+          "name": "firstname",
+          "join": "customer",
+          "summary": "GROUP"
+        },
+        {
+          "name": "lastname",
+          "join": "customer",
+          "summary": "GROUP"
+        },
+        {
+          "name": "middlename",
+          "join": "customer",
+          "summary": "GROUP"
+        },
+        {
+          "name": "internalid",
+          "summary": "GROUP",
+          "sort": "ASC"
+        },
+        {
+          "name": "tranid",
+          "summary": "GROUP"
+        },
+        {
+          "name": "taxtype",
+          "join": "taxDetail",
+          "summary": "GROUP"
+        },
+        {
+          "name": "taxpointdate",
+          "summary": "GROUP"
+        },
+        {
+          "name": "subtype",
+          "join": "item",
+          "summary": "GROUP"
+        },
+        {
+          "name": "custrecord_str_trc_code",
+          "join": "custcol_str_tax_reporting_category",
+          "summary": "GROUP"
+        },
+        {
+          "name": "netamount",
+          "join": "accountingtransaction",
+          "summary": "SUM",
+          "feature": "multibook"
+        },
+        {
+          "name": "formulacurrency",
+          "summary": "SUM",
+          "formula": "{accountingtransaction.exchangerate} * {taxdetail.taxamount}",
+          "feature": "multibook"
+        }
+      ],
+      "filterExpression": [
+        ["type", "anyof", "CashRfnd", "CashSale", "CustCred", "CustInvc"],
+        "AND",
+        ["posting", "is", "T"],
+        "AND",
+        ["mainline", "is", "F"],
+        "AND",
+        ["taxline", "is", "F"],
+        "AND",
+        ["item", "noneof", "@NONE@"]
+      ],
+      "settings": [
+        {
+          "name": "consolidationtype",
+          "value": "NONE",
+          "feature": ["subsidiaries", "multicurrency"]
+        }
+      ]
+    },
+    {
+      "title": "Sales by Tax Code (Summary)",
+      "id": "customsearch_str_salesbytaxcode_sum",
+      "type": "transaction",
+      "columns": [
+        {
+          "name": "custbody_ste_transaction_type",
+          "summary": "GROUP"
+        },
+        {
+          "name": "custitem_ste_item_taxitem_type",
+          "join": "item",
+          "summary": "GROUP"
+        },
+        {
+          "name": "type",
+          "summary": "GROUP"
+        },
+        {
+          "name": "taxcode",
+          "join": "taxDetail",
+          "summary": "GROUP",
+          "sort": "ASC"
+        },
+        {
+          "name": "trandate",
+          "summary": "GROUP",
+          "sort": "ASC"
+        },
+        {
+          "name": "internalid",
+          "summary": "GROUP",
+          "sort": "ASC"
+        },
+        {
+          "name": "netamount",
+          "summary": "SUM"
+        },
+        {
+          "name": "taxamount",
+          "join": "taxDetail",
+          "summary": "SUM"
+        },
+        {
+          "name": "taxpointdate",
+          "summary": "GROUP"
+        },
+        {
+          "name": "taxtype",
+          "join": "taxDetail",
+          "summary": "GROUP"
+        },
+        {
+          "name": "subtype",
+          "join": "item",
+          "summary": "GROUP"
+        },
+        {
+          "name": "custrecord_str_trc_code",
+          "join": "custcol_str_tax_reporting_category",
+          "summary": "GROUP"
+        },
+        {
+          "name": "netamount",
+          "join": "accountingtransaction",
+          "summary": "SUM",
+          "feature": "multibook"
+        },
+        {
+          "name": "formulacurrency",
+          "summary": "SUM",
+          "formula": "{accountingtransaction.exchangerate} * {taxdetail.taxamount}",
+          "feature": "multibook"
+        }
+      ],
+      "filterExpression": [
+        ["type", "anyof", "CashRfnd", "CashSale", "CustCred", "CustInvc"],
+        "AND",
+        ["posting", "is", "T"],
+        "AND",
+        ["mainline", "is", "F"],
+        "AND",
+        ["taxline", "is", "F"],
+        "AND",
+        ["item", "noneof", "@NONE@"]
+      ],
+      "settings": [
+        {
+          "name": "consolidationtype",
+          "value": "NONE",
+          "feature": ["subsidiaries", "multicurrency"]
+        }
+      ]
+    },
+    {
+      "title": "Purchases By Tax Code (Details)",
+      "id": "customsearch_str_purcbytaxcode_details",
+      "type": "transaction",
+      "columns": [
+        {
+          "name": "custbody_ste_transaction_type",
+          "summary": "GROUP"
+        },
+        {
+          "name": "custitem_ste_item_taxitem_type",
+          "join": "item",
+          "summary": "GROUP"
+        },
+        {
+          "name": "type",
+          "summary": "GROUP"
+        },
+        {
+          "name": "taxcode",
+          "join": "taxDetail",
+          "summary": "GROUP",
+          "sort": "ASC"
+        },
+        {
+          "name": "netamount",
+          "summary": "SUM"
+        },
+        {
+          "name": "taxamount",
+          "join": "taxDetail",
+          "summary": "SUM"
+        },
+        {
+          "name": "trandate",
+          "summary": "GROUP",
+          "sort": "ASC"
+        },
+        {
+          "name": "companyname",
+          "join": "vendor",
+          "summary": "GROUP"
+        },
+        {
+          "name": "isperson",
+          "join": "vendor",
+          "summary": "GROUP"
+        },
+        {
+          "name": "firstname",
+          "join": "vendor",
+          "summary": "GROUP"
+        },
+        {
+          "name": "lastname",
+          "join": "vendor",
+          "summary": "GROUP"
+        },
+        {
+          "name": "middlename",
+          "join": "vendor",
+          "summary": "GROUP"
+        },
+        {
+          "name": "internalid",
+          "summary": "GROUP",
+          "sort": "ASC"
+        },
+        {
+          "name": "tranid",
+          "summary": "GROUP"
+        },
+        {
+          "name": "taxtype",
+          "join": "taxDetail",
+          "summary": "GROUP"
+        },
+        {
+          "name": "taxpointdate",
+          "summary": "GROUP"
+        },
+        {
+          "name": "taxtype",
+          "join": "taxDetail",
+          "summary": "GROUP"
+        },
+        {
+          "name": "subtype",
+          "join": "item",
+          "summary": "GROUP"
+        },
+        {
+          "name": "item",
+          "summary": "GROUP"
+        },
+        {
+          "name": "entityid",
+          "join": "employee",
+          "summary": "GROUP"
+        },
+        {
+          "name": "custrecord_str_trc_code",
+          "join": "custcol_str_tax_reporting_category",
+          "summary": "GROUP"
+        },
+        {
+          "name": "netamount",
+          "join": "accountingtransaction",
+          "summary": "SUM",
+          "feature": "multibook"
+        },
+        {
+          "name": "formulacurrency",
+          "summary": "SUM",
+          "formula": "{accountingtransaction.exchangerate} * {taxdetail.taxamount}",
+          "feature": "multibook"
+        },
+        {
+          "name": "type",
+          "join": "account",
+          "summary": "GROUP",
+          "label": "Account Type",
+          "sort": "ASC"
+        }
+      ],
+      "filterExpression": [
+        ["type", "anyof", "VendBill", "VendCred", "ExpRept"],
+        "AND",
+        ["posting", "is", "T"],
+        "AND",
+        ["mainline", "is", "F"],
+        "AND",
+        ["taxline", "is", "F"],
+        "AND",
+        ["item", "noneof", "@NONE@"]
+      ],
+      "settings": [
+        {
+          "name": "consolidationtype",
+          "value": "NONE",
+          "feature": ["subsidiaries", "multicurrency"]
+        }
+      ]
+    },
+    {
+      "title": "Purchases By Tax Code (Summary)",
+      "id": "customsearch_str_purchasesbytaxcode_sum",
+      "type": "transaction",
+      "columns": [
+        {
+          "name": "custbody_ste_transaction_type",
+          "summary": "GROUP"
+        },
+        {
+          "name": "custitem_ste_item_taxitem_type",
+          "join": "item",
+          "summary": "GROUP"
+        },
+        {
+          "name": "type",
+          "summary": "GROUP"
+        },
+        {
+          "name": "taxcode",
+          "join": "taxDetail",
+          "summary": "GROUP",
+          "sort": "ASC"
+        },
+        {
+          "name": "netamount",
+          "summary": "SUM"
+        },
+        {
+          "name": "taxamount",
+          "join": "taxDetail",
+          "summary": "SUM"
+        },
+        {
+          "name": "trandate",
+          "summary": "GROUP",
+          "sort": "ASC"
+        },
+        {
+          "name": "internalid",
+          "summary": "GROUP",
+          "sort": "ASC"
+        },
+        {
+          "name": "taxpointdate",
+          "summary": "GROUP"
+        },
+        {
+          "name": "taxtype",
+          "join": "taxDetail",
+          "summary": "GROUP"
+        },
+        {
+          "name": "subtype",
+          "join": "item",
+          "summary": "GROUP"
+        },
+        {
+          "name": "item",
+          "summary": "GROUP"
+        },
+        {
+          "name": "custrecord_str_trc_code",
+          "join": "custcol_str_tax_reporting_category",
+          "summary": "GROUP"
+        },
+        {
+          "name": "netamount",
+          "join": "accountingtransaction",
+          "summary": "SUM",
+          "feature": "multibook"
+        },
+        {
+          "name": "formulacurrency",
+          "summary": "SUM",
+          "formula": "{accountingtransaction.exchangerate} * {taxdetail.taxamount}",
+          "feature": "multibook"
+        },
+        {
+          "name": "type",
+          "join": "account",
+          "summary": "GROUP",
+          "label": "Account Type",
+          "sort": "ASC"
+        }
+      ],
+      "filterExpression": [
+        ["type", "anyof", "VendBill", "VendCred", "ExpRept"],
+        "AND",
+        ["posting", "is", "T"],
+        "AND",
+        ["mainline", "is", "F"],
+        "AND",
+        ["taxline", "is", "F"],
+        "AND",
+        ["item", "noneof", "@NONE@"]
+      ],
+      "settings": [
+        {
+          "name": "consolidationtype",
+          "value": "NONE",
+          "feature": ["subsidiaries", "multicurrency"]
+        }
+      ]
+    }
+  ]
+}

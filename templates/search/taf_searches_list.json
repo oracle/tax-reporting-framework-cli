@@ -1,0 +1,184 @@
+{
+  "list": [
+    {
+      "title": "TAF SEARCH",
+      "id": "customsearch_taf_template",
+      "type": "transaction",
+      "columns": [
+        {
+          "name": "trandate",
+          "summary": "GROUP",
+          "sort": "ASC"
+        },
+        {
+          "name": "tranid",
+          "summary": "GROUP"
+        },
+        {
+          "name": "internalid",
+          "summary": "GROUP",
+          "sort": "ASC"
+        },
+        {
+          "name": "type",
+          "summary": "GROUP"
+        },
+        {
+          "name": "glnumber",
+          "summary": "GROUP"
+        },
+        {
+          "name": "glnumberdate",
+          "summary": "GROUP"
+        },
+        {
+          "name": "localizednumber",
+          "join": "account",
+          "summary": "GROUP",
+          "label": "account_localizednumber",
+          "configuration": {
+            "type": "accountingpreferences",
+            "id": "ACCOUNTNUMBERS"
+          }
+        },
+        {
+          "name": "localizedname",
+          "join": "account",
+          "summary": "GROUP"
+        },
+        {
+          "name": "number",
+          "join": "account",
+          "summary": "GROUP",
+          "label": "account_number",
+          "configuration": {
+            "type": "accountingpreferences",
+            "id": "ACCOUNTNUMBERS"
+          }
+        },
+        {
+          "name": "name",
+          "join": "account",
+          "summary": "GROUP"
+        },
+        {
+          "name": "internalid",
+          "join": "customer",
+          "summary": "GROUP"
+        },
+        {
+          "name": "isperson",
+          "join": "customer",
+          "summary": "GROUP"
+        },
+        {
+          "name": "entityid",
+          "join": "customer",
+          "summary": "GROUP"
+        },
+        {
+          "name": "companyname",
+          "join": "customer",
+          "summary": "GROUP"
+        },
+        {
+          "name": "firstname",
+          "join": "customer",
+          "summary": "GROUP"
+        },
+        {
+          "name": "middlename",
+          "join": "customer",
+          "summary": "GROUP"
+        },
+        {
+          "name": "lastname",
+          "join": "customer",
+          "summary": "GROUP"
+        },
+        {
+          "name": "internalid",
+          "join": "vendor",
+          "summary": "GROUP"
+        },
+        {
+          "name": "internalid",
+          "join": "vendorline",
+          "summary": "GROUP"
+        },
+        {
+          "name": "isperson",
+          "join": "vendor",
+          "summary": "GROUP"
+        },
+        {
+          "name": "entityid",
+          "join": "vendor",
+          "summary": "GROUP"
+        },
+        {
+          "name": "companyname",
+          "join": "vendor",
+          "summary": "GROUP"
+        },
+        {
+          "name": "firstname",
+          "join": "vendor",
+          "summary": "GROUP"
+        },
+        {
+          "name": "middlename",
+          "join": "vendor",
+          "summary": "GROUP"
+        },
+        {
+          "name": "lastname",
+          "join": "vendor",
+          "summary": "GROUP"
+        },
+        {
+          "name": "entity",
+          "summary": "GROUP"
+        },
+        {
+          "name": "memo",
+          "summary": "GROUP"
+        },
+        {
+          "name": "creditamount",
+          "summary": "SUM"
+        },
+        {
+          "name": "debitamount",
+          "summary": "SUM"
+        },
+        {
+          "name": "currency",
+          "summary": "GROUP",
+          "feature": "multicurrency"
+        },
+        {
+          "name": "fxamount",
+          "summary": "SUM",
+          "feature": "multicurrency"
+        }
+      ],
+      "filterExpression": [
+        ["posting", "is", "T"],
+        "AND",
+        [
+          ["creditamount", "isnotempty", ""],
+          "OR",
+          ["debitamount", "isnotempty", ""]
+        ]
+      ],
+      "settings": [
+        {
+          "name": "consolidationtype",
+          "value": "NONE",
+          "feature": ["multicurrency", "subsidiaries"]
+        }
+      ]
+    }
+  ]
+}

@@ -1,20 +1,23 @@
 {
   "list": [
     {
-      "name": "Tax Report Template",
+      "name": "TAF SuiteQL Template",
       "country": "COUNTRY",
       "report": "TAF",
       "isCountryDefault": true,
       "uuid": "UUID",
       "createdBy": "com.netsuite.PROJECT",
+      "translations": {
+        "en_US": "TAF SuiteQL Template"
+      },
       "details": [
         {
           "type": "Summary",
-          "schema": "VAT_REPORT_SUMMARY.json"
+          "schema": "TAF_SUITEQL.json"
         },
         {
           "type": "META",
-          "schema": "VAT_REPORT_META.json"
+          "schema": "TAF_SUITEQL_META.json"
         }
       ]
     }

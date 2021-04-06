@@ -1,0 +1,25 @@
+{
+  "list": [
+    {
+      "name": "TAF Search Template",
+      "country": "COUNTRY",
+      "report": "TAF",
+      "isCountryDefault": true,
+      "uuid": "UUID",
+      "createdBy": "com.netsuite.PROJECT",
+      "translations": {
+        "en_US": "TAF Search Template"
+      },
+      "details": [
+        {
+          "type": "Summary",
+          "schema": "TAF_SEARCH.json"
+        },
+        {
+          "type": "META",
+          "schema": "TAF_SEARCH_META.json"
+        }
+      ]
+    }
+  ]
+}

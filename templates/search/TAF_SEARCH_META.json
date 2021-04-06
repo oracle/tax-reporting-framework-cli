@@ -1,0 +1,70 @@
+{
+  "name": "TAF SEARCH META",
+  "id": "TAF_SEARCH_META",
+  "type": "TAF",
+  "validator": {
+    "script": "SuiteApps/com.netsuite.PROJECT/src/service/GLAuditNumberingService"
+  },
+  "reports": [
+    {
+      "data": ["transactions", "company_info", "subsidiary", "company"],
+      "namefunction": "taf_ctr",
+      "template": "TAF_CTR.ftl"
+    }
+  ],
+  "setup": {
+    "precision": 2,
+    "number": {
+      "decimal": ",",
+      "separator": ""
+    },
+    "taxcode": {
+      "decimal": ".",
+      "parent": "number"
+    },
+    "date": "yyyyMMdd"
+  },
+  "preferences": {
+    "defaults": [
+      {
+        "parent": "periodfilters",
+        "fields": [
+          {
+            "fieldName": "starttaxyear",
+            "value": 1
+          },
+          {
+            "fieldName": "includeperiodendjournals",
+            "value": true
+          },
+          {
+            "fieldName": "reportingfrequency",
+            "parent": "reports",
+            "value": "annually",
+            "displayType": "normal",
+            "options": [
+              {
+                "value": "monthly",
+                "text": "screen.countrytaxreportpreference.reportingfrequency.monthly.label"
+              },
+              {
+                "value": "quarterly",
+                "text": "screen.countrytaxreportpreference.reportingfrequency.quarterly.label"
+              },
+              {
+                "value": "annually",
+                "text": "screen.countrytaxreportpreference.reportingfrequency.annually.label"
+              }
+            ]
+          },
+          {
+            "fieldName": "usetaxpointdate",
+            "parent": "reports",
+            "value": false,
+            "displayType": "enabled"
+          }
+        ]
+      }
+    ]
+  }
+}

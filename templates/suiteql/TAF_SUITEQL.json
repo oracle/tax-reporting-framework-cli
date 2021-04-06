@@ -1,0 +1,162 @@
+{
+  "name": "CTRT TAF SUITEQL",
+  "id": "CTRT_TAF_SUITEQL",
+  "type": "TAF",
+  "context": {
+    "report": {
+      "nexus": "reportparam.nexus",
+      "subsidiary": "reportparam.subsidiary",
+      "accountingcontext": {
+        "source": "SuiteApps/com.netsuite.PROJECT/src/service/AccountingContextService"
+      }
+    }
+  },
+  "source": [
+    {
+      "id": "transactions",
+      "type": "query",
+      "querybuilder": {
+        "type": "suiteql",
+        "script": "SuiteApps/com.netsuite.PROJECT/src/builder/suiteql/CTRTTAFSuiteQLBuilder"
+      },
+      "processor": {
+        "type": "scheduled",
+        "script": "SuiteApps/com.netsuite.PROJECT/src/processors/pre/CTRTQueryPreProcessor"
+      },
+      "validator": {
+        "script": "SuiteApps/com.netsuite.PROJECT/src/service/GLAuditNumberingService",
+        "method": "checkGLNumbering"
+      }
+    },
+    {
+      "id": "subsidiary",
+      "type": "record",
+      "recordtype": "subsidiary",
+      "recordid": "context.report.subsidiary",
+      "features": ["SUBSIDIARIES"],
+      "sublistfields": [
+        {
+          "name": "taxregistration",
+          "fields": [
+            "nexuscountry",
+            "nexus",
+            "taxregistrationnumber",
+            "taxengine",
+            "effectivefrom",
+            "validuntil"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company",
+      "type": "config",
+      "recordtype": "companyinformation",
+      "sublistfields": [
+        {
+          "name": "taxregistration",
+          "fields": [
+            "nexuscountry",
+            "nexus",
+            "taxregistrationnumber",
+            "taxengine",
+            "effectivefrom",
+            "validuntil"
+          ]
+        }
+      ]
+    }
+  ],
+  "data": [
+    {
+      "id": "company_info",
+      "processor": "SuiteApps/com.netsuite.PROJECT/src/post/CompanyInfoProcessor"
+    },
+    {
+      "id": "transactions",
+      "source": ["transactions"],
+      "field": [
+        {
+          "id": "type",
+          "value": "type",
+          "type": "string"
+        },
+        {
+          "id": "typetext",
+          "value": "typetext",
+          "type": "string"
+        },
+        {
+          "id": "glnumber",
+          "value": "glnumber",
+          "type": "string"
+        },
+        {
+          "id": "glnumberdate",
+          "value": "glnumberdate",
+          "type": "date"
+        },
+        {
+          "id": "accnumber",
+          "value": "accnumber",
+          "type": "string"
+        },
+        {
+          "id": "accname",
+          "value": "accname",
+          "type": "string"
+        },
+        {
+          "id": "entityId",
+          "value": "entityId",
+          "type": "string"
+        },
+        {
+          "id": "entityName",
+          "value": "entityName",
+          "type": "string"
+        },
+        {
+          "id": "type",
+          "value": "type",
+          "type": "string"
+        },
+        {
+          "id": "tranid",
+          "value": "tranid",
+          "type": "string"
+        },
+        {
+          "id": "memo",
+          "value": "memo",
+          "type": "string"
+        },
+        {
+          "id": "debit",
+          "value": "debit",
+          "type": "number"
+        },
+        {
+          "id": "credit",
+          "value": "credit",
+          "type": "number"
+        },
+        {
+          "id": "trandate",
+          "value": "trandate",
+          "type": "date"
+        },
+        {
+          "id": "fxamount",
+          "value": "fxamount",
+          "type": "number"
+        },
+        {
+          "id": "currencytext",
+          "value": "currencytext",
+          "type": "string"
+        }
+      ]
+    }
+  ]
+}
