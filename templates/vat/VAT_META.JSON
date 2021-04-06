@@ -1,0 +1,76 @@
+{
+  "name": "VAT COUNTRY META",
+  "id": "VAT_COUNTRY_META",
+  "type": "VAT",
+  "subtype": "",
+  "validperiod": "1",
+  "setup": {
+    "precision": 2,
+    "availableFilters": [
+      "source",
+      "account",
+      "isjournal",
+      "type",
+      "taxcode",
+      "txnType",
+      "itemType",
+      "reportingCategory"
+    ]
+  },
+  "source": {
+    "sales": {
+      "summary": "vat_salesdetails",
+      "details": "vat_salesdetails_drilldown"
+    },
+    "purchases": {
+      "summary": "vat_purchasedetails",
+      "details": "vat_purchasedetails_drilldown"
+    },
+    "sales_journals": {
+      "summary": "vat_journaldetails",
+      "details": "vat_journaldetails_drilldown"
+    },
+    "purchases_journals": {
+      "summary": "vat_journaldetails",
+      "details": "vat_journaldetails_drilldown"
+    },
+    "account_driven_transactions": {
+      "summary": "vat_accountdrivendetails",
+      "details": "vat_accountdrivendetails_drilldown"
+    }
+  },
+  "logo": {
+    "en": "ph4185eng_logo.gif"
+  },
+  "preferences": {
+    "defaults": [
+      {
+        "parent": "periodfilters",
+        "fields": [
+          {
+            "fieldName": "starttaxyear",
+            "value": 1
+          },
+          {
+            "fieldName": "reportingfrequency",
+            "parent": "reports",
+            "value": "monthly",
+            "displayType": "normal",
+            "options": [
+              {
+                "value": "monthly",
+                "text": "screen.countrytaxreportpreference.reportingfrequency.monthly.label"
+              }
+            ]
+          },
+          {
+            "fieldName": "usetaxpointdate",
+            "parent": "reports",
+            "value": false,
+            "displayType": "normal"
+          }
+        ]
+      }
+    ]
+  }
+}

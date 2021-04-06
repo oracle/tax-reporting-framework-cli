@@ -1,0 +1,49 @@
+{
+  "name": "VAT COUNTRY Details",
+  "id": "VAT_COUNTRY_DETAILS",
+  "type": "Details",
+  "context": {
+    "report": {
+      "postingperiod": "reportparam.postingperiod",
+      "subsidiary": "reportparam.subsidiary",
+      "nexus": "reportparam.nexus"
+    }
+  },
+  "source": [
+    {
+      "id": "vat_salesdetails_drilldown",
+      "type": "savedsearch",
+      "internalid": "customsearch_str_salesbytaxcode_details",
+      "filters": "STR_BASE_TRANSACTION_FILTERS",
+      "processor": {
+        "type": "scheduled",
+        "script": "SuiteApps/com.netsuite.PROJECT/src/processors/pre/VATDetailsSearchProcessor",
+        "limits": {
+          "searchresult": 100000,
+          "period": "monthly"
+        },
+        "params": {
+          "type": "SALE"
+        }
+      }
+    },
+    {
+      "id": "taxcode_mapping",
+      "type": "savedsearch",
+      "internalid": "customsearch_trf_taxcode_mapping",
+      "filters": [
+        {
+          "name": "country",
+          "operator": "is",
+          "values": "PH",
+          "useRawValues": true
+        }
+      ],
+      "processor": {
+        "type": "scheduled",
+        "script": "SuiteApps/com.netsuite.PROJECT/src/processors/pre/COUNTRYTaxCodeMapper"
+      }
+    }
+  ],
+  DATA
+}

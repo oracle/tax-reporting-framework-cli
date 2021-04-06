@@ -1,0 +1,60 @@
+{
+  "name": "VAT COUNTRY Summary",
+  "id": "VAT_COUNTRY_SUMMARY",
+  "type": "Summary",
+  "context": {
+    "report": {
+      "postingperiod": "reportparam.postingperiod",
+      "subsidiary": "reportparam.subsidiary",
+      "nexus": "reportparam.nexus"
+    }
+  },
+  "source": [
+    {
+      "id": "subsidiary",
+      "type": "record",
+      "recordtype": "subsidiary",
+      "recordid": "context.report.subsidiary",
+      "features": ["SUBSIDIARIES"],
+      "fields": ["name", "federalidnumber"]
+    },
+    {
+      "id": "company",
+      "type": "config",
+      "recordtype": "companyinformation",
+      "fields": ["employerid", "companyname"]
+    },
+    {
+      "id": "vat_salesdetails",
+      "type": "savedsearch",
+      "internalid": "customsearch_str_salesbytaxcode_sum",
+      "filters": "STR_BASE_TRANSACTION_FILTERS",
+      "processor": {
+        "type": "scheduled",
+        "script": "SuiteApps/com.netsuite.PROJECT/src/processors/pre/VATSearchProcessor",
+        "limits": {
+          "searchresult": 100000,
+          "period": "monthly"
+        }
+      }
+    },
+    {
+      "id": "taxcode_mapping",
+      "type": "savedsearch",
+      "internalid": "customsearch_trf_taxcode_mapping",
+      "filters": [
+        {
+          "name": "country",
+          "operator": "is",
+          "values": "PH",
+          "useRawValues": true
+        }
+      ],
+      "processor": {
+        "type": "scheduled",
+        "script": "SuiteApps/com.netsuite.PROJECT/src/processors/pre/COUNTRYTaxCodeMapper"
+      }
+    }
+  ],
+  DATA
+}

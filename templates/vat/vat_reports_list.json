@@ -1,14 +1,14 @@
 {
   "list": [
     {
-      "name": "VAT Report Template",
+      "name": "VAT COUNTRY Report",
       "country": "COUNTRY",
       "report": "VAT",
       "isCountryDefault": true,
       "uuid": "UUID",
       "createdBy": "com.netsuite.PROJECT",
       "translations": {
-        "en_US": "VAT Report Template"
+        "en_US": "VAT COUNTRY Report"
       },
       "details": [
         {

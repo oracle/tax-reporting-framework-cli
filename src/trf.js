@@ -11,7 +11,7 @@ class trfCLI {
     try {
       program
         .version('1.0.0')
-        .description(chalk.blue('🚀 TRF CLI 🚀'))
+        .description(chalk.redBright('🚀 TRF CLI 🚀'))
         .command('create')
         .description('create new TRF project 😎')
         .action(function () {
@@ -19,7 +19,7 @@ class trfCLI {
         });
       program.parse(process.argv);
 
-      if (process.argv.length === 2) {
+      if (process.argv.length === 2 || process.argv[2] !== 'create') {
         program.help();
       }
     } catch (ex) {
