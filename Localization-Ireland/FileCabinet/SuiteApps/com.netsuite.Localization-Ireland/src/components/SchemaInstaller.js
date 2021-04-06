@@ -1,0 +1,52 @@
+/**
+ * Copyright (c) 2020, Oracle and/or its affiliates. All rights reserved.
+ * @NApiVersion 2.1
+ * @NScriptType SDFInstallationScript
+ */
+define(['N/task'], function (task) {
+  var APP_GUID = '46051dae-a53a-41f9-a10f-1d3542cc8b4e';
+
+  function run() {
+    installBundle();
+    installReportSchemas();
+    installSavedSearches();
+  }
+
+  function installBundle() {
+    var bundleInstaller = task.create({
+      taskType: task.TaskType.SCHEDULED_SCRIPT
+    });
+    bundleInstaller.scriptId = 'customscript_str_bundle_installer_ss';
+    bundleInstaller.params = {
+      custscript_str_bundle_installer_ss_guid: APP_GUID
+    };
+    bundleInstaller.submit();
+  }
+
+  function installReportSchemas() {
+    var reportSchemaInstaller = task.create({
+      taskType: task.TaskType.MAP_REDUCE
+    });
+    reportSchemaInstaller.scriptId = 'customscript_reportschema_installer_mr';
+    reportSchemaInstaller.params = {
+      custscript_str_reportschema_ins_mr_uuid: APP_GUID
+    };
+    reportSchemaInstaller.submit();
+  }
+
+  function installSavedSearches() {
+    var searchInstaller = task.create({
+      taskType: task.TaskType.MAP_REDUCE
+    });
+    searchInstaller.scriptId = 'customscript_str_searchinstaller_mr';
+    searchInstaller.params = {
+      custscript_str_searchinstall_mr_uuid: APP_GUID,
+      custscript_str_searchinstall_mr_file: 'str_localized_searches.json'
+    };
+    searchInstaller.submit();
+  }
+
+  return {
+    run: run
+  };
+});

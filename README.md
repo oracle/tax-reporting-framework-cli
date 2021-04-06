@@ -1,27 +1,31 @@
 # Tax Reporting Framework CLI
 
 ## Command line interface for creating reports in TRF with ease!
-
 ```
- trf -p my-awesome-report -t suiteql
- 🚀 TRF CLI 🚀
- Creating your project...🚀🚀🚀
-✅ Creating project: my-awesome-project
-✅ Project type: suiteql
-✨ Done in 0.005s!
+? Select project type.  VAT
+? Find src VAT report file vat.IE.Report.js
+? Enter project name.  Localization-Ireland
+? Enter report country.  IE
+------------------
+🚀 TRF CLI 🚀
+------------------
+Project Name:  Localization-Ireland
+Project Type:  VAT
+Country:  IE
+VAT Source Report:  vat.IE.Report.js
+Creating your project...🚀🚀🚀
+✨ Done in 0.002s!
 ```
-
 ## Commands
 ```
-trf --help
-Usage: trf [options]
+Usage: trf [options] [command]
 
 🚀 TRF CLI 🚀
 
 Options:
-  -V, --version                output the version number
-  -d, --debug                  debug mode
-  -p, --project <projectName>  your project name without spaces (default: "my-awesome-report")
-  -t, --type <projectType>     report type (suiteql, nquery, search) (default: "suiteql")
-  -h, --help                   output usage information                output usage information
+  -V, --version  output the version number
+  -h, --help     output usage information
+
+Commands:
+  create         create new TRF project 😎
 ```
