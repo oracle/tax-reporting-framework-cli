@@ -12,9 +12,9 @@ class tafProject extends project {
       filename: 'reports.json',
       folder: options.srcPath + 'records/',
       replaceContents: [
-        ['UUID', options.uuid],
-        ['COUNTRY', options.country],
-        ['PROJECT', options.project]
+        [/UUID/g, options.uuid],
+        [/COUNTRY/g, options.country],
+        [/PROJECT/g, options.project]
       ]
     };
     await this.createFileFromTemplate(opts);
@@ -25,9 +25,9 @@ class tafProject extends project {
       filename: 'searches.json',
       folder: options.srcPath + 'records/',
       replaceContents: [
-        ['UUID', options.uuid],
-        ['COUNTRY', options.country],
-        ['PROJECT', options.project]
+        [/UUID/g, options.uuid],
+        [/COUNTRY/g, options.country],
+        [/PROJECT/g, options.project]
       ]
     };
     await this.createFileFromTemplate(opts);

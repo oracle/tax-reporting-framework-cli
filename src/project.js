@@ -47,7 +47,7 @@ class project {
       srcFile: filename,
       filename: filename,
       folder: options.srcPath + 'components/',
-      replaceContents: [['UUID', options.uuid]]
+      replaceContents: [[/UUID/g, options.uuid]]
     };
     await this.createFileFromTemplate(opts);
   }
@@ -59,9 +59,9 @@ class project {
       filename: filename,
       folder: options.srcPath + 'records/',
       replaceContents: [
-        ['UUID', options.uuid],
-        ['COUNTRY', options.country],
-        ['PROJECT', options.projectName]
+        [/UUID/g, options.uuid],
+        [/COUNTRY/g, options.country],
+        [/PROJECT/g, options.projectName]
       ]
     };
     await this.createFileFromTemplate(opts);
@@ -72,9 +72,9 @@ class project {
   //     filename: 'schema.json',
   //     folder: options.srcPath + 'records/',
   //     replaceContents: [
-  //       ['UUID', options.uuid],
-  //       ['COUNTRY', options.country],
-  //       ['PROJECT', options.projectName]
+  //       [/UUID/g, options.uuid],
+  //       [/COUNTRY/g, options.country],
+  //       [/PROJECT/g, options.projectName]
   //     ]
   //   };
   //   await this.createFileFromTemplate(opts);
