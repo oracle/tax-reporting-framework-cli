@@ -1,0 +1,13 @@
+<manifest projecttype="SUITEAPP">
+	<publisherid>com.netsuite</publisherid>
+	<projectid>PROJECT</projectid>
+	<projectname>PROJECT</projectname>
+	<projectversion>1.0.0</projectversion>
+	<frameworkversion>1.0</frameworkversion>
+	<dependencies>
+		<features>
+			<feature required="true">SERVERSIDESCRIPTING</feature>
+		</features>
+	</dependencies>
+</manifest>
+

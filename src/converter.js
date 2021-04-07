@@ -1,6 +1,6 @@
 'use strict';
 
-var JSON_TEMPLATE =
+const JSON_TEMPLATE =
   '"data": [\n' +
   '${schemas}' +
   '\t{\n' +
@@ -11,7 +11,7 @@ var JSON_TEMPLATE =
   '\t\t]\n' +
   '\t}\n' +
   ']\n';
-var OF_SCHEMA_TEMPLATE =
+const OF_SCHEMA_TEMPLATE =
   '\t{\n' +
   '\t\t"id": "${box}",\n' +
   '\t\t"source": ["vat_${search}summary"],\n' +
@@ -36,7 +36,7 @@ var OF_SCHEMA_TEMPLATE =
   '\t\t\t }\n' +
   '\t\t]\n' +
   '\t},\n';
-var ACCRUE_SCHEMA_TEMPLATE =
+const ACCRUE_SCHEMA_TEMPLATE =
   '\t{\n' +
   '\t\t"id": "${box}",\n' +
   '\t\t"source": ["vat_${search}summary"],\n' +
@@ -61,16 +61,16 @@ var ACCRUE_SCHEMA_TEMPLATE =
   '\t\t\t }\n' +
   '\t\t]\n' +
   '\t},\n';
-var REPORT_DATA_TEMPLATE =
+const REPORT_DATA_TEMPLATE =
   '\t\t{\n' +
   '\t\t\t"id": "${box}",\n' +
   '\t\t\t"value": "${expression}"\n' +
   '\t\t},\n';
-var AMOUNT_RATE_REGEX = '\\.((Tax|Net|Notional)Amount|Rate)';
-var SEARCH_INDEX = 1;
-var TAXCODE_INDEX = 2;
+const AMOUNT_RATE_REGEX = '\\.((Tax|Net|Notional)Amount|Rate)';
+const SEARCH_INDEX = 1;
+const TAXCODE_INDEX = 2;
 
-module.exports = function (fileContents) {
+exports.convert = (fileContents) => {
   var functionBlocks = getFunctionBlocks(fileContents);
   var convertedContents = [];
 
@@ -312,4 +312,9 @@ module.exports = function (fileContents) {
     var boxName = objectAssignment.match(boxRegex)[nameIndex];
     return boxName;
   }
+};
+
+exports.selectTaxDefs = (contents) => {
+  const matches = contents.match(/^.*this.TaxDefinition = (\{[\s\S]*?\});/gm);
+  return matches ? matches[1] : null;
 };

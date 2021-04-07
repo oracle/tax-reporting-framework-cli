@@ -1,7 +1,7 @@
 'use strict';
 
 const project = require('./project');
-const convert = require('./converter');
+const { convert, selectTaxDefs } = require('./converter');
 
 class vatProject extends project {
   constructor() {
@@ -14,7 +14,7 @@ class vatProject extends project {
     this.createVATReportsRecord(options);
     this.createVATSearchesRecord(options);
     this.createVATSchemas(options);
-    // this.createProcessors(options);
+    this.createProcessors(options);
   }
 
   async createVATReportsRecord(options) {
@@ -68,28 +68,40 @@ class vatProject extends project {
   }
 
   async createProcessors(options) {
-    const taxCodeMapperFilename = 'TaxCodeMapper.js';
+    //COUNTRYTaxCodeMapper.js
+    const taxCodeDefs = selectTaxDefs(this.contents);
+    const ctrTaxCodeMapperFilename = 'COUNTRYTaxCodeMapper.js';
     const opts1 = {
-      srcFile: 'vat/' + taxCodeMapperFilename,
-      filename: taxCodeMapperFilename,
-      folder: options.srcPath + 'processors/pre/',
-      replaceContents: []
-    };
-    await super.createFileFromTemplate(opts1);
-
-    ///TODO create convert TAXCODEDEFS
-    const ctrTaxCodeMapperFilename = 'CountryTaxCodeMapper.js';
-    const opts2 = {
       srcFile: 'vat/' + ctrTaxCodeMapperFilename,
-      filename: ctrTaxCodeMapperFilename.replace(/COUNTRY/g, options.country),
+      filename: ctrTaxCodeMapperFilename.replace('COUNTRY', options.country),
       folder: options.srcPath + 'processors/pre/',
       replaceContents: [
         [/UUID/g, options.uuid],
         [/COUNTRY/g, options.country],
-        [/PROJECT/g, options.projectName]
+        [/PROJECT/g, options.projectName],
+        [/TAXDEFS/g, taxCodeDefs]
       ]
     };
-    await super.createFileFromTemplate(opts2);
+    await super.createFileFromTemplate(opts1);
+
+    const files = [
+      'VATSearchProcessor.js',
+      'VATSearchDetailsProcessor.js',
+      'TaxCodeMapper.js'
+    ];
+    files.forEach((file) => {
+      this.createScriptFile(options, file);
+    });
+  }
+
+  async createScriptFile(options, filename) {
+    const opts = {
+      srcFile: 'vat/' + filename,
+      filename: filename,
+      folder: options.srcPath + 'processors/pre/',
+      replaceContents: []
+    };
+    await super.createFileFromTemplate(opts);
   }
 }
 module.exports = vatProject;

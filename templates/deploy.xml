@@ -1,0 +1,14 @@
+<deploy>
+    <files>
+        <path>~/FileCabinet/SuiteApps/com.netsuite.PROJECT/*</path>
+    </files>
+    <objects>
+        <path>~/Objects/*</path>
+    </objects>
+    <run>
+    	<script>
+    		<path>~/Objects/script/si/customscript_report_schema_installer_si.xml</path>
+    		<deployment>customdeploy_report_schema_installer_si</deployment>
+    	</script>
+    </run>
+</deploy>

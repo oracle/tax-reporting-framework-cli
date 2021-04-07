@@ -29,7 +29,7 @@ define(['./TaxCodeMapper'], function (TaxCodeMapper) {
   CountryTaxCodeMapper.prototype.findMatchingTaxCodeDefinition = function (
     taxcode
   ) {
-    var countryCode = 'COUNTRY';
+    var _CountryCode = 'COUNTRY';
     var taxDefinitions = TAXDEFS;
     for (var taxDef in taxDefinitions) {
       if (taxDefinitions[taxDef](taxcode)) {
