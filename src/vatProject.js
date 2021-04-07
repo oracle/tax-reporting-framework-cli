@@ -1,5 +1,6 @@
 'use strict';
 
+const fs = require('fs-extra');
 const project = require('./project');
 const { convert, selectTaxDefs } = require('./converter');
 
@@ -15,6 +16,7 @@ class vatProject extends project {
     this.createVATSearchesRecord(options);
     this.createVATSchemas(options);
     this.createProcessors(options);
+    this.copyTemplates(options);
   }
 
   async createVATReportsRecord(options) {
@@ -48,8 +50,7 @@ class vatProject extends project {
   }
 
   async createVATSchemas(options) {
-    const filename = 'VAT_SUMMARY';
-    //TODO create convert SUMMARY
+    let filename = 'VAT_SUMMARY';
     const convertedContents = convert(this.contents);
     convertedContents.forEach(async (content, idx) => {
       const opts = {
@@ -64,6 +65,12 @@ class vatProject extends project {
         ]
       };
       await super.createFileFromTemplate(opts);
+    });
+
+    const files = ['VAT_META.json', 'VAT_DETAILS.json'];
+    const folder = 'schemas/';
+    files.forEach((file) => {
+      this.createScriptFile(options, file, folder);
     });
   }
 
@@ -89,19 +96,27 @@ class vatProject extends project {
       'VATSearchDetailsProcessor.js',
       'TaxCodeMapper.js'
     ];
+
+    const folder = 'processors/pre/';
     files.forEach((file) => {
-      this.createScriptFile(options, file);
+      this.createScriptFile(options, file, folder);
     });
   }
 
-  async createScriptFile(options, filename) {
+  async createScriptFile(options, filename, folder) {
     const opts = {
       srcFile: 'vat/' + filename,
       filename: filename,
-      folder: options.srcPath + 'processors/pre/',
+      folder: options.srcPath + folder,
       replaceContents: []
     };
     await super.createFileFromTemplate(opts);
+  }
+
+  async copyTemplates(options) {
+    fs.copy(options.templatePath, options.srcPath + 'templates/', (err) => {
+      if (err) return console.error(err);
+    });
   }
 }
 module.exports = vatProject;

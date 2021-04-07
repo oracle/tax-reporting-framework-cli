@@ -23,6 +23,7 @@ const questions = [
 
 module.exports = function () {
   inquirer.registerPrompt('filePath', require('inquirer-file-path'));
+  inquirer.registerPrompt('directory', require('inquirer-select-directory'));
   inquirer
     .prompt([
       {
@@ -34,12 +35,20 @@ module.exports = function () {
     ])
     .then(function (answers) {
       if (answers.projectType === 'VAT') {
-        questions.unshift({
-          type: 'filePath',
-          name: 'srcReportFile',
-          message: 'Find src VAT report file',
-          basePath: './'
-        });
+        questions.unshift(
+          {
+            type: 'filePath',
+            name: 'srcReportFile',
+            message: 'Browse src VAT report file. ',
+            basePath: './'
+          },
+          {
+            type: 'directory',
+            name: 'templatePath',
+            message: 'Browse src VAT template dir. ',
+            basePath: './'
+          }
+        );
       } else {
         questions.unshift({
           type: 'list',
@@ -56,18 +65,31 @@ module.exports = function () {
       console.log(chalk.grey('------------------'));
       console.log(chalk.redBright('🚀 TRF CLI 🚀'));
       console.log(chalk.grey('------------------'));
-      console.log(chalk.blue('Project Name: '), answers.projectName);
-      console.log(chalk.blue('Project Type: '), projectType);
-      console.log(chalk.blue('Country: '), answers.country);
+      console.log(
+        chalk.gray('Project Name: '),
+        chalk.blue(answers.projectName)
+      );
+      console.log(chalk.gray('Project Type: '), chalk.blue(projectType));
+      console.log(chalk.gray('Country: '), chalk.blue(answers.country));
 
       const start = new Date().getTime();
       if (projectType === 'VAT') {
-        console.log(chalk.blue('VAT Source Report: '), answers.srcReportFile);
+        console.log(
+          chalk.gray('VAT src report: '),
+          chalk.blue(answers.srcReportFile)
+        );
+        console.log(
+          chalk.gray('VAT template path: '),
+          chalk.blue(answers.templatePath)
+        );
         console.log(chalk.gray('Creating your project...🚀🚀🚀'));
         new vatProject().create(answers);
       } else {
         if (answers.searchType === 'search') {
-          console.log(chalk.blue('VAT Source Report: '), answers.srcReportFile);
+          console.log(
+            chalk.gray('VAT Source Report: '),
+            chalk.blue(answers.srcReportFile)
+          );
           console.log(chalk.gray('Creating your project...🚀🚀🚀'));
           new tafProject().createTAFSearch(answers);
         } else {

@@ -1,4 +1,3 @@
 node_modules
 yarn.lock
-my-awesome-report
-vat.IE.report.js
+ie-report
