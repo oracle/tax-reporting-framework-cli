@@ -314,7 +314,7 @@ exports.convert = (fileContents) => {
   }
 };
 
-exports.selectTaxDefs = (contents) => {
-  const matches = contents.match(/^.*this.TaxDefinition = (\{[\s\S]*?\});/gm);
+exports.getTaxDefs = (contents) => {
+  const matches = contents.match(/^.*?this.TaxDefinition = (\{[\s\S]*?\});/m);
   return matches ? matches[1] : null;
 };

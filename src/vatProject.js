@@ -2,7 +2,7 @@
 
 const fs = require('fs-extra');
 const project = require('./project');
-const { convert, selectTaxDefs } = require('./converter');
+const { convert, getTaxDefs } = require('./converter');
 
 class vatProject extends project {
   constructor() {
@@ -76,7 +76,7 @@ class vatProject extends project {
 
   async createProcessors(options) {
     //COUNTRYTaxCodeMapper.js
-    const taxCodeDefs = selectTaxDefs(this.contents);
+    const taxCodeDefs = getTaxDefs(this.contents);
     const ctrTaxCodeMapperFilename = 'COUNTRYTaxCodeMapper.js';
     const opts1 = {
       srcFile: 'vat/' + ctrTaxCodeMapperFilename,
