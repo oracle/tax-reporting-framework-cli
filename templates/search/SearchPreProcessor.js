@@ -13,7 +13,6 @@ define([], function () {
   SearchPreProcessor.prototype.process = function (row, columns) {
     try {
       var data = {};
-
       data.type = row.getValue({
         name: 'type',
         summary: 'group'
@@ -45,7 +44,6 @@ define([], function () {
           summary: 'group'
         }) || '';
       data.accname = data.accname.replace(data.accnumber, '').trim();
-
       data.entityId =
         row.getValue({
           name: 'entity',
@@ -80,7 +78,6 @@ define([], function () {
           summary: 'group'
         }) || '';
       data.memo = this.noneToBlank(data.memo);
-
       data.debit =
         row.getValue({
           name: 'debitamount',
@@ -96,10 +93,10 @@ define([], function () {
           name: 'trandate',
           summary: 'group'
         }) || '';
-      return data;
     } catch (ex) {
       throw ex;
     }
+    return data;
   };
 
   SearchPreProcessor.prototype.noneToBlank = function (string) {

@@ -17,10 +17,10 @@ class tafSearchProject extends project {
   }
 
   async createTemplates(options) {
-    const template = 'TAF_TEMPLATE.ftl';
+    const filename = 'TAF_TEMPLATE.ftl';
     const opts = {
-      srcFile: 'search/' + template,
-      filename: template,
+      srcFile: 'search/' + filename,
+      filename: filename,
       folder: options.srcPath + 'templates/',
       replaceContents: []
     };
@@ -76,23 +76,14 @@ class tafSearchProject extends project {
   }
 
   async createProcessors(options) {
-    const preprocessor = 'SearchPreProcessor.js';
-    const opts1 = {
-      srcFile: 'search/' + preprocessor,
-      filename: preprocessor,
+    const filename = 'SearchPreProcessor.js';
+    const opts = {
+      srcFile: 'search/' + filename,
+      filename: filename,
       folder: options.srcPath + 'processors/pre/',
       replaceContents: []
     };
-    await this.createFileFromTemplate(opts1);
-
-    const postprocessor = 'SearchPostProcessor.js';
-    const opts2 = {
-      srcFile: 'search/' + postprocessor,
-      filename: postprocessor,
-      folder: options.srcPath + 'processors/post/',
-      replaceContents: []
-    };
-    await this.createFileFromTemplate(opts2);
+    await this.createFileFromTemplate(opts);
   }
 }
 module.exports = tafSearchProject;

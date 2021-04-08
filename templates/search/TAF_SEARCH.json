@@ -10,7 +10,7 @@
   },
   "source": [
     {
-      "id": "transactions",
+      "id": "transactions_raw",
       "type": "savedsearch",
       "internalid": "customsearch_taf_template",
       "filters": [
@@ -29,14 +29,76 @@
       ],
       "processor": {
         "type": "scheduled",
-        "script": "SuiteApps/com.netsuite.PROJECT/src/processors/pre/SearchPreProcessor"
+        "script": "SuiteApps/com.netsuite.myawesomeproject/src/processors/pre/SearchPreProcessor"
       }
     }
   ],
   "data": [
     {
       "id": "transactions",
-      "processor": "SuiteApps/com.netsuite.PROJECT/src/processors/post/SearchPostProcessor"
+      "source": ["transactions_raw"],
+      "field": [
+        {
+          "id": "type",
+          "value": "type"
+        },
+        {
+          "id": "typetext",
+          "value": "typetext"
+        },
+        {
+          "id": "glnumber",
+          "value": "glnumber"
+        },
+        {
+          "id": "glnumberdate",
+          "value": "glnumberdate"
+        },
+        {
+          "id": "accnumber",
+          "value": "accnumber"
+        },
+        {
+          "id": "accname",
+          "value": "accname"
+        },
+        {
+          "id": "entityId",
+          "value": "entityId"
+        },
+        {
+          "id": "entityName",
+          "value": "entityName"
+        },
+        {
+          "id": "tranid",
+          "value": "tranid"
+        },
+        {
+          "id": "memo",
+          "value": "memo"
+        },
+        {
+          "id": "debit",
+          "value": "debit"
+        },
+        {
+          "id": "credit",
+          "value": "credit"
+        },
+        {
+          "id": "trandate",
+          "value": "trandate"
+        },
+        {
+          "id": "fxamount",
+          "value": "fxamount"
+        },
+        {
+          "id": "currencytext",
+          "value": "currencytext"
+        }
+      ]
     }
   ]
 }
