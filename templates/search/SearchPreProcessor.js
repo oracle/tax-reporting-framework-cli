@@ -3,7 +3,7 @@
  * @NModuleScope TargetAccount
  */
 
-define(['N/runtime'], function (runtime) {
+define([], function () {
   function SearchPreProcessor(params, context) {
     this.name = 'SearchPreProcessor';
     this.params = params;
@@ -34,33 +34,19 @@ define(['N/runtime'], function (runtime) {
       data.accnumber =
         row.getValue({
           join: 'account',
-          name: 'localizednumber',
-          summary: 'group'
-        }) ||
-        row.getValue({
-          join: 'account',
           name: 'number',
           summary: 'group'
-        }) ||
-        '';
+        }) || '';
       data.accnumber = this.noneToBlank(data.accnumber);
       data.accname =
         row.getValue({
           join: 'account',
-          name: 'localizedname',
-          summary: 'group'
-        }) ||
-        row.getValue({
-          join: 'account',
           name: 'name',
           summary: 'group'
-        }) ||
-        '';
+        }) || '';
       data.accname = data.accname.replace(data.accnumber, '').trim();
 
-      var entityData = this.entityProcessor.process(row);
       data.entityId =
-        entityData.entityId ||
         row.getValue({
           name: 'entity',
           summary: 'group'
@@ -73,11 +59,10 @@ define(['N/runtime'], function (runtime) {
         '';
       data.entityName =
         this.noneToBlank(
-          entityData.entityName ||
-            row.getText({
-              name: 'entity',
-              summary: 'group'
-            })
+          row.getText({
+            name: 'entity',
+            summary: 'group'
+          })
         ) || '';
       data.tranid =
         row.getValue({
@@ -96,21 +81,6 @@ define(['N/runtime'], function (runtime) {
         }) || '';
       data.memo = this.noneToBlank(data.memo);
 
-      if (
-        runtime.isFeatureInEffect({
-          feature: 'MULTICURRENCY'
-        })
-      ) {
-        data.currencytext = row.getValue({
-          name: 'currency',
-          summary: 'group'
-        });
-        data.fxamount =
-          row.getValue({
-            name: 'fxamount',
-            summary: 'sum'
-          }) || '';
-      }
       data.debit =
         row.getValue({
           name: 'debitamount',

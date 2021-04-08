@@ -13,7 +13,7 @@ class tafSuiteQLProject extends project {
   }
 
   async createRecords(options) {
-    const filename = 'reports.json';
+    const filename = 'str_localized_reports.json';
     const opts = {
       srcFile: 'suiteql/' + filename,
       filename: filename,

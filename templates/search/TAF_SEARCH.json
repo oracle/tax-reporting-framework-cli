@@ -31,51 +31,9 @@
         "type": "scheduled",
         "script": "SuiteApps/com.netsuite.PROJECT/src/processors/pre/SearchPreProcessor"
       }
-    },
-    {
-      "id": "subsidiary",
-      "type": "record",
-      "recordtype": "subsidiary",
-      "recordid": "context.report.subsidiary",
-      "features": ["SUBSIDIARIES"],
-      "sublistfields": [
-        {
-          "name": "taxregistration",
-          "fields": [
-            "nexuscountry",
-            "nexus",
-            "taxregistrationnumber",
-            "taxengine",
-            "effectivefrom",
-            "validuntil"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "company",
-      "type": "config",
-      "recordtype": "companyinformation",
-      "sublistfields": [
-        {
-          "name": "taxregistration",
-          "fields": [
-            "nexuscountry",
-            "nexus",
-            "taxregistrationnumber",
-            "taxengine",
-            "effectivefrom",
-            "validuntil"
-          ]
-        }
-      ]
     }
   ],
   "data": [
-    {
-      "id": "company_info",
-      "processor": "SuiteApps/com.netsuite.PROJECT/src/processors/post/CompanyInfoProcessor"
-    },
     {
       "id": "transactions",
       "processor": "SuiteApps/com.netsuite.PROJECT/src/processors/post/SearchPostProcessor"
