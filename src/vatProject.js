@@ -20,7 +20,7 @@ class vatProject extends project {
   }
 
   async createVATReportsRecord(options) {
-    const filename = 'vat_reports_list.json';
+    const filename = 'reports.json';
     const opts = {
       srcFile: 'vat/' + filename,
       filename: filename,
@@ -35,7 +35,7 @@ class vatProject extends project {
   }
 
   async createVATSearchesRecord(options) {
-    const filename = 'vat_searches_list.json';
+    const filename = 'searches.json';
     const opts = {
       srcFile: 'vat/' + filename,
       filename: filename,

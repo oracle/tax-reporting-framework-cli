@@ -3,7 +3,8 @@
 'use strict';
 const inquirer = require('inquirer');
 const chalk = require('chalk');
-const tafProject = require('./tafProject');
+const tafSuiteQLProject = require('./tafSuiteQLProject');
+const tafSearchProject = require('./tafSearchProject');
 const vatProject = require('./vatProject');
 
 const questions = [
@@ -86,14 +87,10 @@ module.exports = function () {
         new vatProject().create(answers);
       } else {
         if (answers.searchType === 'search') {
-          console.log(
-            chalk.gray('VAT Source Report: '),
-            chalk.blue(answers.srcReportFile)
-          );
           console.log(chalk.gray('Creating your project...🚀🚀🚀'));
-          new tafProject().createTAFSearch(answers);
+          new tafSearchProject().create(answers);
         } else {
-          new tafProject().createTAFSuiteQL(answers);
+          new tafSuiteQLProject().create(answers);
         }
       }
       console.log(

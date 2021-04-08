@@ -1,5 +1,6 @@
 'use strict';
 const fs = require('fs').promises;
+const path = require('path');
 
 module.exports = class fileService {
   constructor() {}
@@ -16,7 +17,7 @@ module.exports = class fileService {
 
   async createFile(name, contents) {
     await fs
-      .writeFile(name, contents)
+      .writeFile(path.join(__dirname, name), contents)
       .catch((err) =>
         console.error(`Failed to write file: ${name}, Error: ${err}`)
       );
@@ -24,10 +25,10 @@ module.exports = class fileService {
 
   async readFile(name) {
     const contents = await fs
-      .readFile(name)
+      .readFile(path.join(__dirname, name))
       .catch((err) =>
         console.error(`Failed to read file: ${name}, Error: ${err}`)
       );
-    return contents.toString();
+    return contents ? contents.toString() : '';
   }
 };
