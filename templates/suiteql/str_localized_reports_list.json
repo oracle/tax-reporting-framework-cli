@@ -1,14 +1,14 @@
 {
   "list": [
     {
-      "name": "TAF SuiteQL Template",
+      "name": "TAF SuiteQL Report",
       "country": "COUNTRY",
       "report": "TAF",
       "isCountryDefault": true,
       "uuid": "UUID",
       "createdBy": "com.netsuite.PROJECT",
       "translations": {
-        "en_US": "TAF SuiteQL Template"
+        "en_US": "TAF SuiteQL Report"
       },
       "details": [
         {

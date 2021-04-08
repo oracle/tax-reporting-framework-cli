@@ -36,7 +36,7 @@ class tafSearchProject extends project {
       replaceContents: [
         [/UUID/g, options.uuid],
         [/COUNTRY/g, options.country],
-        [/PROJECT/g, options.project]
+        [/PROJECT/g, options.projectName]
       ]
     };
     await this.createFileFromTemplate(opts);
@@ -51,7 +51,7 @@ class tafSearchProject extends project {
       replaceContents: [
         [/UUID/g, options.uuid],
         [/COUNTRY/g, options.country],
-        [/PROJECT/g, options.project]
+        [/PROJECT/g, options.projectName]
       ]
     };
     await this.createFileFromTemplate(opts);
@@ -60,8 +60,18 @@ class tafSearchProject extends project {
   async createSchemas(options) {
     const files = ['TAF_SEARCH_META.json', 'TAF_SEARCH.json'];
     const folder = 'schemas/';
-    files.forEach((file) => {
-      this.createScriptFile(options, file, folder);
+    files.forEach(async (file) => {
+      const opts = {
+        srcFile: 'search/' + file,
+        filename: file,
+        folder: options.srcPath + folder,
+        replaceContents: [
+          [/UUID/g, options.uuid],
+          [/COUNTRY/g, options.country],
+          [/PROJECT/g, options.projectName]
+        ]
+      };
+      await super.createFileFromTemplate(opts);
     });
   }
 
@@ -83,16 +93,6 @@ class tafSearchProject extends project {
       replaceContents: []
     };
     await this.createFileFromTemplate(opts2);
-  }
-
-  async createScriptFile(options, filename, folder) {
-    const opts = {
-      srcFile: 'search/' + filename,
-      filename: filename,
-      folder: options.srcPath + folder,
-      replaceContents: []
-    };
-    await super.createFileFromTemplate(opts);
   }
 }
 module.exports = tafSearchProject;

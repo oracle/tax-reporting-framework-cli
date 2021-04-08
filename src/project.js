@@ -50,7 +50,7 @@ class project {
   }
 
   async createBundleRecord(options) {
-    const filename = 'bundle.json';
+    const filename = 'str_localized_bundle.json';
     const opts = {
       srcFile: filename,
       filename: filename,

@@ -5,17 +5,13 @@
   "context": {
     "report": {
       "nexus": "reportparam.nexus",
-      "subsidiary": "reportparam.subsidiary",
-      "accountingcontext": {
-        "source": "SuiteApps/com.netsuite.PROJECT/src/service/AccountingContextService"
-      }
+      "subsidiary": "reportparam.subsidiary"
     }
   },
   "source": [
     {
       "id": "transactions",
       "type": "savedsearch",
-      "isPEJCompatible": true,
       "internalid": "customsearch_taf_template",
       "filters": [
         {
@@ -29,28 +25,11 @@
           "operator": "anyof",
           "join": "accountingperiod",
           "values": "context.report.postingperiod"
-        },
-        {
-          "join": "account",
-          "name": "accountingcontext",
-          "operator": "is",
-          "values": "context.report.accountingcontext.usercontext",
-          "features": ["SUBSIDIARIES"]
-        },
-        {
-          "join": "account",
-          "name": "locale",
-          "operator": "is",
-          "values": "context.report.accountingcontext.userlocale"
         }
       ],
       "processor": {
         "type": "scheduled",
         "script": "SuiteApps/com.netsuite.PROJECT/src/processors/pre/SearchPreProcessor"
-      },
-      "validator": {
-        "script": "SuiteApps/com.netsuite.PROJECT/src/service/GLAuditNumberingService",
-        "method": "checkGLNumbering"
       }
     },
     {
