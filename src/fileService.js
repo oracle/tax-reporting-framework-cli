@@ -17,7 +17,7 @@ module.exports = class fileService {
 
   async createFile(name, contents) {
     await fs
-      .writeFile(path.join(__dirname, name), contents)
+      .writeFile(name, contents)
       .catch((err) =>
         console.error(`Failed to write file: ${name}, Error: ${err}`)
       );
@@ -25,7 +25,7 @@ module.exports = class fileService {
 
   async readFile(name) {
     const contents = await fs
-      .readFile(path.join(__dirname, name))
+      .readFile(path.resolve(__dirname, '../', name))
       .catch((err) =>
         console.error(`Failed to read file: ${name}, Error: ${err}`)
       );
