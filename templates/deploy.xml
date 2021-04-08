@@ -7,8 +7,8 @@
     </objects>
     <run>
     	<script>
-    		<path>~/Objects/script/si/customscript_report_schema_installer_si.xml</path>
-    		<deployment>customdeploy_report_schema_installer_si</deployment>
+    		<path>~/Objects/customscript_schema_installer.xml</path>
+    		<deployment>customdeploy_schema_installer</deployment>
     	</script>
     </run>
 </deploy>

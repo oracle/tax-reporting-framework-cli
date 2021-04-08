@@ -9,10 +9,10 @@ class tafSuiteQLProject extends project {
 
   async createTAFSuiteQL(options) {
     super.create(option);
-    this.createTAFReportsSuiteQLRecord(options);
+    this.createRecords(options);
   }
 
-  async createTAFReportsSuiteQLRecord(options) {
+  async createRecords(options) {
     const filename = 'reports.json';
     const opts = {
       srcFile: 'suiteql/' + filename,

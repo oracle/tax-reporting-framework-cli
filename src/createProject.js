@@ -11,8 +11,12 @@ const questions = [
   {
     type: 'input',
     name: 'projectName',
-    message: 'Enter project name. ',
-    default: 'my-awesome-project'
+    message:
+      'Enter project name. ' +
+      chalk.gray(
+        '(The project ID must not be empty and can contain only lowercase alphabetic and numeric characters)\n'
+      ),
+    default: 'myawesomeproject'
   },
   {
     type: 'input',

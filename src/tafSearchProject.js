@@ -9,13 +9,26 @@ class tafSearchProject extends project {
 
   async create(options) {
     super.create(options);
-    this.createRecords(options);
+    this.createReports(options);
     this.createSearches(options);
     this.createSchemas(options);
+    this.createProcessors(options);
+    this.createTemplates(options);
   }
 
-  async createRecords(options) {
-    const filename = 'reports.json';
+  async createTemplates(options) {
+    const template = 'TAF_TEMPLATE.ftl';
+    const opts = {
+      srcFile: 'search/' + template,
+      filename: template,
+      folder: options.srcPath + 'templates/',
+      replaceContents: []
+    };
+    await this.createFileFromTemplate(opts);
+  }
+
+  async createReports(options) {
+    const filename = 'str_localized_reports_list.json';
     const opts = {
       srcFile: 'search/' + filename,
       filename: filename,
@@ -30,7 +43,7 @@ class tafSearchProject extends project {
   }
 
   async createSearches(options) {
-    const filename = 'searches.json';
+    const filename = 'str_localized_searches.json';
     const opts = {
       srcFile: 'search/' + filename,
       filename: filename,
@@ -52,12 +65,24 @@ class tafSearchProject extends project {
     });
   }
 
-  async createTAFSearchProcessors(options) {
-    const files = ['TAF_SEARCH_META.json', 'TAF_SEARCH.json'];
-    const folder = 'schemas/';
-    files.forEach((file) => {
-      this.createScriptFile(options, file, folder);
-    });
+  async createProcessors(options) {
+    const preprocessor = 'SearchPreProcessor.js';
+    const opts1 = {
+      srcFile: 'search/' + preprocessor,
+      filename: preprocessor,
+      folder: options.srcPath + 'processors/pre/',
+      replaceContents: []
+    };
+    await this.createFileFromTemplate(opts1);
+
+    const postprocessor = 'SearchPostProcessor.js';
+    const opts2 = {
+      srcFile: 'search/' + postprocessor,
+      filename: postprocessor,
+      folder: options.srcPath + 'processors/post/',
+      replaceContents: []
+    };
+    await this.createFileFromTemplate(opts2);
   }
 
   async createScriptFile(options, filename, folder) {

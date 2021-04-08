@@ -138,6 +138,5 @@ define(['N/runtime'], function (runtime) {
     }
     return string;
   };
-
   return SearchPreProcessor;
 });
