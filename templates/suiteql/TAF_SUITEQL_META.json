@@ -2,14 +2,11 @@
   "name": "TAF SUITEQL META",
   "id": "TAF_SUITEQL_META",
   "type": "TAF",
-  "validator": {
-    "script": "SuiteApps/com.netsuite.PROJECT/src/service/GLAuditNumberingService"
-  },
   "reports": [
     {
-      "data": ["transactions", "company_info", "subsidiary", "company"],
-      "namefunction": "taf_ctr",
-      "template": "TAF_CTR.ftl"
+      "data": ["transactions"],
+      "namefunction": "default",
+      "template": "TAF_TEMPLATE.ftl"
     }
   ],
   "setup": {

@@ -41,16 +41,7 @@ define(['N/runtime'], function (runtime) {
       data.trandate = row.trandate || '';
       return data;
     } catch (ex) {
-      error.throw(
-        {
-          name: ex.name,
-          message: ex.message
-        },
-        {
-          context: this.name + '.process',
-          level: error.level.ERROR
-        }
-      );
+      throw ex;
     }
   };
 

@@ -40,63 +40,78 @@
       "field": [
         {
           "id": "type",
-          "value": "type"
+          "value": "type",
+          "type": "string"
         },
         {
           "id": "typetext",
-          "value": "typetext"
+          "value": "typetext",
+          "type": "string"
         },
         {
           "id": "glnumber",
-          "value": "glnumber"
+          "value": "glnumber",
+          "type": "string"
         },
         {
           "id": "glnumberdate",
-          "value": "glnumberdate"
+          "value": "glnumberdate",
+          "type": "date"
         },
         {
           "id": "accnumber",
-          "value": "accnumber"
+          "value": "accnumber",
+          "type": "string"
         },
         {
           "id": "accname",
-          "value": "accname"
+          "value": "accname",
+          "type": "string"
         },
         {
           "id": "entityId",
-          "value": "entityId"
+          "value": "entityId",
+          "type": "string"
         },
         {
           "id": "entityName",
-          "value": "entityName"
+          "value": "entityName",
+          "type": "string"
         },
         {
           "id": "tranid",
-          "value": "tranid"
+          "value": "tranid",
+          "type": "string"
         },
         {
           "id": "memo",
-          "value": "memo"
+          "value": "memo",
+          "type": "string"
         },
         {
           "id": "debit",
-          "value": "debit"
+          "value": "debit",
+          "type": "number"
         },
         {
           "id": "credit",
-          "value": "credit"
+          "value": "credit",
+          "type": "number"
         },
         {
           "id": "trandate",
-          "value": "trandate"
+          "value": "trandate",
+          "type": "date"
         },
         {
           "id": "fxamount",
-          "value": "fxamount"
+          "value": "fxamount",
+          "type": "number"
         },
         {
           "id": "currencytext",
-          "value": "currencytext"
+          "value": "currencytext",
+          "type": "string"
         }
       ]
     }
