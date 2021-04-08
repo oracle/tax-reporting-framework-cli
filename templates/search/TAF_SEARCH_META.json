@@ -5,8 +5,8 @@
   "reports": [
     {
       "data": ["transactions"],
-      "namefunction": "taf_ctr",
-      "template": "TAF_CTR.ftl"
+      "namefunction": "default",
+      "template": "TAF_TEMPLATE.ftl"
     }
   ],
   "setup": {
