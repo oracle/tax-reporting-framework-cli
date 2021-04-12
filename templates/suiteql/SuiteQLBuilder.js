@@ -24,26 +24,23 @@ define(['N/config', 'N/runtime'], function (config, runtime) {
     accountingPeriod += ')';
     accountingPeriodFilter += accountingPeriod;
 
-    var userContextFilter = ' AND acs.accountingcontext IS NULL';
-    if (context.report.accountingcontext.usercontext != '@NONE@') {
-      userContextFilter =
-        ' AND acs.accountingcontext IN ' +
-        "('" +
-        context.report.accountingcontext.usercontext +
-        "')";
-    }
+    // var userContextFilter = ' AND acs.accountingcontext IS NULL';
+    // if (context.report.accountingcontext.usercontext != '@NONE@') {
+    //     userContextFilter =
+    //         ' AND acs.accountingcontext IN ' + "('" + context.report.accountingcontext.usercontext + "')";
+    // }
 
-    var userLocaleFilter = '';
-    if (runtime.isFeatureInEffect({ feature: 'MULTILANGUAGE' })) {
-      userLocaleFilter = ' AND acs.locale IS NULL';
-      if (context.report.accountingcontext.userlocale != '@NONE@') {
-        userLocaleFilter =
-          ' AND Upper(acs.locale) IN ' +
-          "('" +
-          context.report.accountingcontext.userlocale.toUpperCase() +
-          "')";
-      }
-    }
+    // var userLocaleFilter = '';
+    // if (runtime.isFeatureInEffect({ feature: 'MULTILANGUAGE' })) {
+    //     userLocaleFilter = ' AND acs.locale IS NULL';
+    //     if (context.report.accountingcontext.userlocale != '@NONE@') {
+    //         userLocaleFilter =
+    //             ' AND Upper(acs.locale) IN ' +
+    //             "('" +
+    //             context.report.accountingcontext.userlocale.toUpperCase() +
+    //             "')";
+    //     }
+    // }
 
     var isAcctNumberEnabled = config
       .load('accountingpreferences')
@@ -90,8 +87,8 @@ define(['N/config', 'N/runtime'], function (config, runtime) {
             AND (tal.credit IS NOT NULL OR tal.debit IS NOT NULL)" +
       subsidiaryFilter +
       accountingPeriodFilter +
-      userContextFilter +
-      userLocaleFilter +
+      //   userContextFilter +
+      //   userLocaleFilter +
       pejFilter +
       ' GROUP BY t.trandate, t.tranid, t.id, t.type, t.recordtype, tal.glauditnumber, \
             tal.glauditnumberdate, ' +

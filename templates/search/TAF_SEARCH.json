@@ -29,7 +29,7 @@
       ],
       "processor": {
         "type": "scheduled",
-        "script": "SuiteApps/com.netsuite.myawesomeproject/src/processors/pre/SearchPreProcessor"
+        "script": "SuiteApps/com.netsuite.PROJECT/src/processors/pre/SearchPreProcessor"
       }
     }
   ],

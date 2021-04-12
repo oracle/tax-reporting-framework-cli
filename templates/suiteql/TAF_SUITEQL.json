@@ -68,11 +68,6 @@
           "type": "string"
         },
         {
-          "id": "type",
-          "value": "type",
-          "type": "string"
-        },
-        {
           "id": "tranid",
           "value": "tranid",
           "type": "string"

@@ -4,8 +4,6 @@
 const program = require('commander');
 const chalk = require('chalk');
 const createProject = require('./createProject');
-const { selectTaxDefs } = require('./converter');
-const fileService = require('./fileService');
 
 class trfCLI {
   constructor() {}
