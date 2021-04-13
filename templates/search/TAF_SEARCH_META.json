@@ -31,10 +31,6 @@
             "value": 1
           },
           {
-            "fieldName": "includeperiodendjournals",
-            "value": true
-          },
-          {
             "fieldName": "reportingfrequency",
             "parent": "reports",
             "value": "annually",
