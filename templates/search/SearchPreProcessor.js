@@ -11,8 +11,8 @@ define([], function () {
   }
 
   SearchPreProcessor.prototype.process = function (row, columns) {
+    var data = {};
     try {
-      var data = {};
       data.type = row.getValue({
         name: 'type',
         summary: 'group'

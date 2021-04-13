@@ -32,21 +32,6 @@
           "summary": "GROUP"
         },
         {
-          "name": "localizednumber",
-          "join": "account",
-          "summary": "GROUP",
-          "label": "account_localizednumber",
-          "configuration": {
-            "type": "accountingpreferences",
-            "id": "ACCOUNTNUMBERS"
-          }
-        },
-        {
-          "name": "localizedname",
-          "join": "account",
-          "summary": "GROUP"
-        },
-        {
           "name": "number",
           "join": "account",
           "summary": "GROUP",

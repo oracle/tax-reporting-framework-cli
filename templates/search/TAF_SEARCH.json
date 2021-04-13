@@ -5,7 +5,8 @@
   "context": {
     "report": {
       "nexus": "reportparam.nexus",
-      "subsidiary": "reportparam.subsidiary"
+      "subsidiary": "reportparam.subsidiary",
+      "postingperiod": "reportparam.postingperiod"
     }
   },
   "source": [

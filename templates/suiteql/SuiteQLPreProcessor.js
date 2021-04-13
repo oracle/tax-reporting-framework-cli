@@ -14,8 +14,8 @@ define(['N/runtime'], function (runtime) {
   }
 
   SuiteQLPreProcessor.prototype.process = function (row) {
+    var data = {};
     try {
-      var data = {};
       data.type = row.type || '';
       data.typetext = row.recordtype || '';
       data.glnumber = row.glauditnumber || '';
@@ -39,10 +39,10 @@ define(['N/runtime'], function (runtime) {
       data.debit = row.debit || 0;
       data.credit = row.credit || 0;
       data.trandate = row.trandate || '';
-      return data;
     } catch (ex) {
       throw ex;
     }
+    return data;
   };
 
   return SuiteQLPreProcessor;
