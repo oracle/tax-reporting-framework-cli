@@ -30,5 +30,5 @@ Commands:
   create         create new TRF project 😎
 ```
 
-## TODO
+## To do
 Add PostInstall script to remove schemas 

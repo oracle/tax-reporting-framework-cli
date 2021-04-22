@@ -104,6 +104,13 @@ class project {
         contents = contents.replace(...el);
       });
 
+    await this._fs.createFile(
+      options.folder + options.filename,
+      this.formatFile(options, contents)
+    );
+  }
+
+  formatFile(options, contents) {
     let formatterOptions = {
       tabWidth: 4,
       semi: true,
@@ -120,8 +127,7 @@ class project {
     if (options.filename.match(/.*js/g)) {
       contents = prettier.format(contents, formatterOptions);
     }
-
-    await this._fs.createFile(options.folder + options.filename, contents);
+    return contents;
   }
 }
 
