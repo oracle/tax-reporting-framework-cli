@@ -18,10 +18,10 @@ describe('tafSearchProject', function () {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
-  it('tafSearchProject.createReports > expect > opts are correct', () => {
+  test('tafSearchProject.createReports > expect > opts are correct', () => {
     const filename = 'str_localized_reports_list.json';
     this.aut.createReports(this.options);
     expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
@@ -36,7 +36,7 @@ describe('tafSearchProject', function () {
     });
   });
 
-  it('tafSearchProject.createSearches > expect > opts are correct', () => {
+  test('tafSearchProject.createSearches > expect > opts are correct', () => {
     const filename = 'str_localized_searches.json';
     this.aut.createSearches(this.options);
     expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
@@ -51,7 +51,7 @@ describe('tafSearchProject', function () {
     });
   });
 
-  it('tafSearchProject.createSchemas > expect > opts are correct', () => {
+  test('tafSearchProject.createSchemas > expect > opts are correct', () => {
     const files = ['TAF_SEARCH_META.json', 'TAF_SEARCH.json'];
     this.aut.createSchemas(this.options);
     files.forEach((file) => {
@@ -68,7 +68,7 @@ describe('tafSearchProject', function () {
     });
   });
 
-  it('tafSearchProject.createProcessors > expect > opts are correct', () => {
+  test('tafSearchProject.createProcessors > expect > opts are correct', () => {
     const filename = 'SearchPreProcessor.js';
     this.aut.createProcessors(this.options);
     expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
@@ -79,7 +79,7 @@ describe('tafSearchProject', function () {
     });
   });
 
-  it('tafSearchProject.createTemplates > expect > opts are correct', () => {
+  test('tafSearchProject.createTemplates > expect > opts are correct', () => {
     const filename = 'TAF_TEMPLATE.ftl';
     this.aut.createTemplates(this.options);
     expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
@@ -88,5 +88,31 @@ describe('tafSearchProject', function () {
       folder: this.options.srcPath + 'templates/',
       replaceContents: []
     });
+  });
+
+  test('tafSearchProject.create > expect > create files', () => {
+    jest.spyOn(project.prototype, 'create').mockImplementation(() => {});
+    jest
+      .spyOn(tafSearchProject.prototype, 'createReports')
+      .mockImplementation(() => {});
+    jest
+      .spyOn(tafSearchProject.prototype, 'createSearches')
+      .mockImplementation(() => {});
+    jest
+      .spyOn(tafSearchProject.prototype, 'createSchemas')
+      .mockImplementation(() => {});
+    jest
+      .spyOn(tafSearchProject.prototype, 'createProcessors')
+      .mockImplementation(() => {});
+    jest
+      .spyOn(tafSearchProject.prototype, 'createTemplates')
+      .mockImplementation(() => {});
+
+    this.aut.create(this.options);
+    expect(tafSearchProject.prototype.createReports).toBeCalled();
+    expect(tafSearchProject.prototype.createSearches).toBeCalled();
+    expect(tafSearchProject.prototype.createSchemas).toBeCalled();
+    expect(tafSearchProject.prototype.createProcessors).toBeCalled();
+    expect(tafSearchProject.prototype.createTemplates).toBeCalled();
   });
 });

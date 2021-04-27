@@ -41,7 +41,7 @@ class tafSuiteQLProject extends project {
           [/PROJECT/g, options.projectName]
         ]
       };
-      await super.createFileFromTemplate(opts);
+      await this.createFileFromTemplate(opts);
     });
   }
 
@@ -67,7 +67,7 @@ class tafSuiteQLProject extends project {
       folder: options.srcPath + folder,
       replaceContents: []
     };
-    await super.createFileFromTemplate(opts);
+    await this.createFileFromTemplate(opts);
   }
 
   async createProcessors(options) {

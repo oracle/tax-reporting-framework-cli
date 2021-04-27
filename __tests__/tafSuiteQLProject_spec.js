@@ -19,10 +19,10 @@ describe('tafSuiteQLProject', function () {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
-  it('tafSuiteQLProject.createRecords > expect > opts are correct', () => {
+  test('tafSuiteQLProject.createRecords > expect > opts are correct', () => {
     const filename = 'str_localized_reports_list.json';
     this.aut.createRecords(this.options);
     expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
@@ -37,7 +37,7 @@ describe('tafSuiteQLProject', function () {
     });
   });
 
-  it('tafSuiteQLProject.createSchemas > expect > opts are correct', () => {
+  test('tafSuiteQLProject.createSchemas > expect > opts are correct', () => {
     const files = ['TAF_SUITEQL_META.json', 'TAF_SUITEQL.json'];
     this.aut.createSchemas(this.options);
     files.forEach((file) => {
@@ -54,7 +54,7 @@ describe('tafSuiteQLProject', function () {
     });
   });
 
-  it('tafSuiteQLProject.createProcessors > expect > opts are correct', () => {
+  test('tafSuiteQLProject.createProcessors > expect > opts are correct', () => {
     const filename = 'SuiteQLPreProcessor.js';
     this.aut.createProcessors(this.options);
     expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
@@ -65,7 +65,7 @@ describe('tafSuiteQLProject', function () {
     });
   });
 
-  it('tafSuiteQLProject.createTemplates > expect > opts are correct', () => {
+  test('tafSuiteQLProject.createTemplates > expect > opts are correct', () => {
     const filename = 'TAF_TEMPLATE.ftl';
     this.aut.createTemplates(this.options);
     expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
@@ -76,13 +76,55 @@ describe('tafSuiteQLProject', function () {
     });
   });
 
-  it('tafSuiteQLProject.createBuilders > expect > opts are correct', () => {
+  test('tafSuiteQLProject.createBuilders > expect > opts are correct', () => {
     const filename = 'SuiteQLBuilder.js';
     this.aut.createBuilders(this.options);
     expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
       srcFile: 'suiteql/' + filename,
       filename: filename,
       folder: this.options.srcPath + 'builders/',
+      replaceContents: []
+    });
+  });
+
+  test('tafSuiteQLProject.create > expect > create files', () => {
+    jest.spyOn(project.prototype, 'create').mockImplementation(() => {});
+    jest
+      .spyOn(tafSuiteQLProject.prototype, 'createRecords')
+      .mockImplementation(() => {});
+    jest
+      .spyOn(tafSuiteQLProject.prototype, 'createSchemas')
+      .mockImplementation(() => {});
+    jest
+      .spyOn(tafSuiteQLProject.prototype, 'createProcessors')
+      .mockImplementation(() => {});
+    jest
+      .spyOn(tafSuiteQLProject.prototype, 'createBuilders')
+      .mockImplementation(() => {});
+    jest
+      .spyOn(tafSuiteQLProject.prototype, 'createTemplates')
+      .mockImplementation(() => {});
+
+    this.aut.create(this.options);
+    expect(tafSuiteQLProject.prototype.createRecords).toBeCalled();
+    expect(tafSuiteQLProject.prototype.createSchemas).toBeCalled();
+    expect(tafSuiteQLProject.prototype.createProcessors).toBeCalled();
+    expect(tafSuiteQLProject.prototype.createBuilders).toBeCalled();
+    expect(tafSuiteQLProject.prototype.createTemplates).toBeCalled();
+  });
+
+  test('tafSuiteQLProject.createScriptFile > expect > create file', () => {
+    jest
+      .spyOn(project.prototype, 'createFileFromTemplate')
+      .mockImplementation(() => {});
+
+    const filename = 'file.js';
+    const folder = 'folder';
+    this.aut.createScriptFile(this.options, filename, folder);
+    expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
+      srcFile: 'suiteql/' + filename,
+      filename: filename,
+      folder: this.options.srcPath + folder,
       replaceContents: []
     });
   });

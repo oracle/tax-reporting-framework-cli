@@ -71,7 +71,7 @@ class tafSearchProject extends project {
           [/PROJECT/g, options.projectName]
         ]
       };
-      await super.createFileFromTemplate(opts);
+      await this.createFileFromTemplate(opts);
     });
   }
 
