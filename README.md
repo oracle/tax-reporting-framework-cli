@@ -30,9 +30,13 @@ Commands:
   create         create new TRF project 😎
 ```
 
+## Issues
+vat 
+- error is encountered when selecting template of vat report and creating project outside of trf-cli root
+
 ## To do
-- Add PostInstall script to remove schemas 
-- File for OSSRs - DONE
+- [ ] Add PostInstall script to remove schemas 
+- [x] File for OSSRs - DONE
   - commander: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3009&rectype=2933&whence=
   - inquirer: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3010&rectype=2933&whence=
   - chalk: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3011&rectype=2933&whence=

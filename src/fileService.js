@@ -7,14 +7,14 @@ module.exports = class fileService {
 
   async createFolder(name) {
     await fs.mkdir(name, { recursive: true }).catch((err) => {
-      console.log(`Failed to create folder: ${name}, Error: ${err}`);
+      // console.log(`Failed to create folder: ${name}, Error: ${err}`);
       throw err;
     });
   }
 
   async createFile(name, contents) {
     await fs.writeFile(name, contents).catch((err) => {
-      console.log(`Failed to write file: ${name}, Error: ${err}`);
+      // console.log(`Failed to write file: ${name}, Error: ${err}`);
       throw err;
     });
   }
@@ -23,7 +23,7 @@ module.exports = class fileService {
     const contents = await fs
       .readFile(path.resolve(__dirname, '../', name))
       .catch((err) => {
-        console.log(`Failed to read file: ${name}, Error: ${err}`);
+        // console.log(`Failed to read file: ${name}, Error: ${err}`);
         throw err;
       });
     return contents ? contents.toString() : '';
