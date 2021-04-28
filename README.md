@@ -31,8 +31,8 @@ Commands:
 ```
 
 ## Issues
-vat 
-- error is encountered when selecting template of vat report and creating project outside of trf-cli root
+VAT 
+- [ ] error is encountered when selecting template of vat report and creating project outside of trf-cli root
 
 ## To do
 - [ ] Add PostInstall script to remove schemas 
