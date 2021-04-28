@@ -36,10 +36,14 @@ Commands:
   - commander: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3009&rectype=2933&whence=
   - inquirer: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3010&rectype=2933&whence=
   - chalk: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3011&rectype=2933&whence=
+  - jest: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3014&rectype=2933&whence=
+  - prettier: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3018&rectype=2933&whence=
+  - path: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3015&rectype=2933&whence=
   - inquirer-file-path: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3012&rectype=2933&whence=
   - inquirer-select-directory: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3013&rectype=2933&whence=
-  - jest: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3014&rectype=2933&whence=
-  - path: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3015&rectype=2933&whence=
   - node-fs-extra: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3016&rectype=2933&whence=
   - uuid: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3017&rectype=2933&whence=
-  - prettier: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3018&rectype=2933&whence=
+- Send email to exporteccn_ww@oracle.com
+
+## References
+https://confluence.corp.netsuite.com/display/TEAMPDP/Open+Source+Software+Approval+Process

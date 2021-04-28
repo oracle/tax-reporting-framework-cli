@@ -124,6 +124,7 @@ class project {
       formatterOptions.parser = 'json';
     }
 
+    //only format js, json
     if (options.filename.match(/.*js/g)) {
       contents = prettier.format(contents, formatterOptions);
     }
