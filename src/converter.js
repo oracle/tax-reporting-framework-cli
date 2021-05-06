@@ -101,6 +101,13 @@ const getFunctionBlocks = (fileContents, functionPattern) => {
   return functionBlocks;
 };
 
+const getBoxName = (objectAssignment, boxNamePattern) => {
+  var nameIndex = 1;
+  var boxRegex = new RegExp(boxNamePattern);
+  var boxName = objectAssignment.match(boxRegex)[nameIndex];
+  return boxName;
+};
+
 exports.convertToSummaries = (fileContents) => {
   var functionBlocks = getFunctionBlocks(fileContents, getFunctionPattern());
   var convertedContents = [];
@@ -110,7 +117,7 @@ exports.convertToSummaries = (fileContents) => {
       convertedContents.push(convertToSummarySchema(block));
     });
   } else {
-    console.error("converter error:  No reports to parse");
+    console.log("converter:  No reports to parse");
   }
   return convertedContents;
 
@@ -158,7 +165,8 @@ exports.convertToSummaries = (fileContents) => {
     var outputJSON = SUMMARY_JSON_TEMPLATE;
 
     objectAssignments.forEach(function (objectAssignment, index) {
-      var boxName = getBoxName(objectAssignment);
+      var boxNamePattern = "obj.(\\w+)";
+      var boxName = getBoxName(objectAssignment, boxNamePattern);
       var ofSchemas = getOfSchemas({
         boxName: boxName,
         objectAssignment: objectAssignment,
@@ -309,14 +317,6 @@ exports.convertToSummaries = (fileContents) => {
     var objectAssignments = block.match(objectAssignmentRegex);
     return objectAssignments;
   }
-
-  function getBoxName(objectAssignment) {
-    var nameIndex = 1;
-    var boxNamePattern = "obj.(\\w+)";
-    var boxRegex = new RegExp(boxNamePattern);
-    var boxName = objectAssignment.match(boxRegex)[nameIndex];
-    return boxName;
-  }
 };
 
 exports.convertToDetails = (fileContents) => {
@@ -328,22 +328,22 @@ exports.convertToDetails = (fileContents) => {
       convertedContents.push(convertToDetailsSchema(block));
     });
   } else {
-    console.error("converter error:  No reports to parse");
+    console.log("converter:  No reports to parse");
   }
   return convertedContents;
 
   function getFunctionPattern() {
     var functionNamePattern =
-      "^(\\w+\\.)+GetDrilldownData = function\\(\\w+(, \\w+)?\\) \\{\\r\\n";
-    var variableAssignmentPattern = "(\\s+var \\w+ = [_A-z0-9.(){}]+;\\r\\n)*";
-    var switchPattern = "\\s+switch \\(boxNumber\\) \\{\\r\\n";
+      "(\\w+\\.)+GetDrilldownData = function\\(\\w+(, \\w+)?\\) \\{";
+    var variableAssignmentPattern = "(\\s+var \\w+ = [_A-z0-9.(){}]+;)*";
+    var switchPattern = "\\s+switch \\(boxNumber\\) \\{";
     var dataAssignmentPattern = getDataAssignmentPattern();
-    var multiDataAssignmentPattern = "(" + dataAssignmentPattern + "\\r\\n)+";
-    var returnPattern = "\\r\\n\\s+return [_A-z0-9.(){}]+;";
+    var multiDataAssignmentPattern = "(" + dataAssignmentPattern + ")+";
+    var returnPattern = "\\s+return [_A-z0-9.(){}]+;";
     var closingPattern =
       "\\s+\\}" +
       variableAssignmentPattern +
-      "\\r\\n\\s+ds\\.ReportData = data;" +
+      "\\s+ds\\.ReportData = data;" +
       returnPattern;
 
     var functionPattern =
@@ -374,7 +374,8 @@ exports.convertToDetails = (fileContents) => {
     var outputJSON = DETAILS_JSON_TEMPLATE;
 
     dataAssignments.forEach(function (dataAssignment) {
-      var boxName = getBoxName(dataAssignment);
+      var boxNamePattern = "obj.(\\w+)";
+      var boxName = getBoxName(dataAssignment, boxNamePattern);
       var schemas = getDetailSchemas({
         box: boxName,
         dataAssignment: dataAssignment,

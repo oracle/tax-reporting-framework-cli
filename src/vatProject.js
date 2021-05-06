@@ -59,7 +59,7 @@ class vatProject extends project {
     convertedSummaries.forEach(async (content, idx) => {
       const opts = {
         srcFile: `vat/${filename}.json`,
-        filename: `${filename}_${idx}.json`,
+        filename: `VAT_` + options.country + `_SUMMARY_${idx}.json`,
         folder: options.srcPath + "schemas/",
         replaceContents: [
           [/UUID/g, options.uuid],
@@ -76,7 +76,7 @@ class vatProject extends project {
     convertedDetails.forEach(async (content, idx) => {
       const opts = {
         srcFile: `vat/${filename}.json`,
-        filename: `${filename}_${idx}.json`,
+        filename: `VAT_` + options.country + `_DETAILS_${idx}.json`,
         folder: options.srcPath + "schemas/",
         replaceContents: [
           [/UUID/g, options.uuid],
