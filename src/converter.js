@@ -1,4 +1,7 @@
-"use strict";
+/**
+ * Copyright (c) 2021, Oracle and/or its affiliates. All rights reserved.
+ */
+'use strict';
 
 const SUMMARY_JSON_TEMPLATE =
   '"data": [\n' +

@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 
+/**
+ * Copyright (c) 2021, Oracle and/or its affiliates. All rights reserved.
+ */
 'use strict';
+
 const fileService = require('./fileService');
 const { v4: uuidv4 } = require('uuid');
 const prettier = require('prettier');

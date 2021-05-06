@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+/**
+ * Copyright (c) 2021, Oracle and/or its affiliates. All rights reserved.
+ */
 
 'use strict';
 const inquirer = require('inquirer');
@@ -26,10 +29,10 @@ const questions = [
   }
 ];
 
-module.exports = function () {
+module.exports = async () => {
   inquirer.registerPrompt('filePath', require('inquirer-file-path'));
   inquirer.registerPrompt('directory', require('inquirer-select-directory'));
-  inquirer
+  await inquirer
     .prompt([
       {
         type: 'list',
@@ -64,42 +67,39 @@ module.exports = function () {
       }
       promptProjectInfo(answers.projectType);
     });
+};
 
-  const promptProjectInfo = (projectType) => {
-    inquirer.prompt(questions).then((answers) => {
-      console.log(chalk.grey('------------------'));
-      console.log(chalk.redBright('🚀 TRF CLI 🚀'));
-      console.log(chalk.grey('------------------'));
+const promptProjectInfo = async (projectType) => {
+  await inquirer.prompt(questions).then((answers) => {
+    console.log(chalk.grey('------------------'));
+    console.log(chalk.redBright('🚀 TRF CLI 🚀'));
+    console.log(chalk.grey('------------------'));
+    console.log(chalk.gray('Project Name: '), chalk.blue(answers.projectName));
+    console.log(chalk.gray('Project Type: '), chalk.blue(projectType));
+    console.log(chalk.gray('Country: '), chalk.blue(answers.country));
+
+    const start = new Date().getTime();
+    if (projectType === 'VAT') {
       console.log(
-        chalk.gray('Project Name: '),
-        chalk.blue(answers.projectName)
+        chalk.gray('VAT src report: '),
+        chalk.blue(answers.srcReportFile)
       );
-      console.log(chalk.gray('Project Type: '), chalk.blue(projectType));
-      console.log(chalk.gray('Country: '), chalk.blue(answers.country));
-
-      const start = new Date().getTime();
-      if (projectType === 'VAT') {
-        console.log(
-          chalk.gray('VAT src report: '),
-          chalk.blue(answers.srcReportFile)
-        );
-        console.log(
-          chalk.gray('VAT template path: '),
-          chalk.blue(answers.templatePath)
-        );
+      console.log(
+        chalk.gray('VAT template path: '),
+        chalk.blue(answers.templatePath)
+      );
+      console.log(chalk.gray('Creating your project...🚀🚀🚀'));
+      new vatProject().create(answers);
+    } else {
+      if (answers.searchType === 'search') {
         console.log(chalk.gray('Creating your project...🚀🚀🚀'));
-        new vatProject().create(answers);
+        new tafSearchProject().create(answers);
       } else {
-        if (answers.searchType === 'search') {
-          console.log(chalk.gray('Creating your project...🚀🚀🚀'));
-          new tafSearchProject().create(answers);
-        } else {
-          new tafSuiteQLProject().create(answers);
-        }
+        new tafSuiteQLProject().create(answers);
       }
-      console.log(
-        chalk.gray(`✨ Done in ${(new Date().getTime() - start) / 1000}s!`)
-      );
-    });
-  };
+    }
+    console.log(
+      chalk.gray(`✨ Done in ${(new Date().getTime() - start) / 1000}s!`)
+    );
+  });
 };
