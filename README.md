@@ -55,7 +55,7 @@ Commands:
 - [ ] Get approval from Oracle Corporate Architecture. The request is made via the form, prerequisites should be met: LICENSE.txt and THIRD-PARTY-LICENSES.txt files should be placed in the root and copyright/license headers added to project files. Contact: Corporate Architecture Approvals <corparch_appr@oracle.com>
 - [ ] Get approval from HQInfo. Contact: hqinfo_us_appr@oracle.com
 - [ ] Oracle headers
-- [ ] THIRD_PARTY_LICENSES.txt
+- [x] THIRD_PARTY_LICENSES.txt
 
 ## References
 https://confluence.corp.netsuite.com/display/TEAMPDP/Open+Source+Software+Approval+Process
