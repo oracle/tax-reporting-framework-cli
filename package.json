@@ -19,7 +19,6 @@
     "inquirer-file-path": "^1.0.1",
     "inquirer-select-directory": "^1.1.2",
     "jest": "^26.6.3",
-    "path": "^0.12.7",
     "prettier": "^2.2.1",
     "uuid": "^8.3.2"
   },
