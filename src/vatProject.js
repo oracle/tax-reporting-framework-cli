@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2021, Oracle and/or its affiliates. All rights reserved.
  */
-'use strict';
+"use strict";
 
 const fs = require("fs-extra");
 const project = require("./project");
@@ -17,7 +17,9 @@ class vatProject extends project {
   }
 
   async create(options) {
-    this.contents = await this._fs.readFile(options.srcReportFile);
+    this.contents = await this._fs.readFile(
+      options.templatePath + "\\" + options.srcReportFile
+    );
     super.create(options);
     this.createVATReportsRecord(options);
     this.createVATSearchesRecord(options);
