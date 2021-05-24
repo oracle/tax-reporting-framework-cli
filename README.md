@@ -48,6 +48,7 @@ Commands:
 - [ ] inquirer-select-directory: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3013&rectype=2933&whence=
 - [x] node-fs-extra: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3016&rectype=2933&whence=
 - [x] uuid: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3017&rectype=2933&whence=
+- [ ] inquirer-fuzzy-path https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3095&rectype=2933&whence= 
 
 ## To do
 - [x] Get approval from exporteccn_ww@oracle.com
