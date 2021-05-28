@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2021, Oracle and/or its affiliates. All rights reserved.
  */
-"use strict";
+'use strict';
 
-const fs = require("fs-extra");
-const project = require("./project");
+const fs = require('fs-extra');
+const project = require('./project');
 const {
   convertToSummaries,
   convertToDetails,
-  getTaxDefs,
-} = require("./converter");
+  getTaxDefs
+} = require('./converter');
 
 class vatProject extends project {
   constructor() {
@@ -17,9 +17,7 @@ class vatProject extends project {
   }
 
   async create(options) {
-    this.contents = await this._fs.readFile(
-      options.templatePath + "\\" + options.srcReportFile
-    );
+    this.contents = await this._fs.readFile(options.srcReportFile);
     super.create(options);
     this.createVATReportsRecord(options);
     this.createVATSearchesRecord(options);
@@ -29,98 +27,98 @@ class vatProject extends project {
   }
 
   async createVATReportsRecord(options) {
-    const filename = "str_localized_reports_list.json";
+    const filename = 'str_localized_reports_list.json';
     const opts = {
-      srcFile: "vat/" + filename,
+      srcFile: 'vat/' + filename,
       filename: filename,
-      folder: options.srcPath + "records/",
+      folder: options.srcPath + 'records/',
       replaceContents: [
         [/UUID/g, options.uuid],
         [/COUNTRY/g, options.country],
-        [/PROJECT/g, options.projectName],
-      ],
+        [/PROJECT/g, options.projectName]
+      ]
     };
     await super.createFileFromTemplate(opts);
   }
 
   async createVATSearchesRecord(options) {
-    const filename = "str_localized_searches.json";
+    const filename = 'str_localized_searches.json';
     const opts = {
-      srcFile: "vat/" + filename,
+      srcFile: 'vat/' + filename,
       filename: filename,
-      folder: options.srcPath + "records/",
+      folder: options.srcPath + 'records/',
       replaceContents: [
         [/UUID/g, options.uuid],
         [/COUNTRY/g, options.country],
-        [/PROJECT/g, options.projectName],
-      ],
+        [/PROJECT/g, options.projectName]
+      ]
     };
     await super.createFileFromTemplate(opts);
   }
 
   async createVATSchemas(options) {
-    let filename = "VAT_SUMMARY";
+    let filename = 'VAT_SUMMARY';
     const convertedSummaries = convertToSummaries(this.contents);
     convertedSummaries.forEach(async (content, idx) => {
       const opts = {
         srcFile: `vat/${filename}.json`,
         filename: `VAT_` + options.country + `_SUMMARY_${idx}.json`,
-        folder: options.srcPath + "schemas/",
+        folder: options.srcPath + 'schemas/',
         replaceContents: [
           [/UUID/g, options.uuid],
           [/COUNTRY/g, options.country],
           [/PROJECT/g, options.projectName],
-          ["DATA", content.replace(/'/g, '"')],
-        ],
+          ['DATA', content.replace(/'/g, '"')]
+        ]
       };
       await super.createFileFromTemplate(opts);
     });
 
-    filename = "VAT_DETAILS";
+    filename = 'VAT_DETAILS';
     const convertedDetails = convertToDetails(this.contents);
     convertedDetails.forEach(async (content, idx) => {
       const opts = {
         srcFile: `vat/${filename}.json`,
         filename: `VAT_` + options.country + `_DETAILS_${idx}.json`,
-        folder: options.srcPath + "schemas/",
+        folder: options.srcPath + 'schemas/',
         replaceContents: [
           [/UUID/g, options.uuid],
           [/COUNTRY/g, options.country],
           [/PROJECT/g, options.projectName],
-          ["DATA", content.replace(/'/g, '"')],
-        ],
+          ['DATA', content.replace(/'/g, '"')]
+        ]
       };
       await super.createFileFromTemplate(opts);
     });
 
-    const folder = "schemas/";
-    this.createScriptFile(options, "VAT_META.json", folder);
+    const folder = 'schemas/';
+    this.createScriptFile(options, 'VAT_META.json', folder);
   }
 
   async createProcessors(options) {
     //COUNTRYTaxCodeMapper.js
     const taxCodeDefs = getTaxDefs(this.contents);
-    const ctrTaxCodeMapperFilename = "COUNTRYTaxCodeMapper.js";
+    const ctrTaxCodeMapperFilename = 'COUNTRYTaxCodeMapper.js';
     const opts1 = {
-      srcFile: "vat/" + ctrTaxCodeMapperFilename,
-      filename: ctrTaxCodeMapperFilename.replace("COUNTRY", options.country),
-      folder: options.srcPath + "processors/pre/",
+      srcFile: 'vat/' + ctrTaxCodeMapperFilename,
+      filename: ctrTaxCodeMapperFilename.replace('COUNTRY', options.country),
+      folder: options.srcPath + 'processors/pre/',
       replaceContents: [
         [/UUID/g, options.uuid],
         [/COUNTRY/g, options.country],
         [/PROJECT/g, options.projectName],
-        [/TAXDEFS/g, taxCodeDefs],
-      ],
+        [/TAXDEFS/g, taxCodeDefs]
+      ]
     };
     await super.createFileFromTemplate(opts1);
 
     const files = [
-      "VATSearchProcessor.js",
-      "VATSearchDetailsProcessor.js",
-      "TaxCodeMapper.js",
+      'VATSearchProcessor.js',
+      'VATSearchDetailsProcessor.js',
+      'TaxCodeMapper.js'
     ];
 
-    const folder = "processors/pre/";
+    const folder = 'processors/pre/';
     files.forEach((file) => {
       this.createScriptFile(options, file, folder);
     });
@@ -128,16 +126,16 @@ class vatProject extends project {
 
   async createScriptFile(options, filename, folder) {
     const opts = {
-      srcFile: "vat/" + filename,
+      srcFile: 'vat/' + filename,
       filename: filename,
       folder: options.srcPath + folder,
-      replaceContents: [],
+      replaceContents: []
     };
     await super.createFileFromTemplate(opts);
   }
 
   async copyTemplates(options) {
-    fs.copy(options.templatePath, options.srcPath + "templates/", (err) => {
+    fs.copy(options.templatePath, options.srcPath + 'templates/', (err) => {
       if (err) return console.error(err);
     });
   }
