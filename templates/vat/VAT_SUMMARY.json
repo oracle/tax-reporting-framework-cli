@@ -46,7 +46,7 @@
         {
           "name": "country",
           "operator": "is",
-          "values": "PH",
+          "values": "COUNTRY",
           "useRawValues": true
         }
       ],

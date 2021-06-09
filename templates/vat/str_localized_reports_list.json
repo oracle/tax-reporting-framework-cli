@@ -10,20 +10,7 @@
       "translations": {
         "en_US": "VAT COUNTRY Report"
       },
-      "details": [
-        {
-          "type": "Summary",
-          "schema": "VAT_COUNTRY_SUMMARY.json"
-        },
-        {
-          "type": "Details",
-          "schema": "VAT_COUNTRY_DETAILS.json"
-        },
-        {
-          "type": "META",
-          "schema": "VAT_COUNTRY_META.json"
-        }
-      ]
+      "details": "DETAILS"
     }
   ]
 }
