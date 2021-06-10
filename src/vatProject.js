@@ -144,10 +144,10 @@ class vatProject extends project {
     });
   }
 
-  async createScriptFile(options, file, filename, folder) {
+  async createScriptFile(options, sourceFile, destinationFile, folder) {
     const opts = {
-      srcFile: 'vat/' + file,
-      filename: filename,
+      srcFile: 'vat/' + sourceFile,
+      filename: destinationFile,
       folder: options.srcPath + folder,
       replaceContents: []
     };
