@@ -1,469 +1,517 @@
 {
   "list": [
     {
-      "title": "Sales by Tax Code (Details)",
-      "id": "customsearch_str_salesbytaxcode_details",
+      "title": "Sales by Tax Code (Summary) COUNTRY",
+      "id": "customsearch_str_salesbytaxcode_sum_countryLowercase",
       "type": "transaction",
       "columns": [
         {
-          "name": "custbody_ste_transaction_type",
-          "summary": "GROUP"
-        },
-        {
-          "name": "custitem_ste_item_taxitem_type",
-          "join": "item",
-          "summary": "GROUP"
-        },
-        {
-          "name": "type",
-          "summary": "GROUP"
-        },
-        {
-          "name": "taxcode",
-          "join": "taxDetail",
-          "summary": "GROUP",
-          "sort": "ASC"
-        },
-        {
-          "name": "netamount",
-          "summary": "SUM"
-        },
-        {
-          "name": "taxamount",
-          "join": "taxDetail",
-          "summary": "SUM"
-        },
-        {
-          "name": "trandate",
-          "summary": "GROUP",
-          "sort": "ASC"
-        },
-        {
-          "name": "companyname",
-          "join": "customer",
-          "summary": "GROUP"
-        },
-        {
-          "name": "isperson",
-          "join": "customer",
-          "summary": "GROUP"
-        },
-        {
-          "name": "firstname",
-          "join": "customer",
-          "summary": "GROUP"
-        },
-        {
-          "name": "lastname",
-          "join": "customer",
-          "summary": "GROUP"
-        },
-        {
-          "name": "middlename",
-          "join": "customer",
-          "summary": "GROUP"
-        },
-        {
           "name": "internalid",
-          "summary": "GROUP",
-          "sort": "ASC"
-        },
-        {
-          "name": "tranid",
           "summary": "GROUP"
         },
         {
-          "name": "taxtype",
-          "join": "taxDetail",
-          "summary": "GROUP"
+           "name": "type",
+           "summary": "GROUP"
         },
         {
-          "name": "taxpointdate",
-          "summary": "GROUP"
+           "name": "trandate",
+           "summary": "GROUP",
+           "sort": "ASC"
         },
         {
-          "name": "subtype",
-          "join": "item",
-          "summary": "GROUP"
+           "name": "postingperiod",
+           "summary": "GROUP"
         },
         {
-          "name": "custrecord_str_trc_code",
-          "join": "custcol_str_tax_reporting_category",
-          "summary": "GROUP"
+           "name": "taxperiod",
+           "summary": "GROUP"
         },
         {
-          "name": "netamount",
-          "join": "accountingtransaction",
-          "summary": "SUM",
-          "feature": "multibook"
+           "name": "taxcode",
+           "summary": "GROUP"
         },
         {
-          "name": "formulacurrency",
-          "summary": "SUM",
-          "formula": "{accountingtransaction.exchangerate} * {taxdetail.taxamount}",
-          "feature": "multibook"
+           "name": "netamount",
+           "summary": "SUM"
+        },
+        {
+           "name": "taxamount",
+           "summary": "SUM"
         }
       ],
       "filterExpression": [
-        ["type", "anyof", "CashRfnd", "CashSale", "CustCred", "CustInvc"],
-        "AND",
-        ["posting", "is", "T"],
-        "AND",
-        ["mainline", "is", "F"],
-        "AND",
-        ["taxline", "is", "F"],
-        "AND",
-        ["item", "noneof", "@NONE@"]
-      ],
-      "settings": [
-        {
-          "name": "consolidationtype",
-          "value": "NONE",
-          "feature": ["subsidiaries", "multicurrency"]
-        }
+        ["type","anyof","CashRfnd","CustCred","CashSale","CustInvc"], 
+        "AND", 
+        ["posting","is","T"], 
+        "AND", 
+        ["mainline","is","F"], 
+        "AND", 
+        ["taxline","is","F"]
       ]
     },
     {
-      "title": "Sales by Tax Code (Summary)",
-      "id": "customsearch_str_salesbytaxcode_sum",
+      "title": "Sales by Tax Code (Details) COUNTRY",
+      "id": "customsearch_str_salesbytaxcode_details_countryLowercase",
       "type": "transaction",
       "columns": [
         {
-          "name": "custbody_ste_transaction_type",
-          "summary": "GROUP"
-        },
-        {
-          "name": "custitem_ste_item_taxitem_type",
-          "join": "item",
-          "summary": "GROUP"
-        },
-        {
-          "name": "type",
-          "summary": "GROUP"
-        },
-        {
-          "name": "taxcode",
-          "join": "taxDetail",
-          "summary": "GROUP",
-          "sort": "ASC"
-        },
-        {
-          "name": "trandate",
-          "summary": "GROUP",
-          "sort": "ASC"
-        },
-        {
           "name": "internalid",
-          "summary": "GROUP",
-          "sort": "ASC"
-        },
-        {
-          "name": "netamount",
-          "summary": "SUM"
-        },
-        {
-          "name": "taxamount",
-          "join": "taxDetail",
-          "summary": "SUM"
-        },
-        {
-          "name": "taxpointdate",
           "summary": "GROUP"
         },
         {
-          "name": "taxtype",
-          "join": "taxDetail",
-          "summary": "GROUP"
+           "name": "type",
+           "summary": "GROUP"
         },
         {
-          "name": "subtype",
-          "join": "item",
-          "summary": "GROUP"
+           "name": "trandate",
+           "summary": "GROUP",
+           "sort": "ASC"
         },
         {
-          "name": "custrecord_str_trc_code",
-          "join": "custcol_str_tax_reporting_category",
-          "summary": "GROUP"
+           "name": "postingperiod",
+           "summary": "GROUP"
         },
         {
-          "name": "netamount",
-          "join": "accountingtransaction",
-          "summary": "SUM",
-          "feature": "multibook"
+           "name": "taxperiod",
+           "summary": "GROUP"
         },
         {
-          "name": "formulacurrency",
-          "summary": "SUM",
-          "formula": "{accountingtransaction.exchangerate} * {taxdetail.taxamount}",
-          "feature": "multibook"
+           "name": "taxcode",
+           "summary": "GROUP"
+        },
+        {
+           "name": "netamount",
+           "summary": "SUM"
+        },
+        {
+           "name": "taxamount",
+           "summary": "SUM"
+        },
+        {
+         "name": "lastname",
+         "join": "customer",
+         "summary": "GROUP"
+        },
+        {
+           "name": "middlename",
+           "join": "customer",
+           "summary": "GROUP"
+        },
+        {
+           "name": "companyname",
+           "join": "customer",
+           "summary": "GROUP"
+        },
+        {
+           "name": "firstname",
+           "join": "customer",
+           "summary": "GROUP"
+        },
+        {
+           "name": "companyname",
+           "join": "vendor",
+           "summary": "GROUP"
+        },
+        {
+           "name": "lastname",
+           "join": "vendor",
+           "summary": "GROUP"
+        },
+        {
+           "name": "firstname",
+           "join": "vendor",
+           "summary": "GROUP"
+        },
+        {
+           "name": "middlename",
+           "join": "vendor",
+           "summary": "GROUP"
+        },
+        {
+           "name": "isperson",
+           "join": "vendor",
+           "summary": "GROUP"
         }
       ],
       "filterExpression": [
-        ["type", "anyof", "CashRfnd", "CashSale", "CustCred", "CustInvc"],
-        "AND",
-        ["posting", "is", "T"],
-        "AND",
-        ["mainline", "is", "F"],
-        "AND",
-        ["taxline", "is", "F"],
-        "AND",
-        ["item", "noneof", "@NONE@"]
-      ],
-      "settings": [
-        {
-          "name": "consolidationtype",
-          "value": "NONE",
-          "feature": ["subsidiaries", "multicurrency"]
-        }
+        ["type","anyof","CashRfnd","CustCred","CashSale","CustInvc"], 
+         "AND", 
+        ["posting","is","T"], 
+        "AND", 
+        ["mainline","is","F"], 
+        "AND", 
+        ["taxline","is","F"]
       ]
     },
     {
-      "title": "Purchases By Tax Code (Details)",
-      "id": "customsearch_str_purcbytaxcode_details",
+      "title": "Purchases By Tax Code (Summary) COUNTRY",
+      "id": "customsearch_str_purchasesbytaxcode_sum_countryLowercase",
       "type": "transaction",
       "columns": [
         {
-          "name": "custbody_ste_transaction_type",
-          "summary": "GROUP"
-        },
-        {
-          "name": "custitem_ste_item_taxitem_type",
-          "join": "item",
-          "summary": "GROUP"
-        },
-        {
-          "name": "type",
-          "summary": "GROUP"
-        },
-        {
-          "name": "taxcode",
-          "join": "taxDetail",
-          "summary": "GROUP",
-          "sort": "ASC"
-        },
-        {
-          "name": "netamount",
-          "summary": "SUM"
-        },
-        {
-          "name": "taxamount",
-          "join": "taxDetail",
-          "summary": "SUM"
-        },
-        {
-          "name": "trandate",
-          "summary": "GROUP",
-          "sort": "ASC"
-        },
-        {
-          "name": "companyname",
-          "join": "vendor",
-          "summary": "GROUP"
-        },
-        {
-          "name": "isperson",
-          "join": "vendor",
-          "summary": "GROUP"
-        },
-        {
-          "name": "firstname",
-          "join": "vendor",
-          "summary": "GROUP"
-        },
-        {
-          "name": "lastname",
-          "join": "vendor",
-          "summary": "GROUP"
-        },
-        {
-          "name": "middlename",
-          "join": "vendor",
-          "summary": "GROUP"
-        },
-        {
           "name": "internalid",
-          "summary": "GROUP",
-          "sort": "ASC"
-        },
-        {
-          "name": "tranid",
           "summary": "GROUP"
         },
         {
-          "name": "taxtype",
-          "join": "taxDetail",
-          "summary": "GROUP"
+           "name": "type",
+           "summary": "GROUP"
         },
         {
-          "name": "taxpointdate",
-          "summary": "GROUP"
+           "name": "trandate",
+           "summary": "GROUP",
+           "sort": "ASC"
         },
         {
-          "name": "taxtype",
-          "join": "taxDetail",
-          "summary": "GROUP"
+           "name": "postingperiod",
+           "summary": "GROUP"
         },
         {
-          "name": "subtype",
-          "join": "item",
-          "summary": "GROUP"
+           "name": "taxperiod",
+           "summary": "GROUP"
         },
         {
-          "name": "item",
-          "summary": "GROUP"
+           "name": "taxcode",
+           "summary": "GROUP"
         },
         {
-          "name": "entityid",
-          "join": "employee",
-          "summary": "GROUP"
+           "name": "netamount",
+           "summary": "SUM"
         },
         {
-          "name": "custrecord_str_trc_code",
-          "join": "custcol_str_tax_reporting_category",
-          "summary": "GROUP"
-        },
-        {
-          "name": "netamount",
-          "join": "accountingtransaction",
-          "summary": "SUM",
-          "feature": "multibook"
-        },
-        {
-          "name": "formulacurrency",
-          "summary": "SUM",
-          "formula": "{accountingtransaction.exchangerate} * {taxdetail.taxamount}",
-          "feature": "multibook"
-        },
-        {
-          "name": "type",
-          "join": "account",
-          "summary": "GROUP",
-          "label": "Account Type",
-          "sort": "ASC"
+           "name": "taxamount",
+           "summary": "SUM"
         }
       ],
       "filterExpression": [
         ["type", "anyof", "VendBill", "VendCred", "ExpRept"],
-        "AND",
-        ["posting", "is", "T"],
-        "AND",
-        ["mainline", "is", "F"],
-        "AND",
-        ["taxline", "is", "F"],
-        "AND",
-        ["item", "noneof", "@NONE@"]
-      ],
-      "settings": [
-        {
-          "name": "consolidationtype",
-          "value": "NONE",
-          "feature": ["subsidiaries", "multicurrency"]
-        }
+        "AND", 
+        ["posting","is","T"], 
+        "AND", 
+        ["mainline","is","F"], 
+        "AND", 
+        ["taxline","is","F"]
       ]
     },
     {
-      "title": "Purchases By Tax Code (Summary)",
-      "id": "customsearch_str_purchasesbytaxcode_sum",
+      "title": "Purchases By Tax Code (Details) COUNTRY",
+      "id": "customsearch_str_purcbytaxcode_details_countryLowercase",
       "type": "transaction",
       "columns": [
         {
-          "name": "custbody_ste_transaction_type",
-          "summary": "GROUP"
-        },
-        {
-          "name": "custitem_ste_item_taxitem_type",
-          "join": "item",
-          "summary": "GROUP"
-        },
-        {
-          "name": "type",
-          "summary": "GROUP"
-        },
-        {
-          "name": "taxcode",
-          "join": "taxDetail",
-          "summary": "GROUP",
-          "sort": "ASC"
-        },
-        {
-          "name": "netamount",
-          "summary": "SUM"
-        },
-        {
-          "name": "taxamount",
-          "join": "taxDetail",
-          "summary": "SUM"
-        },
-        {
-          "name": "trandate",
-          "summary": "GROUP",
-          "sort": "ASC"
-        },
-        {
           "name": "internalid",
-          "summary": "GROUP",
-          "sort": "ASC"
-        },
-        {
-          "name": "taxpointdate",
           "summary": "GROUP"
         },
         {
-          "name": "taxtype",
-          "join": "taxDetail",
-          "summary": "GROUP"
+           "name": "type",
+           "summary": "GROUP"
         },
         {
-          "name": "subtype",
-          "join": "item",
-          "summary": "GROUP"
+           "name": "trandate",
+           "summary": "GROUP",
+           "sort": "ASC"
         },
         {
-          "name": "item",
-          "summary": "GROUP"
+           "name": "postingperiod",
+           "summary": "GROUP"
         },
         {
-          "name": "custrecord_str_trc_code",
-          "join": "custcol_str_tax_reporting_category",
-          "summary": "GROUP"
+           "name": "taxperiod",
+           "summary": "GROUP"
         },
         {
-          "name": "netamount",
-          "join": "accountingtransaction",
-          "summary": "SUM",
-          "feature": "multibook"
+           "name": "taxcode",
+           "summary": "GROUP"
         },
         {
-          "name": "formulacurrency",
-          "summary": "SUM",
-          "formula": "{accountingtransaction.exchangerate} * {taxdetail.taxamount}",
-          "feature": "multibook"
+           "name": "netamount",
+           "summary": "SUM"
         },
         {
-          "name": "type",
-          "join": "account",
-          "summary": "GROUP",
-          "label": "Account Type",
-          "sort": "ASC"
+           "name": "taxamount",
+           "summary": "SUM"
+        },
+        {
+         "name": "lastname",
+         "join": "customer",
+         "summary": "GROUP"
+        },
+        {
+           "name": "middlename",
+           "join": "customer",
+           "summary": "GROUP"
+        },
+        {
+           "name": "companyname",
+           "join": "customer",
+           "summary": "GROUP"
+        },
+        {
+           "name": "firstname",
+           "join": "customer",
+           "summary": "GROUP"
+        },
+        {
+           "name": "companyname",
+           "join": "vendor",
+           "summary": "GROUP"
+        },
+        {
+           "name": "lastname",
+           "join": "vendor",
+           "summary": "GROUP"
+        },
+        {
+           "name": "firstname",
+           "join": "vendor",
+           "summary": "GROUP"
+        },
+        {
+           "name": "middlename",
+           "join": "vendor",
+           "summary": "GROUP"
+        },
+        {
+           "name": "isperson",
+           "join": "vendor",
+           "summary": "GROUP"
         }
       ],
       "filterExpression": [
         ["type", "anyof", "VendBill", "VendCred", "ExpRept"],
-        "AND",
-        ["posting", "is", "T"],
-        "AND",
-        ["mainline", "is", "F"],
-        "AND",
-        ["taxline", "is", "F"],
-        "AND",
-        ["item", "noneof", "@NONE@"]
-      ],
-      "settings": [
-        {
-          "name": "consolidationtype",
-          "value": "NONE",
-          "feature": ["subsidiaries", "multicurrency"]
-        }
+         "AND", 
+        ["posting","is","T"], 
+        "AND", 
+        ["mainline","is","F"], 
+        "AND", 
+        ["taxline","is","F"]
+      ]
+    },
+    {
+      "title": "TRF Tax Code Mapping COUNTRY",
+      "id": "customsearch_trf_taxcode_mapping_countryLowercase",
+      "type": "salestaxitem",
+      "columns": [
+         {
+            "name": "internalid",
+            "summary": "GROUP",
+            "label": "Internal ID"
+         },
+         {
+            "name": "itemid",
+            "summary": "GROUP",
+            "label": "Item ID"
+         },
+         {
+            "name": "name",
+            "summary": "GROUP",
+            "sort": "ASC",
+            "label": "Name"
+         },
+         {
+            "name": "rate",
+            "summary": "GROUP",
+            "label": "Rate"
+         },
+         {
+            "name": "country",
+            "summary": "GROUP",
+            "label": "Country"
+         },
+         {
+            "name": "effectivefrom",
+            "summary": "GROUP",
+            "label": "Effective From"
+         },
+         {
+            "name": "validuntil",
+            "summary": "GROUP",
+            "label": "Valid Until"
+         },
+         {
+            "name": "availableon",
+            "summary": "GROUP",
+            "label": "Available On"
+         },
+         {
+            "name": "exempt",
+            "summary": "GROUP",
+            "label": "Exempt"
+         },
+         {
+            "name": "appliestoservice",
+            "summary": "GROUP",
+            "label": "Applies To Service"
+         },
+         {
+            "name": "iseccode",
+            "summary": "GROUP",
+            "label": "EC Code"
+         },
+         {
+            "name": "isexport",
+            "summary": "GROUP",
+            "label": "Export"
+         },
+         {
+            "name": "isexcludetaxreports",
+            "summary": "GROUP",
+            "label": "Is Excluded From Tax Reports"
+         },
+         {
+            "name": "isreversecharge",
+            "summary": "GROUP",
+            "label": "Reverse Charge"
+         },
+         {
+            "name": "parent",
+            "summary": "GROUP",
+            "label": "Parent"
+         },
+         {
+            "name": "custrecord_4110_import",
+            "summary": "GROUP",
+            "label": "Import"
+         },
+         {
+            "name": "custrecord_4110_government",
+            "summary": "GROUP",
+            "label": "Government"
+         },
+         {
+            "name": "custrecord_4110_capital_goods",
+            "summary": "GROUP",
+            "label": "Capital Goods"
+         },
+         {
+            "name": "custrecord_4110_no_tax_invoice",
+            "summary": "GROUP",
+            "label": "No Tax Invoice"
+         },
+         {
+            "name": "custrecord_4110_purchaser_issued",
+            "summary": "GROUP",
+            "label": "Purchaser Issued Invoice"
+         },
+         {
+            "name": "custrecord_4110_duplicate",
+            "summary": "GROUP",
+            "label": "Duplicate Invoice"
+         },
+         {
+            "name": "custrecord_4110_triplicate",
+            "summary": "GROUP",
+            "label": "Triplicate Invoice"
+         },
+         {
+            "name": "custrecord_4110_other_tax_evidence",
+            "summary": "GROUP",
+            "label": "Other Tax Evidence"
+         },
+         {
+            "name": "custrecord_4110_cash_register",
+            "summary": "GROUP",
+            "label": "Cash Register"
+         },
+         {
+            "name": "custrecord_4110_reduced_rate",
+            "summary": "GROUP",
+            "label": "Reduced Rate"
+         },
+         {
+            "name": "custrecord_4110_super_reduced",
+            "summary": "GROUP",
+            "label": "Special Reduced Rate"
+         },
+         {
+            "name": "custrecord_4110_surcharge",
+            "summary": "GROUP",
+            "label": "Surcharge"
+         },
+         {
+            "name": "custrecord_4110_non_operation",
+            "summary": "GROUP",
+            "label": "Non-operational Transaction"
+         },
+         {
+            "name": "custrecord_4110_no_tax_credit",
+            "summary": "GROUP",
+            "label": "No Tax Credit"
+         },
+         {
+            "name": "custrecord_4110_electronic",
+            "summary": "GROUP",
+            "label": "E-invoice"
+         },
+         {
+            "name": "custrecord_4110_special_territory",
+            "summary": "GROUP",
+            "label": "Special Territory"
+         },
+         {
+            "name": "custrecord_4110_unknown_tax_credit",
+            "summary": "GROUP",
+            "label": "Unknown Tax Credit"
+         },
+         {
+            "name": "custrecord_4110_suspended",
+            "summary": "GROUP",
+            "label": "Suspended"
+         },
+         {
+            "name": "custrecord_4110_non_taxable",
+            "summary": "GROUP",
+            "label": "Non-Taxable"
+         },
+         {
+            "name": "custrecord_4110_partial_credit",
+            "summary": "GROUP",
+            "label": "Partial Tax Credit"
+         },
+         {
+            "name": "custrecord_4110_paid",
+            "summary": "GROUP",
+            "label": "Paid"
+         },
+         {
+            "name": "custrecord_4110_outside_customs",
+            "summary": "GROUP",
+            "label": "Outside Customs Territory"
+         },
+         {
+            "name": "custrecord_4110_non_resident",
+            "summary": "GROUP",
+            "label": "Non Resident"
+         },
+         {
+            "name": "custrecord_4110_non_recoverable",
+            "summary": "GROUP",
+            "label": "Non Recoverable"
+         },
+         {
+            "name": "custrecord_4110_non_deductible",
+            "summary": "GROUP",
+            "label": "Non-Deductible"
+         },
+         {
+            "name": "custrecord_4110_nondeductible_parent",
+            "summary": "GROUP",
+            "label": "Non-Deductible Rate Derived From"
+         },
+         {
+            "name": "custrecord_deferred_on",
+            "summary": "GROUP",
+            "label": "Deferred"
+         },
+         {
+            "name": "custrecord_for_digital_services",
+            "summary": "GROUP",
+            "label": "Applies to Digital Services"
+         },
+         {
+            "name": "custrecord_4110_category",
+            "summary": "GROUP",
+            "label": "Category"
+         }
       ]
     }
   ]

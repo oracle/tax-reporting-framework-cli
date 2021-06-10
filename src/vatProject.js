@@ -28,6 +28,24 @@ class vatProject extends project {
 
   async createVATReportsRecord(options) {
     const filename = 'str_localized_reports_list.json';
+    let schemaDetails = [];
+    const convertedSummaries = convertToSummaries(this.contents);
+    convertedSummaries.forEach(async (content, idx) => {
+      const schemaName = `VAT_` + options.country + `_SUMMARY_${idx}.json`
+      schemaDetails.push({
+        "type": "Summary",
+        "schema": schemaName
+      })
+    })
+    const convertedDetails = convertToDetails(this.contents);
+    convertedDetails.forEach(async (content, idx) => {
+      const schemaName = `VAT_` + options.country + `_DETAILS_${idx}.json`
+      schemaDetails.push({
+        "type": "Details",
+        "schema": schemaName
+      })
+    })
+
     const opts = {
       srcFile: 'vat/' + filename,
       filename: filename,
@@ -35,7 +53,8 @@ class vatProject extends project {
       replaceContents: [
         [/UUID/g, options.uuid],
         [/COUNTRY/g, options.country],
-        [/PROJECT/g, options.projectName]
+        [/PROJECT/g, options.projectName],
+        [/"DETAILS"/, JSON.stringify(schemaDetails)]
       ]
     };
     await super.createFileFromTemplate(opts);
@@ -50,6 +69,7 @@ class vatProject extends project {
       replaceContents: [
         [/UUID/g, options.uuid],
         [/COUNTRY/g, options.country],
+        [/countryLowercase/g, options.country.toLowerCase()],
         [/PROJECT/g, options.projectName]
       ]
     };
@@ -92,7 +112,7 @@ class vatProject extends project {
     });
 
     const folder = 'schemas/';
-    this.createScriptFile(options, 'VAT_META.json', folder);
+    this.createScriptFile(options, `VAT_META.json`, `VAT_${options.country}_META.json`, folder);
   }
 
   async createProcessors(options) {
