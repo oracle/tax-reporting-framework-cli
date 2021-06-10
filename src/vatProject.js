@@ -140,14 +140,14 @@ class vatProject extends project {
 
     const folder = 'processors/pre/';
     files.forEach((file) => {
-      this.createScriptFile(options, file, folder);
+      this.createScriptFile(options, file, file, folder);
     });
   }
 
-  async createScriptFile(options, filename, folder) {
+  async createScriptFile(options, sourceFile, destinationFile, folder) {
     const opts = {
-      srcFile: 'vat/' + filename,
-      filename: filename,
+      srcFile: 'vat/' + sourceFile,
+      filename: destinationFile,
       folder: options.srcPath + folder,
       replaceContents: []
     };
