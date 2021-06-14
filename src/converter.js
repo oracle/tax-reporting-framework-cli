@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2021, Oracle and/or its affiliates. All rights reserved.
  */
-'use strict';
+"use strict";
 
 const SUMMARY_JSON_TEMPLATE =
   '"data": [\n' +
@@ -129,7 +129,7 @@ exports.convertToSummaries = (fileContents) => {
     var searchRegex = "\\w+\\.";
     var ofRegex = "Of\\([\"']\\w+[\"']\\)";
     var accrueRegex =
-      "Accrue\\(([\"']\\w+[\"'], )?\\[[\"']\\w+[\"'](, [\"']\\w+[\"'])*\\]\\)";
+      "Accrue\\(([\"']\\w+[\"'],\\s*)?\\[[\"']\\w+[\"'](\\s*,\\s*[\"']\\w+[\"'])*\\]\\)";
 
     var operatorRegex = "( [+-]\\s*)?";
     var objectAssignmentRegex =
@@ -167,49 +167,51 @@ exports.convertToSummaries = (fileContents) => {
     var objectAssignments = getObjectAssignmentsFromFunction(block);
     var outputJSON = SUMMARY_JSON_TEMPLATE;
 
-    objectAssignments.forEach(function (objectAssignment, index) {
-      var boxNamePattern = "obj.(\\w+)";
-      var boxName = getBoxName(objectAssignment, boxNamePattern);
-      var ofSchemas = getOfSchemas({
-        boxName: boxName,
-        objectAssignment: objectAssignment,
-      });
-      var accrueSchemas = getAccrueSchemas({
-        boxName: boxName,
-        objectAssignment: objectAssignment,
-      });
-      var allSchemas = ofSchemas.concat(accrueSchemas);
-      var boxExpression = "";
-      var boxRegex = new RegExp('"id": "(\\w+)"');
-      var reportData = [];
-
-      if (allSchemas.length > 1) {
-        allSchemas.forEach(function (schema, index) {
-          var operator = index === allSchemas.length - 1 ? "" : " + ";
-          allSchemas[index] = schema.replace(
-            boxRegex,
-            '"id": "$1_' + (index + 1) + '"'
-          );
-          var childBox = schema.match(boxRegex)[1] + "_" + (index + 1);
-          boxExpression += childBox + operator;
+    if (objectAssignments.length > 0) {
+      objectAssignments.forEach(function (objectAssignment, index) {
+        var boxNamePattern = "obj.(\\w+)";
+        var boxName = getBoxName(objectAssignment, boxNamePattern);
+        var ofSchemas = getOfSchemas({
+          boxName: boxName,
+          objectAssignment: objectAssignment,
         });
+        var accrueSchemas = getAccrueSchemas({
+          boxName: boxName,
+          objectAssignment: objectAssignment,
+        });
+        var allSchemas = ofSchemas.concat(accrueSchemas);
+        var boxExpression = "";
+        var boxRegex = new RegExp('"id": "(\\w+)"');
+        var reportData = [];
 
-        var boxReportData = REPORT_DATA_TEMPLATE.replace("${box}", boxName);
-        boxReportData = boxReportData.replace("${expression}", boxExpression);
-        reportData.push(boxReportData);
-      } else {
-        var childBox = allSchemas[0].match(boxRegex)[1];
-        boxExpression = childBox;
-        var boxReportData = REPORT_DATA_TEMPLATE.replace("${box}", childBox);
-        boxReportData = boxReportData.replace("${expression}", boxExpression);
-        reportData.push(boxReportData);
-      }
+        if (allSchemas.length > 1) {
+          allSchemas.forEach(function (schema, index) {
+            var operator = index === allSchemas.length - 1 ? "" : " + ";
+            allSchemas[index] = schema.replace(
+              boxRegex,
+              '"id": "$1_' + (index + 1) + '"'
+            );
+            var childBox = schema.match(boxRegex)[1] + "_" + (index + 1);
+            boxExpression += childBox + operator;
+          });
 
-      var outputReportData = reportData.join(" ") + "${report_data}";
-      var outputSchemas = allSchemas.join(" ") + "${schemas}";
-      outputJSON = outputJSON.replace("${schemas}", outputSchemas);
-      outputJSON = outputJSON.replace("${report_data}", outputReportData);
-    });
+          var boxReportData = REPORT_DATA_TEMPLATE.replace("${box}", boxName);
+          boxReportData = boxReportData.replace("${expression}", boxExpression);
+          reportData.push(boxReportData);
+        } else {
+          var childBox = allSchemas[0].match(boxRegex)[1];
+          boxExpression = childBox;
+          var boxReportData = REPORT_DATA_TEMPLATE.replace("${box}", childBox);
+          boxReportData = boxReportData.replace("${expression}", boxExpression);
+          reportData.push(boxReportData);
+        }
+
+        var outputReportData = reportData.join(" ") + "${report_data}";
+        var outputSchemas = allSchemas.join(" ") + "${schemas}";
+        outputJSON = outputJSON.replace("${schemas}", outputSchemas);
+        outputJSON = outputJSON.replace("${report_data}", outputReportData);
+      });
+    }
     outputJSON = cleanupForWriting(outputJSON);
     return outputJSON;
   }
@@ -339,6 +341,7 @@ exports.convertToDetails = (fileContents) => {
     var functionNamePattern =
       "(\\w+\\.)+GetDrilldownData = function\\(\\w+(, \\w+)?\\) \\{";
     var variableAssignmentPattern = "(\\s+var \\w+ = [_A-z0-9.(){}]+;)*";
+    var loopPattern = getLoopPattern();
     var switchPattern = "\\s+switch \\(boxNumber\\) \\{";
     var dataAssignmentPattern = getDataAssignmentPattern();
     var multiDataAssignmentPattern = "(" + dataAssignmentPattern + ")+";
@@ -352,24 +355,21 @@ exports.convertToDetails = (fileContents) => {
     var functionPattern =
       functionNamePattern +
       variableAssignmentPattern +
+      loopPattern +
       switchPattern +
       multiDataAssignmentPattern +
       closingPattern;
     return functionPattern;
   }
 
-  function getDataAssignmentPattern() {
-    var dataAssignmentPattern = "\\s+case '(\\w+)':(\\s|\\n|\\r)*data =";
-    var detailsPattern =
-      "(\\s|\\n|\\r)*_DR\\.Get(Sales|Purchase)Details(\\w+)?\\(\\['\\w+'(,'\\w+')*\\](, '\\w+')?\\)";
-    var fullDataAssignmentPattern =
-      dataAssignmentPattern +
-      detailsPattern +
-      "(\\.concat\\(" +
-      detailsPattern +
-      "\\))*;(\\s|\\n|\\r)*break;";
+  function getLoopPattern() {
+    const catchAllCharacter = "[_A-z0-9.(){} +,']";
+    const keywordPattern =
+      "(\\s+(for|if)\\s\\(" + catchAllCharacter + "+\\) \\{";
+    const linePattern =
+      "(\\s+" + catchAllCharacter + "+=" + catchAllCharacter + "+;)+";
 
-    return fullDataAssignmentPattern;
+    return keywordPattern + linePattern + "\\s+})*";
   }
 
   function convertToDetailsSchema(block) {
@@ -400,15 +400,15 @@ exports.convertToDetails = (fileContents) => {
   }
 
   function getDataAssignmentPattern() {
-    var dataAssignmentPattern = "\\s+case '(\\w+)':(\\s|\\n|\\r)*data =";
+    var dataAssignmentPattern = "\\s+case '(\\w+)':\\s*data =";
     var detailsPattern =
-      "(\\s|\\n|\\r)*_DR\\.Get(Sales|Purchase)Details(\\w+)?\\(\\['\\w+'(,'\\w+')*\\](, '\\w+')?\\)";
+      "\\s*_DR\\.Get(Sales|Purchase)Details(\\w+)?\\(\\['\\w+'(,\\s*'\\w+')*\\](,\\s*'\\w+')?\\)";
     var fullDataAssignmentPattern =
       dataAssignmentPattern +
       detailsPattern +
       "(\\.concat\\(" +
       detailsPattern +
-      "\\))*;(\\s|\\n|\\r)*break;";
+      "\\))*;\\s*break;";
 
     return fullDataAssignmentPattern;
   }
@@ -424,24 +424,26 @@ exports.convertToDetails = (fileContents) => {
   function getDetailSchemas(options) {
     var schemas = [];
     var pattern =
-      "_DR\\.Get(Sales|Purchase)Details(\\w+)?\\(\\['\\w+'(,'\\w+')*\\](, '\\w+')?\\)";
+      "_DR\\.Get(Sales|Purchase)Details(\\w+)?\\(\\['\\w+'(,\\s*'\\w+')*\\](,\\s*'\\w+')?\\)";
     var regex = new RegExp(pattern, "g");
     var details = options.dataAssignment.match(regex);
 
-    details.forEach(function (detail) {
-      var schema = createDetailSchema({
-        box: options.box,
-        detail: detail,
+    if (details) {
+      details.forEach(function (detail) {
+        var schema = createDetailSchema({
+          box: options.box,
+          detail: detail,
+        });
+        schemas.push(schema);
       });
-      schemas.push(schema);
-    });
+    }
     return schemas;
   }
 
   function createDetailSchema(options) {
     var schema = "";
     var pattern =
-      "_DR\\.Get((Sales|Purchase)Details(\\w+)?)\\((\\[('\\w+')(,'\\w+')*\\])(, '\\w+')?\\)";
+      "_DR\\.Get((Sales|Purchase)Details(\\w+)?)\\((\\[('\\w+')(,\\s*'\\w+')*\\])(,\\s*'\\w+')?\\)";
     var regex = new RegExp(pattern);
     var components = options.detail.match(regex);
 
