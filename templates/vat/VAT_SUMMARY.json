@@ -25,9 +25,23 @@
       "fields": ["employerid", "companyname"]
     },
     {
-      "id": "vat_salesdetails",
+      "id": "vat_salessummary",
       "type": "savedsearch",
-      "internalid": "customsearch_str_salesbytaxcode_sum",
+      "internalid": "customsearch_trf_salesbytaxcode_sum_countryLowercase",
+      "filters": "STR_BASE_TRANSACTION_FILTERS",
+      "processor": {
+        "type": "scheduled",
+        "script": "SuiteApps/com.netsuite.PROJECT/src/processors/pre/VATSearchProcessor",
+        "limits": {
+          "searchresult": 100000,
+          "period": "monthly"
+        }
+      }
+    },
+    {
+      "id": "vat_purchasessummary",
+      "type": "savedsearch",
+      "internalid": "customsearch_trf_purchasesbytaxcode_sum_countryLowercase",
       "filters": "STR_BASE_TRANSACTION_FILTERS",
       "processor": {
         "type": "scheduled",

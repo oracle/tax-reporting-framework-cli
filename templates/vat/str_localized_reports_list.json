@@ -2,6 +2,7 @@
   "list": [
     {
       "name": "VAT COUNTRY Report",
+      "islegacy": true,
       "country": "COUNTRY",
       "report": "VAT",
       "isCountryDefault": true,
