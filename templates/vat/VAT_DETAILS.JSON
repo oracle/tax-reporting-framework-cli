@@ -11,9 +11,26 @@
   },
   "source": [
     {
-      "id": "vat_salesdetails_drilldown",
+      "id": "vat_salesdetails",
       "type": "savedsearch",
-      "internalid": "customsearch_str_salesbytaxcode_details",
+      "internalid": "customsearch_trf_salesbytaxcode_details_countryLowercase",
+      "filters": "STR_BASE_TRANSACTION_FILTERS",
+      "processor": {
+        "type": "scheduled",
+        "script": "SuiteApps/com.netsuite.PROJECT/src/processors/pre/VATDetailsSearchProcessor",
+        "limits": {
+          "searchresult": 100000,
+          "period": "monthly"
+        },
+        "params": {
+          "type": "SALE"
+        }
+      }
+    },
+    {
+      "id": "vat_purchasedetails",
+      "type": "savedsearch",
+      "internalid": "customsearch_trf_purcbytaxcode_details_countryLowercase",
       "filters": "STR_BASE_TRANSACTION_FILTERS",
       "processor": {
         "type": "scheduled",

@@ -8,9 +8,9 @@ define(['./TaxCodeMapper'], function (TaxCodeMapper) {
     TaxCodeMapper.call(this, params, context);
     this.name = 'COUNTRYTaxCodeMapper';
   }
-  util.extend(CountryTaxCodeMapper.prototype, TaxCodeMapper.prototype);
+  util.extend(COUNTRYTaxCodeMapper.prototype, TaxCodeMapper.prototype);
 
-  CountryTaxCodeMapper.prototype.process = function (row, columns) {
+  COUNTRYTaxCodeMapper.prototype.process = function (row, columns) {
     try {
       var taxcode = TaxCodeMapper.prototype.process.call(this, row);
 
@@ -26,7 +26,7 @@ define(['./TaxCodeMapper'], function (TaxCodeMapper) {
     }
   };
 
-  CountryTaxCodeMapper.prototype.findMatchingTaxCodeDefinition = function (
+  COUNTRYTaxCodeMapper.prototype.findMatchingTaxCodeDefinition = function (
     taxcode
   ) {
     var _CountryCode = 'COUNTRY';
