@@ -479,5 +479,9 @@ exports.convertToDetails = (fileContents) => {
 
 exports.getTaxDefs = (contents) => {
   const matches = contents.match(/^.*?this.TaxDefinition = (\{[\s\S]*?\});/m);
-  return matches ? matches[1] : null;
+  var taxDefs = null;
+  if (matches){
+    taxDefs = matches[1].replace(/nlapiStringToDate/g, 'new Date');
+  }
+  return taxDefs;
 };
