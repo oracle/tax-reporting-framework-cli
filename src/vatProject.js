@@ -119,7 +119,7 @@ class vatProject extends project {
 
   async createProcessors(options) {
     //COUNTRYTaxCodeMapper.js
-    const taxCodeDefs = getTaxDefs(this.contents).replace(/nlapiStringToDate/g, 'new Date');
+    const taxCodeDefs = getTaxDefs(this.contents);
     const ctrTaxCodeMapperFilename = 'COUNTRYTaxCodeMapper.js';
     const opts1 = {
       srcFile: 'vat/' + ctrTaxCodeMapperFilename,
