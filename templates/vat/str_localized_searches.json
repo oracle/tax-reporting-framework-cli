@@ -2,7 +2,8 @@
   "list": [
     {
       "title": "Sales by Tax Code (Summary) COUNTRY",
-      "id": "customsearch_str_salesbytaxcode_sum_countryLowercase",
+      "id": "customsearch_trf_salesbytaxcode_sum_countryLowercase",
+      "islegacy": true,
       "type": "transaction",
       "columns": [
         {
@@ -58,6 +59,7 @@
     {
       "title": "Sales by Tax Code (Details) COUNTRY",
       "id": "customsearch_str_salesbytaxcode_dtls_countryLowercase",
+      "islegacy": true,
       "type": "transaction",
       "columns": [
         {
@@ -158,6 +160,7 @@
     {
       "title": "Purchases By Tax Code (Summary) COUNTRY",
       "id": "customsearch_str_purcbytaxcode_sum_countryLowercase",
+      "islegacy": true,
       "type": "transaction",
       "columns": [
         {
@@ -213,6 +216,7 @@
     {
       "title": "Purchases By Tax Code (Details) COUNTRY",
       "id": "customsearch_str_purcbytaxcode_dtls_countryLowercase",
+      "islegacy": true,
       "type": "transaction",
       "columns": [
         {
@@ -313,6 +317,7 @@
     {
       "title": "TRF Tax Code Mapping COUNTRY",
       "id": "customsearch_trf_taxcode_mapping_countryLowercase",
+      "islegacy": true,
       "type": "salestaxitem",
       "columns": [
         {
@@ -536,6 +541,143 @@
           "summary": "GROUP",
           "label": "Category"
         }
+      ]
+    },
+    {
+      "title": "Non-Deductible STC Summary COUNTRY",
+      "id": "customsearch_trf_nd_stc_summary_countryLowercase",
+      "islegacy": true,
+      "type": "transaction",
+      "columns": [
+        {
+          "name": "type",
+          "summary": "GROUP",
+          "label": "Type"
+        },
+        {
+          "name": "memo",
+          "summary": "GROUP",
+          "label": "Memo"
+        }
+      ],
+      "filterExpression": [
+        ["customgl", "is", "T"],
+        "AND",
+        ["type", "anyof", "VendBill", "VendCred", "Check", "ExpRept"]
+      ]
+    },
+    {
+      "title": "Non-Deductible STC Details COUNTRY",
+      "id": "customsearch_trf_nd_stc_details_countryLowercase",
+      "islegacy": true,
+      "type": "transaction",
+      "columns": [
+        {
+          "name": "type",
+          "summary": "GROUP",
+          "label": "Type"
+        },
+        {
+          "name": "memo",
+          "summary": "GROUP",
+          "label": "Memo"
+        },
+        {
+          "name": "trandate",
+          "summary": "GROUP",
+          "sort": "ASC",
+          "label": "Date"
+        },
+        {
+          "name": "taxperiod",
+          "summary": "GROUP",
+          "label": "Tax Period"
+        },
+        {
+          "name": "tranid",
+          "summary": "GROUP",
+          "label": "Document Number"
+        },
+        {
+          "name": "internalid",
+          "summary": "GROUP",
+          "label": "Internal ID"
+        },
+        {
+          "name": "custbody_report_timestamp",
+          "summary": "GROUP",
+          "label": "Report Timestamp"
+        },
+        {
+          "name": "companyname",
+          "join": "vendor",
+          "summary": "GROUP",
+          "label": "Company Name"
+        },
+        {
+          "name": "entityid",
+          "join": "vendor",
+          "summary": "GROUP",
+          "label": "Name"
+        },
+        {
+          "name": "firstname",
+          "join": "vendor",
+          "summary": "GROUP",
+          "label": "First Name"
+        },
+        {
+          "name": "lastname",
+          "join": "vendor",
+          "summary": "GROUP",
+          "label": "Last Name"
+        },
+        {
+          "name": "middlename",
+          "join": "vendor",
+          "summary": "GROUP",
+          "label": "Middle Name"
+        },
+        {
+          "name": "isperson",
+          "join": "vendor",
+          "summary": "GROUP",
+          "label": "Is Individual"
+        },
+        {
+          "name": "vatregnumber",
+          "join": "vendor",
+          "summary": "GROUP",
+          "label": "Tax Number"
+        },
+        {
+          "name": "custentity_tax_contact_last",
+          "join": "vendor",
+          "summary": "GROUP",
+          "label": "Tax Contact Last Name"
+        },
+        {
+          "name": "custentity_tax_contact_first",
+          "join": "vendor",
+          "summary": "GROUP",
+          "label": "Tax Contact First Name"
+        },
+        {
+          "name": "custentity_tax_contact_middle",
+          "join": "vendor",
+          "summary": "GROUP",
+          "label": "Tax Contact Middle Name"
+        },
+        {
+          "name": "transactionnumber",
+          "summary": "GROUP",
+          "label": "Transaction Number"
+        }
+      ],
+      "filterExpression": [
+        ["customgl", "is", "T"],
+        "AND",
+        ["type", "anyof", "VendBill", "VendCred", "Check", "ExpRept"]
       ]
     }
   ]

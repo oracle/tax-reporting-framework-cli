@@ -88,6 +88,7 @@ class vatProject extends project {
           [/UUID/g, options.uuid],
           [/COUNTRY/g, options.country],
           [/PROJECT/g, options.projectName],
+          [/countryLowercase/g, options.country.toLowerCase()],
           ['DATA', content.replace(/'/g, '"')]
         ]
       };
@@ -105,6 +106,7 @@ class vatProject extends project {
           [/UUID/g, options.uuid],
           [/COUNTRY/g, options.country],
           [/PROJECT/g, options.projectName],
+          [/countryLowercase/g, options.country.toLowerCase()],
           ['DATA', content.replace(/'/g, '"')]
         ]
       };

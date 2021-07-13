@@ -11,7 +11,7 @@
   },
   "source": [
     {
-      "id": "vat_salesdetails_drilldown",
+      "id": "vat_salesdetails",
       "type": "savedsearch",
       "internalid": "customsearch_str_salesbytaxcode_dtls_countryLowercase",
       "filters": "LEGACY_VAT_TRANSACTION_FILTERS",
@@ -28,7 +28,7 @@
       }
     },
     {
-      "id": "vat_purchasedetails_drilldown",
+      "id": "vat_purchasedetails",
       "type": "savedsearch",
       "internalid": "customsearch_str_purcbytaxcode_dtls_countryLowercase",
       "filters": "LEGACY_VAT_TRANSACTION_FILTERS",
