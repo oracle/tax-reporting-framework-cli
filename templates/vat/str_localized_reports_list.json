@@ -4,6 +4,7 @@
       "name": "VAT COUNTRY Report",
       "country": "COUNTRY",
       "report": "VAT",
+      "islegacy": true,
       "isCountryDefault": true,
       "uuid": "UUID",
       "createdBy": "com.netsuite.PROJECT",
