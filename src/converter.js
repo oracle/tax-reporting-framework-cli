@@ -37,6 +37,16 @@ const OF_SCHEMA_TEMPLATE =
   '\t\t\t\t "id": "${field}",\n' +
   '\t\t\t\t "value": "${field}",\n' +
   '\t\t\t\t "summarytype": "sum"\n' +
+  "\t\t\t },\n" +
+  "\t\t\t {\n" +
+  '\t\t\t\t "id": "netamount",\n' +
+  '\t\t\t\t "value": "netamount",\n' +
+  '\t\t\t\t "summarytype": "sum"\n' +
+  "\t\t\t },\n" +
+  "\t\t\t {\n" +
+  '\t\t\t\t "id": "taxamount",\n' +
+  '\t\t\t\t "value": "taxamount",\n' +
+  '\t\t\t\t "summarytype": "sum"\n' +
   "\t\t\t }\n" +
   "\t\t]\n" +
   "\t},\n";
@@ -61,6 +71,16 @@ const ACCRUE_SCHEMA_TEMPLATE =
   "\t\t\t {\n" +
   '\t\t\t\t "id": "${field}",\n' +
   '\t\t\t\t "value": "${field}",\n' +
+  '\t\t\t\t "summarytype": "sum"\n' +
+  "\t\t\t },\n" +
+  "\t\t\t {\n" +
+  '\t\t\t\t "id": "netamount",\n' +
+  '\t\t\t\t "value": "netamount",\n' +
+  '\t\t\t\t "summarytype": "sum"\n' +
+  "\t\t\t },\n" +
+  "\t\t\t {\n" +
+  '\t\t\t\t "id": "taxamount",\n' +
+  '\t\t\t\t "value": "taxamount",\n' +
   '\t\t\t\t "summarytype": "sum"\n' +
   "\t\t\t }\n" +
   "\t\t]\n" +
@@ -88,7 +108,15 @@ const DETAILS_SCHEMA_TEMPLATE =
   "\t\t\t\t }\n" +
   "\t\t\t],\n" +
   "\t\t},\n";
+const DETAILS_CONCAT_BOX_TEMPLATE =
+  "\t\t{" +
+  '\t\t\t"id": "${box}",' +
+  '\t\t\t"type": "CONCAT",' +
+  '\t\t\t"data": ["${boxes}"],' +
+  '\t\t\t"sort": "VAT_LEGACY_DRILLDOWN_SORT"' +
+  "\t\t},";
 const AMOUNT_RATE_REGEX = "\\.((Tax|Net|Notional)Amount|Rate)";
+const BOX_REGEX = "${box}";
 const SEARCH_INDEX = 1;
 const TAXCODE_INDEX = 2;
 
@@ -194,17 +222,16 @@ exports.convertToSummaries = (fileContents) => {
             var childBox = schema.match(boxRegex)[1] + "_" + (index + 1);
             boxExpression += childBox + operator;
           });
-
-          var boxReportData = REPORT_DATA_TEMPLATE.replace("${box}", boxName);
-          boxReportData = boxReportData.replace("${expression}", boxExpression);
-          reportData.push(boxReportData);
         } else {
-          var childBox = allSchemas[0].match(boxRegex)[1];
-          boxExpression = childBox;
-          var boxReportData = REPORT_DATA_TEMPLATE.replace("${box}", childBox);
-          boxReportData = boxReportData.replace("${expression}", boxExpression);
-          reportData.push(boxReportData);
+          boxName = allSchemas[0].match(boxRegex)[1];
+          boxExpression = boxName;
         }
+
+        var boxReportData = createBoxReportData({
+          box: boxName,
+          expression: boxExpression,
+        });
+        reportData = reportData.concat(boxReportData);
 
         var outputReportData = reportData.join(" ") + "${report_data}";
         var outputSchemas = allSchemas.join(" ") + "${schemas}";
@@ -304,14 +331,17 @@ exports.convertToSummaries = (fileContents) => {
     var fieldRegex = new RegExp("\\$\\{field\\}", "g");
 
     var search = components[SEARCH_INDEX].toLowerCase();
-    var box = options.box.toLowerCase();
+    var box = options.box;
     var taxcode = components[TAXCODE_INDEX];
     var field = components[fieldIndex].toLowerCase();
 
     var replacedSchema = template.replace("${search}", search);
-    replacedSchema = replacedSchema.replace("${box}", box);
+    replacedSchema = replacedSchema.replace(BOX_REGEX, box);
     replacedSchema = replacedSchema.replace(taxcodeRegex, taxcode);
-    replacedSchema = replacedSchema.replace(fieldRegex, field);
+    replacedSchema =
+      field !== "netamount" && field !== "taxamount"
+        ? replacedSchema.replace(fieldRegex, field)
+        : replacedSchema;
 
     return replacedSchema;
   }
@@ -321,6 +351,39 @@ exports.convertToSummaries = (fileContents) => {
     var objectAssignmentRegex = new RegExp(objectAssignmentPattern, "gm");
     var objectAssignments = block.match(objectAssignmentRegex);
     return objectAssignments;
+  }
+
+  function createBoxReportData(options) {
+    let boxReportData = [];
+    let boxPattern = new RegExp(options.box + "(_\\d+)?", "g");
+
+    let totalBox = REPORT_DATA_TEMPLATE.replace(BOX_REGEX, options.box);
+    totalBox = totalBox.replace("${expression}", options.expression);
+    boxReportData.push(totalBox);
+
+    let taxamountBox = REPORT_DATA_TEMPLATE.replace(
+      BOX_REGEX,
+      options.box + "_taxamount"
+    );
+    let taxamountExpression = options.expression.replace(
+      boxPattern,
+      options.box + ".taxamount"
+    );
+    taxamountBox = taxamountBox.replace("${expression}", taxamountExpression);
+    boxReportData.push(taxamountBox);
+
+    let netamountBox = REPORT_DATA_TEMPLATE.replace(
+      BOX_REGEX,
+      options.box + "_netamount"
+    );
+    let netamountExpression = options.expression.replace(
+      boxPattern,
+      options.box + ".netamount"
+    );
+    netamountBox = netamountBox.replace("${expression}", netamountExpression);
+    boxReportData.push(netamountBox);
+
+    return boxReportData;
   }
 };
 
@@ -429,13 +492,18 @@ exports.convertToDetails = (fileContents) => {
     var details = options.dataAssignment.match(regex);
 
     if (details) {
-      details.forEach(function (detail) {
+      details.forEach(function (detail, index) {
         var schema = createDetailSchema({
-          box: options.box,
+          box: options.box + "_" + index,
           detail: detail,
         });
         schemas.push(schema);
       });
+      var concatDetailsBox = createConcatDetailsBox({
+        box: options.box,
+        details: details,
+      });
+      schemas.push(concatDetailsBox);
     }
     return schemas;
   }
@@ -466,22 +534,34 @@ exports.convertToDetails = (fileContents) => {
     var taxcodeRegex = new RegExp("\\$\\{taxcode\\}", "g");
 
     var search = components[searchIndex].toLowerCase();
-    var box = options.box.toLowerCase();
+    var box = options.box;
     var taxcode = components[taxcodeIndex];
 
     var replacedSchema = template.replace("${search}", search);
-    replacedSchema = replacedSchema.replace("${box}", box);
+    replacedSchema = replacedSchema.replace(BOX_REGEX, box);
     replacedSchema = replacedSchema.replace(taxcodeRegex, taxcode);
 
     return replacedSchema;
+  }
+
+  function createConcatDetailsBox(options) {
+    let concatDetailsBox = DETAILS_CONCAT_BOX_TEMPLATE.replace(
+      BOX_REGEX,
+      options.box
+    );
+    let boxes = options.details.map(
+      (detail, index) => options.box + "_" + index
+    );
+    concatDetailsBox = concatDetailsBox.replace("${boxes}", boxes.join('","'));
+    return concatDetailsBox;
   }
 };
 
 exports.getTaxDefs = (contents) => {
   const matches = contents.match(/^.*?this.TaxDefinition = (\{[\s\S]*?\});/m);
   var taxDefs = null;
-  if (matches){
-    taxDefs = matches[1].replace(/nlapiStringToDate/g, 'new Date');
+  if (matches) {
+    taxDefs = matches[1].replace(/nlapiStringToDate/g, "new Date");
   }
   return taxDefs;
 };
