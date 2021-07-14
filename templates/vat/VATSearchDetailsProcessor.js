@@ -5,7 +5,7 @@
 
 define([], function () {
   function VATSearchDetailsProcessor(params, context) {
-    this.name = 'VATSearchDetailsProcessor';
+    this.name = "VATSearchDetailsProcessor";
     // this.isMBACompatible =
     //   context && context.report ? context.report.isMBACompatible : false;
   }
@@ -15,8 +15,8 @@ define([], function () {
       var data = {};
       data.id = row.id;
       data.internalid = row.getValue({
-        name: 'internalid',
-        summary: 'group'
+        name: "internalid",
+        summary: "group",
       });
       // data.txnType = row.getText({
       //     name: 'custbody_ste_transaction_type',
@@ -33,16 +33,21 @@ define([], function () {
       //     summary: 'group'
       // });
       data.type = row.getValue({
-        name: 'type',
-        summary: 'group'
+        name: "type",
+        summary: "group",
       });
       data.typeName = row.getText({
-        name: 'type',
-        summary: 'group'
+        name: "type",
+        summary: "group",
       });
+      data.taxcodeName = row.getText({
+        name: "taxcode",
+        summary: "group",
+      });
+      data.taxcodeName = this.cleanUpTaxCodeName(data.taxcodeName);
       data.taxcode = row.getText({
-        name: 'taxcode',
-        summary: 'group'
+        name: "taxcode",
+        summary: "group",
       });
       // if (
       //     runtime.isFeatureInEffect({
@@ -61,23 +66,23 @@ define([], function () {
       //     });
       // } else {
       data.netamount = row.getValue({
-        name: 'netamount',
-        summary: 'sum'
+        name: "netamount",
+        summary: "sum",
       });
       data.taxamount = row.getValue({
-        name: 'taxamount',
-        join: 'taxdetail',
-        summary: 'sum'
+        name: "taxamount",
+        join: "taxdetail",
+        summary: "sum",
       });
       // }
       data.name = this.getEntityName(row, data.type);
       data.date = row.getValue({
-        name: 'trandate',
-        summary: 'group'
+        name: "trandate",
+        summary: "group",
       });
       data.txnNo = row.getValue({
-        name: 'tranid',
-        summary: 'group'
+        name: "tranid",
+        summary: "group",
       });
       // data.taxpointdate = row.getValue({
       //     name: 'taxpointdate',
@@ -100,80 +105,89 @@ define([], function () {
 
       return data;
     } catch (ex) {
-      error['throw'](ex, {
-        context: this.name + '.process',
-        level: error.level.ERROR
+      error["throw"](ex, {
+        context: this.name + ".process",
+        level: error.level.ERROR,
       });
     }
   };
 
   VATSearchDetailsProcessor.prototype.getEntityName = function (row, type) {
-    if (type === 'ExpRept') {
+    if (type === "ExpRept") {
       return row.getValue({
-        name: 'entityid',
-        join: 'employee',
-        summary: 'group'
+        name: "entityid",
+        join: "employee",
+        summary: "group",
       });
     }
 
     var entityName = [];
     var source =
-      this.params.type === 'SALE' || this.params.type === 'BILLABLE_EXPENSE'
-        ? 'customer'
-        : 'vendor';
-    var summary = 'group';
+      this.params.type === "SALE" || this.params.type === "BILLABLE_EXPENSE"
+        ? "customer"
+        : "vendor";
+    var summary = "group";
 
     var isIndividual = row.getValue({
-      name: 'isperson',
+      name: "isperson",
       join: source,
-      summary: summary
+      summary: summary,
     });
 
     if (isIndividual) {
       entityName.push(
         getValidName(
           row.getValue({
-            name: 'firstname',
+            name: "firstname",
             join: source,
-            summary: summary
+            summary: summary,
           })
         )
       );
       entityName.push(
         getValidName(
           row.getValue({
-            name: 'middlename',
+            name: "middlename",
             join: source,
-            summary: summary
+            summary: summary,
           })
         )
       );
       entityName.push(
         getValidName(
           row.getValue({
-            name: 'lastname',
+            name: "lastname",
             join: source,
-            summary: summary
+            summary: summary,
           })
         )
       );
     } else {
       entityName.push(
         row.getValue({
-          name: 'companyname',
+          name: "companyname",
           join: source,
-          summary: summary
+          summary: summary,
         })
       );
     }
-    return entityName.join(' ');
+    return entityName.join(" ");
 
     function getValidName(name) {
-      if (name.toLowerCase().indexOf('none') > -1) {
-        return '';
+      if (name.toLowerCase().indexOf("none") > -1) {
+        return "";
       }
       return name;
     }
+  };
+
+  VATSearchDetailsProcessor.prototype.cleanUpTaxCodeName = function (
+    taxcodeName
+  ) {
+    var cleanTaxCodeName = taxcodeName.split(" : ");
+    cleanTaxCodeName =
+      cleanTaxCodeName.length > 1 ? cleanTaxCodeName[1] : cleanTaxCodeName[0];
+    return cleanTaxCodeName;
   };
 
   return VATSearchDetailsProcessor;
