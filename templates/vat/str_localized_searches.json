@@ -198,7 +198,7 @@
         }
       ],
       "filterExpression": [
-        ["type", "anyof", "VendBill", "VendCred", "ExpRept"],
+        ["type", "anyof", "VendBill", "VendCred", "Check", "ExpRept"],
         "AND",
         ["posting", "is", "T"],
         "AND",
@@ -299,7 +299,7 @@
         }
       ],
       "filterExpression": [
-        ["type", "anyof", "VendBill", "VendCred", "ExpRept"],
+        ["type", "anyof", "VendBill", "VendCred", "Check", "ExpRept"],
         "AND",
         ["posting", "is", "T"],
         "AND",
