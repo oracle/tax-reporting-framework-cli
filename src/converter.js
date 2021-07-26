@@ -34,11 +34,6 @@ const OF_SCHEMA_TEMPLATE =
   "\t\t],\n" +
   '\t\t"field": [\n' +
   "\t\t\t {\n" +
-  '\t\t\t\t "id": "${field}",\n' +
-  '\t\t\t\t "value": "${field}",\n' +
-  '\t\t\t\t "summarytype": "sum"\n' +
-  "\t\t\t },\n" +
-  "\t\t\t {\n" +
   '\t\t\t\t "id": "netamount",\n' +
   '\t\t\t\t "value": "netamount",\n' +
   '\t\t\t\t "summarytype": "sum"\n' +
@@ -68,11 +63,6 @@ const ACCRUE_SCHEMA_TEMPLATE =
   "\t\t\t }\n" +
   "\t\t],\n" +
   '\t\t"field": [\n' +
-  "\t\t\t {\n" +
-  '\t\t\t\t "id": "${field}",\n' +
-  '\t\t\t\t "value": "${field}",\n' +
-  '\t\t\t\t "summarytype": "sum"\n' +
-  "\t\t\t },\n" +
   "\t\t\t {\n" +
   '\t\t\t\t "id": "netamount",\n' +
   '\t\t\t\t "value": "netamount",\n' +
@@ -153,11 +143,11 @@ exports.convertToSummaries = (fileContents) => {
   return convertedContents;
 
   function getObjectAssignmentPattern() {
-    var objPrefix = "obj\\.(box|rate\\w+)\\w+ = ";
+    var objPrefix = "obj\\.(box|rate\\w+)\\w+ =\\s*";
     var searchRegex = "\\w+\\.";
     var ofRegex = "Of\\([\"']\\w+[\"']\\)";
     var accrueRegex =
-      "Accrue\\(([\"']\\w+[\"'],\\s*)?\\[[\"']\\w+[\"'](\\s*,\\s*[\"']\\w+[\"'])*\\]\\)";
+      "Accrue\\(([\"']\\w+[\"'],\\s*)?\\[\\s*[\"']\\w+[\"'](\\s*,\\s*[\"']\\w+[\"'])*(,|)\\s*\\]\\)";
 
     var operatorRegex = "( [+-]\\s*)?";
     var objectAssignmentRegex =
@@ -177,7 +167,7 @@ exports.convertToSummaries = (fileContents) => {
   }
 
   function getFunctionPattern() {
-    var functionNameRegex = "(\\w+\\.)+GetData = function\\(\\) \\{";
+    var functionNameRegex = "(\\w+\\.)+GetData = function\\s*\\(\\) \\{";
     var variableAssignmentRegex = "(\\s+var \\w+ = [_A-z0-9.(){}]+;)+";
     var objectAssignmentRegex = getObjectAssignmentPattern();
     var multiobjectAssignmentRegex = "(\\s+" + objectAssignmentRegex + ")+";
@@ -194,7 +184,6 @@ exports.convertToSummaries = (fileContents) => {
   function convertToSummarySchema(block) {
     var objectAssignments = getObjectAssignmentsFromFunction(block);
     var outputJSON = SUMMARY_JSON_TEMPLATE;
-
     if (objectAssignments.length > 0) {
       objectAssignments.forEach(function (objectAssignment, index) {
         var boxNamePattern = "obj.(\\w+)";
@@ -284,11 +273,10 @@ exports.convertToSummaries = (fileContents) => {
   function getAccrueSchemas(options) {
     var schemas = [];
     var pattern =
-      "\\w+\\.Accrue\\(\\[[\"']\\w+[\"'](, [\"']\\w+[\"'])*\\]\\)" +
+      "\\w+\\.Accrue\\(\\[\\s*[\"']\\w+[\"'](\\s*,\\s*[\"']\\w+[\"'])*(,|)\\s*\\]\\)" +
       AMOUNT_RATE_REGEX;
     var objRegex = new RegExp(pattern, "g");
     var objects = options.objectAssignment.match(objRegex);
-
     if (objects) {
       objects.forEach(function (obj, index) {
         var schema = getAccrueSchema({
@@ -307,7 +295,7 @@ exports.convertToSummaries = (fileContents) => {
     var schema = "";
 
     var pattern =
-      "(\\w+)\\.Accrue\\((\\[[\"']\\w+[\"'](, [\"']\\w+[\"'])*\\])\\)" +
+      "(\\w+)\\.Accrue\\((\\[\\s*[\"']\\w+[\"'](\\s*,\\s*[\"']\\w+[\"'])*(,|)\\s*\\])\\)" +
       AMOUNT_RATE_REGEX;
     var regex = new RegExp(pattern);
     var components = options.block.match(regex);
@@ -402,7 +390,7 @@ exports.convertToDetails = (fileContents) => {
 
   function getFunctionPattern() {
     var functionNamePattern =
-      "(\\w+\\.)+GetDrilldownData = function\\(\\w+(, \\w+)?\\) \\{";
+      "(\\w+\\.)+GetDrilldownData = function\\s*\\(\\w+(, \\w+)?\\) \\{";
     var variableAssignmentPattern = "(\\s+var \\w+ = [_A-z0-9.(){}]+;)*";
     var loopPattern = getLoopPattern();
     var switchPattern = "\\s+switch \\(boxNumber\\) \\{";
@@ -458,20 +446,19 @@ exports.convertToDetails = (fileContents) => {
     var dataAssignmentPattern = getDataAssignmentPattern();
     var dataAssignmentRegex = new RegExp(dataAssignmentPattern, "gm");
     var dataAssignments = block.match(dataAssignmentRegex);
-
     return dataAssignments;
   }
 
   function getDataAssignmentPattern() {
     var dataAssignmentPattern = "\\s+case '(\\w+)':\\s*data =";
     var detailsPattern =
-      "\\s*_DR\\.Get(Sales|Purchase)Details(\\w+)?\\(\\['\\w+'(,\\s*'\\w+')*\\](,\\s*'\\w+')?\\)";
+      "\\s*_DR\\s*\\.Get(Sales|Purchase)Details(\\w+)?\\(\\s*\\[\\s*'\\w+'(,\\s*'\\w+'(,|)\\s*)*\\](,\\s*'\\w+')?\\s*\\)";
     var fullDataAssignmentPattern =
       dataAssignmentPattern +
       detailsPattern +
-      "(\\.concat\\(" +
+      "(\\s*\\.concat\\(" +
       detailsPattern +
-      "\\))*;\\s*break;";
+      "\\s*\\))*;\\s*break;";
 
     return fullDataAssignmentPattern;
   }
@@ -487,10 +474,9 @@ exports.convertToDetails = (fileContents) => {
   function getDetailSchemas(options) {
     var schemas = [];
     var pattern =
-      "_DR\\.Get(Sales|Purchase)Details(\\w+)?\\(\\['\\w+'(,\\s*'\\w+')*\\](,\\s*'\\w+')?\\)";
+      "_DR\\s*\\.Get(Sales|Purchase)Details(\\w+)?\\(\\s*\\[\\s*'\\w+'(,\\s*'\\w+'(,|)\\s*)*\\](,\\s*'\\w+')?\\s*\\)";
     var regex = new RegExp(pattern, "g");
     var details = options.dataAssignment.match(regex);
-
     if (details) {
       details.forEach(function (detail, index) {
         var schema = createDetailSchema({
@@ -511,7 +497,7 @@ exports.convertToDetails = (fileContents) => {
   function createDetailSchema(options) {
     var schema = "";
     var pattern =
-      "_DR\\.Get((Sales|Purchase)Details(\\w+)?)\\((\\[('\\w+')(,\\s*'\\w+')*\\])(,\\s*'\\w+')?\\)";
+      "_DR\\s*.Get((Sales|Purchase)Details(\\w+)?)\\(\\s*(\\[\\s*('\\w+')(,\\s*'\\w+'(,|)\\s*)*\\])(,\\s*'\\w+')?\\s*\\)";
     var regex = new RegExp(pattern);
     var components = options.detail.match(regex);
 

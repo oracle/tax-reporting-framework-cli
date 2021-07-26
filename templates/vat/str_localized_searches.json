@@ -315,6 +315,161 @@
       ]
     },
     {
+      "title": "Non-Deductible STC (Summary) COUNTRY",
+      "id": "customsearch_str_nd_stc_sum_countryLowercase",
+      "islegacy": true,
+      "type": "transaction",
+      "columns": [
+          {
+              "name": "internalid",
+              "summary": "GROUP"
+          },
+          {
+              "name": "type",
+              "summary": "GROUP"
+          },
+          {
+              "name": "trandate",
+              "summary": "GROUP",
+              "sort": "ASC"
+          },
+          {
+              "name": "postingperiod",
+              "summary": "GROUP"
+          },
+          {
+              "name": "taxperiod",
+              "summary": "GROUP"
+          },
+          {
+              "name": "memo",
+              "summary": "GROUP"
+          },
+          {
+              "name": "debitamount",
+              "summary": "SUM"
+          }
+      ],
+      "filterExpression": [
+          ["customgl","is","T"],
+          "AND",
+          ["type", "anyof", "VendBill", "VendCred", "Check", "ExpRept"],
+          "AND",
+          ["posting", "is", "T"],
+          "AND",
+          ["mainline", "is", "F"],
+          "AND",
+          ["taxline", "is", "F"]
+      ],
+      "settings": [{
+              "name": "consolidationtype",
+              "value": "NONE"
+          }
+      ]
+    },
+    {
+      "title": "Non-Deductible STC (Details) COUNTRY",
+      "id": "customsearch_str_nd_stc_dtls_countryLowercase",
+      "islegacy": true,
+      "type": "transaction",
+      "columns": [
+          {
+              "name": "internalid",
+              "summary": "GROUP"
+          },
+          {
+              "name": "type",
+              "summary": "GROUP"
+          },
+          {
+              "name": "trandate",
+              "summary": "GROUP",
+              "sort": "ASC"
+          },
+          {
+              "name": "postingperiod",
+              "summary": "GROUP"
+          },
+          {
+              "name": "taxperiod",
+              "summary": "GROUP"
+          },
+          {
+              "name": "memo",
+              "summary": "GROUP"
+          },
+          {
+              "name": "debitamount",
+              "summary": "SUM"
+          },
+          {
+              "name": "lastname",
+              "join": "customer",
+              "summary": "GROUP"
+          },
+          {
+              "name": "middlename",
+              "join": "customer",
+              "summary": "GROUP"
+          },
+          {
+              "name": "companyname",
+              "join": "customer",
+              "summary": "GROUP"
+          },
+          {
+              "name": "firstname",
+              "join": "customer",
+              "summary": "GROUP"
+          },
+          {
+              "name": "companyname",
+              "join": "vendor",
+              "summary": "GROUP"
+          },
+          {
+              "name": "lastname",
+              "join": "vendor",
+              "summary": "GROUP"
+          },
+          {
+              "name": "firstname",
+              "join": "vendor",
+              "summary": "GROUP"
+          },
+          {
+              "name": "middlename",
+              "join": "vendor",
+              "summary": "GROUP"
+          },
+          {
+              "name": "isperson",
+              "join": "vendor",
+              "summary": "GROUP"
+          },
+          {
+              "name": "tranid",
+              "summary": "GROUP"
+          }
+      ],
+      "filterExpression": [
+          ["customgl","is","T"],
+          "AND",
+          ["type", "anyof", "VendBill", "VendCred", "Check", "ExpRept"],
+          "AND",
+          ["posting", "is", "T"],
+          "AND",
+          ["mainline", "is", "F"],
+          "AND",
+          ["taxline", "is", "F"]
+      ],
+      "settings": [{
+              "name": "consolidationtype",
+              "value": "NONE"
+          }
+      ]
+    },
+    {
       "title": "TRF Tax Code Mapping COUNTRY",
       "id": "customsearch_trf_taxcode_mapping_countryLowercase",
       "islegacy": true,

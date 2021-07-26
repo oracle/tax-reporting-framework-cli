@@ -4,6 +4,7 @@
 'use strict';
 
 const fs = require('fs-extra');
+const prettier = require('prettier');
 const project = require('./project');
 const {
   convertToSummaries,
@@ -17,7 +18,9 @@ class vatProject extends project {
   }
 
   async create(options) {
+    const prettierFormat = { "tabWidth": 4, "singleQuote": true, parser: "babel" }
     this.contents = await this._fs.readFile(options.srcReportFile);
+    this.contents = await prettier.format(this.contents, prettierFormat)
     super.create(options);
     this.createVATReportsRecord(options);
     this.createVATSearchesRecord(options);
@@ -137,7 +140,9 @@ class vatProject extends project {
     const files = [
       'VATSearchProcessor.js',
       'VATSearchDetailsProcessor.js',
-      'TaxCodeMapper.js'
+      'TaxCodeMapper.js',
+      'VATSearchNonDeductibleProcessor.js',
+      'VATSearchNonDeductibleDetailsProcessor.js'
     ];
 
     const folder = 'processors/pre/';

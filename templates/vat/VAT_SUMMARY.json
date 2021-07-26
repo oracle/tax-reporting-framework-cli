@@ -39,7 +39,7 @@
       }
     },
     {
-      "id": "vat_purchasedetails",
+      "id": "vat_purchasesummary",
       "type": "savedsearch",
       "internalid": "customsearch_str_purcbytaxcode_sum_countryLowercase",
       "filters": "LEGACY_VAT_TRANSACTION_FILTERS",
@@ -52,6 +52,20 @@
         }
       }
     },
+    {
+      "id": "vat_nondeductiblesummary",
+      "type": "savedsearch",
+      "internalid": "customsearch_str_nd_stc_sum_countryLowercase",
+      "filters": "LEGACY_VAT_TRANSACTION_FILTERS",
+      "processor": {
+          "type": "scheduled",
+          "script": "SuiteApps/com.netsuite.PROJECT/src/processors/pre/VATSearchNonDeductibleProcessor",
+          "limits": {
+              "searchresult": 100000,
+              "period": "monthly"
+          }
+      }
+  },
     {
       "id": "taxcode_mapping",
       "type": "savedsearch",
