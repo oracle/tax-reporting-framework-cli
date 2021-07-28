@@ -18,6 +18,7 @@ define(["./TaxCodeMapper"], function (TaxCodeMapper) {
       var matchedTaxCode = {
         taxcodeId: taxcode.Id,
         taxcodeKey: this.findMatchingTaxCodeDefinition(taxcode),
+        taxcodeName: taxcode.Name,
       };
       return matchedTaxCode;
     } catch (ex) {

@@ -162,9 +162,10 @@ define([], function () {
       //     name: 'custrecord_4110_reverse_charge_alt',
       //     summary: 'group'
       // });
-      taxcode.IsNonDeductibleRef = row.getValue(
-        "custrecord_4110_nondeductible_parent"
-      )
+      taxcode.IsNonDeductibleRef = row.getValue({
+        name: "custrecord_4110_nondeductible_parent",
+        summary: "group",
+      })
         ? true
         : false;
       taxcode.IsNonDeductible = row.getValue({
@@ -191,6 +192,10 @@ define([], function () {
           name: "custrecord_4110_category",
           summary: "group",
         });
+
+        if (selcategory && selcategory.toLowerCase().indexOf('none') > -1) {
+          selcategory = '';
+        }
 
         if (!selcategory && isNull) {
           return true;

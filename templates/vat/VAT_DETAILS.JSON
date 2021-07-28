@@ -45,6 +45,23 @@
       }
     },
     {
+      "id": "vat_purchasedetailsstcndneg",
+      "type": "savedsearch",
+      "internalid": "customsearch_str_nd_stc_dtls_ie",
+      "filters": "LEGACY_VAT_TRANSACTION_FILTERS",
+      "processor": {
+          "type": "scheduled",
+          "script": "SuiteApps/com.netsuite.PROJECT/src/processors/pre/VATSearchNonDeductibleDetailsProcessor",
+          "limits": {
+              "searchresult": 100000,
+              "period": "monthly"
+          },
+          "params": {
+              "type": "PURCHASE"
+          }
+      }
+  },
+    {
       "id": "taxcode_mapping",
       "type": "savedsearch",
       "internalid": "customsearch_trf_taxcode_mapping_countryLowercase",
