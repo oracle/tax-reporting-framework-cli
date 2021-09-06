@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 /**
- * Copyright (c) 2021, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2021, Oracle and/or its affiliates.
+ * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl/
  */
 'use strict';
 
@@ -38,15 +39,14 @@ class project {
     this.createDeploy(options);
   }
 
-  createUUIDFile(path, uuid) {
-    this._fs.createFile(path + uuid);
+  async createUUIDFile(path, uuid) {
+    await this._fs.createFile(path + uuid);
   }
 
   async createComponents(options) {
-    const filename = 'SchemaInstaller.js';
     const opts = {
-      srcFile: filename,
-      filename: filename,
+      srcFile: `SDFinstaller.js`,
+      filename: `${options.projectName}_installer.js`,
       folder: options.srcPath + 'components/',
       replaceContents: [[/UUID/g, options.uuid]]
     };
@@ -69,10 +69,9 @@ class project {
   }
 
   async createObjects(options) {
-    const filename = 'customscript_schema_installer.xml';
     const opts = {
-      srcFile: filename,
-      filename: filename,
+      srcFile: `customscript_sdfinstaller.xml`,
+      filename: `customscript_${options.projectName}_installer.xml`,
       folder: options.projectPath + 'Objects/',
       replaceContents: [
         [/UUID/g, options.uuid],

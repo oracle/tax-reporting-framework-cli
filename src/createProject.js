@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
- * Copyright (c) 2021, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2021, Oracle and/or its affiliates.
+ * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl/
  */
 
 'use strict';
@@ -30,8 +31,7 @@ const questions = [
 ];
 
 module.exports = async () => {
-  inquirer.registerPrompt('filePath', require('inquirer-file-path'));
-  inquirer.registerPrompt('directory', require('inquirer-select-directory'));
+  inquirer.registerPrompt('fuzzypath', require('inquirer-fuzzy-path'));
   await inquirer
     .prompt([
       {
@@ -45,16 +45,27 @@ module.exports = async () => {
       if (answers.projectType === 'VAT') {
         questions.unshift(
           {
-            type: 'filePath',
+            type: 'fuzzypath',
             name: 'srcReportFile',
-            message: 'Browse src VAT report file. ',
-            basePath: './'
+            excludeFilter: (nodePath) => {
+              return nodePath.startsWith('.');
+            },
+            itemType: 'file',
+            rootPath: './',
+            message: 'Select VAT report file.',
+            suggestOnly: false
           },
           {
-            type: 'directory',
+            type: 'fuzzypath',
             name: 'templatePath',
-            message: 'Browse src VAT template dir. ',
-            basePath: './'
+            excludePath: (nodePath) =>
+              nodePath.startsWith('node_modules') ||
+              nodePath.startsWith('.git'),
+            excludeFilter: (nodePath) => nodePath == '.',
+            itemType: 'directory',
+            rootPath: './',
+            message: 'Select VAT template directory.',
+            suggestOnly: false
           }
         );
       } else {

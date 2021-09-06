@@ -1,35 +1,35 @@
 /**
- * @NApiVersion 2.1
+ * @NApiVersion 2.x
  * @NModuleScope TargetAccount
  */
 
-define(['./TaxCodeMapper'], function (TaxCodeMapper) {
+define(["./TaxCodeMapper"], function (TaxCodeMapper) {
   function COUNTRYTaxCodeMapper(params, context) {
     TaxCodeMapper.call(this, params, context);
-    this.name = 'COUNTRYTaxCodeMapper';
+    this.name = "COUNTRYTaxCodeMapper";
   }
-  util.extend(CountryTaxCodeMapper.prototype, TaxCodeMapper.prototype);
+  util.extend(COUNTRYTaxCodeMapper.prototype, TaxCodeMapper.prototype);
 
-  CountryTaxCodeMapper.prototype.process = function (row, columns) {
+  COUNTRYTaxCodeMapper.prototype.process = function (row, columns) {
     try {
       var taxcode = TaxCodeMapper.prototype.process.call(this, row);
 
       //only return id and matched taxcode
       var matchedTaxCode = {
         taxcodeId: taxcode.Id,
-        taxcodeKey: this.findMatchingTaxCodeDefinition(taxcode)
+        taxcodeKey: this.findMatchingTaxCodeDefinition(taxcode),
+        taxcodeName: taxcode.Name,
       };
-      log.error('matchedTaxCode', matchedTaxCode);
       return matchedTaxCode;
     } catch (ex) {
       throw ex;
     }
   };
 
-  CountryTaxCodeMapper.prototype.findMatchingTaxCodeDefinition = function (
+  COUNTRYTaxCodeMapper.prototype.findMatchingTaxCodeDefinition = function (
     taxcode
   ) {
-    var _CountryCode = 'COUNTRY';
+    var _CountryCode = "COUNTRY";
     var taxDefinitions = TAXDEFS;
     for (var taxDef in taxDefinitions) {
       if (taxDefinitions[taxDef](taxcode)) {

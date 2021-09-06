@@ -4,26 +4,14 @@
       "name": "VAT COUNTRY Report",
       "country": "COUNTRY",
       "report": "VAT",
+      "islegacy": true,
       "isCountryDefault": true,
       "uuid": "UUID",
       "createdBy": "com.netsuite.PROJECT",
       "translations": {
         "en_US": "VAT COUNTRY Report"
       },
-      "details": [
-        {
-          "type": "Summary",
-          "schema": "VAT_COUNTRY_SUMMARY.json"
-        },
-        {
-          "type": "Details",
-          "schema": "VAT_COUNTRY_DETAILS.json"
-        },
-        {
-          "type": "META",
-          "schema": "VAT_COUNTRY_META.json"
-        }
-      ]
+      "details": "DETAILS"
     }
   ]
 }

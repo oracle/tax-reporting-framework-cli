@@ -1,105 +1,124 @@
 /**
- * Copyright (c) 2021, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2021, Oracle and/or its affiliates.
+ * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl/
  */
 'use strict';
 
 const SUMMARY_JSON_TEMPLATE =
   '"data": [\n' +
-  "${schemas}" +
-  "\t{\n" +
+  '${schemas}' +
+  '\t{\n' +
   '\t\t"id": "report_data",\n' +
   '\t\t"type": "DERIVED",\n' +
   '\t\t"field": [\n' +
-  "${report_data}" +
-  "\t\t]\n" +
-  "\t}\n" +
-  "]\n";
-const DETAILS_JSON_TEMPLATE = '"data": [\n' + "${schemas}" + "]\n";
+  '${report_data}' +
+  '\t\t]\n' +
+  '\t}\n' +
+  ']\n';
+const DETAILS_JSON_TEMPLATE = '"data": [\n' + '${schemas}' + ']\n';
 const OF_SCHEMA_TEMPLATE =
-  "\t{\n" +
+  '\t{\n' +
   '\t\t"id": "${box}",\n' +
   '\t\t"source": ["vat_${search}summary"],\n' +
   '\t\t"transformer": [\n' +
-  "\t\t\t {\n" +
+  '\t\t\t {\n' +
   '\t\t\t\t "source": ["taxcode_mapping"],\n' +
   '\t\t\t\t "type": "eqJoin",\n' +
   '\t\t\t\t "selector": { "taxcodeKey": { "$eq": "${taxcode}" } },\n' +
   '\t\t\t\t "leftJoinKey": "taxcode",\n' +
   '\t\t\t\t "rightJoinKey": "taxcodeId"\n' +
-  "\t\t\t },\n" +
-  "\t\t\t {\n" +
+  '\t\t\t },\n' +
+  '\t\t\t {\n' +
   '\t\t\t\t "type": "find",\n' +
   '\t\t\t\t "value": { "taxcodeKey": { "$eq": "${taxcode}" } }\n' +
-  "\t\t\t }\n" +
-  "\t\t],\n" +
+  '\t\t\t }\n' +
+  '\t\t],\n' +
   '\t\t"field": [\n' +
-  "\t\t\t {\n" +
-  '\t\t\t\t "id": "${field}",\n' +
-  '\t\t\t\t "value": "${field}",\n' +
+  '\t\t\t {\n' +
+  '\t\t\t\t "id": "netamount",\n' +
+  '\t\t\t\t "value": "netamount",\n' +
   '\t\t\t\t "summarytype": "sum"\n' +
-  "\t\t\t }\n" +
-  "\t\t]\n" +
-  "\t},\n";
+  '\t\t\t },\n' +
+  '\t\t\t {\n' +
+  '\t\t\t\t "id": "taxamount",\n' +
+  '\t\t\t\t "value": "taxamount",\n' +
+  '\t\t\t\t "summarytype": "sum"\n' +
+  '\t\t\t }\n' +
+  '\t\t]\n' +
+  '\t},\n';
 const ACCRUE_SCHEMA_TEMPLATE =
-  "\t{\n" +
+  '\t{\n' +
   '\t\t"id": "${box}",\n' +
   '\t\t"source": ["vat_${search}summary"],\n' +
   '\t\t"transformer": [\n' +
-  "\t\t\t {\n" +
+  '\t\t\t {\n' +
   '\t\t\t\t "source": ["taxcode_mapping"],\n' +
   '\t\t\t\t "type": "eqJoin",\n' +
   '\t\t\t\t "selector": { "taxcodeKey": { "$in": ${taxcode} } },\n' +
   '\t\t\t\t "leftJoinKey": "taxcode",\n' +
   '\t\t\t\t "rightJoinKey": "taxcodeId"\n' +
-  "\t\t\t },\n" +
-  "\t\t\t {\n" +
+  '\t\t\t },\n' +
+  '\t\t\t {\n' +
   '\t\t\t\t "type": "find",\n' +
   '\t\t\t\t "value": { "taxcodeKey": { "$in": ${taxcode} } }\n' +
-  "\t\t\t }\n" +
-  "\t\t],\n" +
+  '\t\t\t }\n' +
+  '\t\t],\n' +
   '\t\t"field": [\n' +
-  "\t\t\t {\n" +
-  '\t\t\t\t "id": "${field}",\n' +
-  '\t\t\t\t "value": "${field}",\n' +
+  '\t\t\t {\n' +
+  '\t\t\t\t "id": "netamount",\n' +
+  '\t\t\t\t "value": "netamount",\n' +
   '\t\t\t\t "summarytype": "sum"\n' +
-  "\t\t\t }\n" +
-  "\t\t]\n" +
-  "\t},\n";
+  '\t\t\t },\n' +
+  '\t\t\t {\n' +
+  '\t\t\t\t "id": "taxamount",\n' +
+  '\t\t\t\t "value": "taxamount",\n' +
+  '\t\t\t\t "summarytype": "sum"\n' +
+  '\t\t\t }\n' +
+  '\t\t]\n' +
+  '\t},\n';
 const REPORT_DATA_TEMPLATE =
-  "\t\t{\n" +
+  '\t\t{\n' +
   '\t\t\t"id": "${box}",\n' +
   '\t\t\t"value": "${expression}"\n' +
-  "\t\t},\n";
+  '\t\t},\n';
 const DETAILS_SCHEMA_TEMPLATE =
-  "\t\t{\n" +
+  '\t\t{\n' +
   '\t\t\t"id": "${box}",\n' +
   '\t\t\t"source": ["vat_${search}"],\n' +
   '\t\t\t"transformer": [\n' +
-  "\t\t\t\t {\n" +
+  '\t\t\t\t {\n' +
   '\t\t\t\t\t "source": ["taxcode_mapping"],\n' +
   '\t\t\t\t\t "type": "eqJoin",\n' +
   '\t\t\t\t\t "selector": { "taxcodeKey": { "$in": ${taxcode} } },\n' +
   '\t\t\t\t\t "leftJoinKey": "taxcode",\n' +
   '\t\t\t\t\t "rightJoinKey": "taxcodeId"\n' +
-  "\t\t\t\t },\n" +
-  "\t\t\t\t {\n" +
+  '\t\t\t\t },\n' +
+  '\t\t\t\t {\n' +
   '\t\t\t\t\t "type": "find",\n' +
   '\t\t\t\t\t "value": { "taxcodeKey": { "$in": ${taxcode} } }\n' +
-  "\t\t\t\t }\n" +
-  "\t\t\t],\n" +
-  "\t\t},\n";
-const AMOUNT_RATE_REGEX = "\\.((Tax|Net|Notional)Amount|Rate)";
+  '\t\t\t\t }\n' +
+  '\t\t\t],\n' +
+  '\t\t},\n';
+const DETAILS_CONCAT_BOX_TEMPLATE =
+  '\t\t{' +
+  '\t\t\t"id": "${box}",' +
+  '\t\t\t"type": "CONCAT",' +
+  '\t\t\t"data": ["${boxes}"],' +
+  '\t\t\t"sort": "VAT_LEGACY_DRILLDOWN_SORT"' +
+  '\t\t},';
+const AMOUNT_RATE_REGEX = '\\.((Tax|Net|Notional)Amount|Rate)';
+const BOX_REGEX = '${box}';
 const SEARCH_INDEX = 1;
 const TAXCODE_INDEX = 2;
 
 const cleanupForWriting = (output) => {
-  var cleanOutput = output.replace("${schemas}", "");
-  cleanOutput = cleanOutput.replace("${report_data}", "");
+  var cleanOutput = output.replace('${schemas}', '');
+  cleanOutput = cleanOutput.replace('${report_data}', '');
   return cleanOutput;
 };
 
 const getFunctionBlocks = (fileContents, functionPattern) => {
-  var functionRegex = new RegExp(functionPattern, "gm");
+  var functionRegex = new RegExp(functionPattern, 'gm');
   var functionBlocks = fileContents.match(functionRegex);
   return functionBlocks;
 };
@@ -120,40 +139,40 @@ exports.convertToSummaries = (fileContents) => {
       convertedContents.push(convertToSummarySchema(block));
     });
   } else {
-    console.log("converter:  No reports to parse");
+    console.log('converter:  No reports to parse');
   }
   return convertedContents;
 
   function getObjectAssignmentPattern() {
-    var objPrefix = "obj\\.(box|rate\\w+)\\w+ = ";
-    var searchRegex = "\\w+\\.";
-    var ofRegex = "Of\\([\"']\\w+[\"']\\)";
+    var objPrefix = 'obj\\.(box|rate\\w+)\\w+ =\\s*';
+    var searchRegex = '\\w+\\.';
+    var ofRegex = 'Of\\(["\']\\w+["\']\\)';
     var accrueRegex =
-      "Accrue\\(([\"']\\w+[\"'], )?\\[[\"']\\w+[\"'](, [\"']\\w+[\"'])*\\]\\)";
+      'Accrue\\((["\']\\w+["\'],\\s*)?\\[\\s*["\']\\w+["\'](\\s*,\\s*["\']\\w+["\'])*(,|)\\s*\\]\\)';
 
-    var operatorRegex = "( [+-]\\s*)?";
+    var operatorRegex = '( [+-]\\s*)?';
     var objectAssignmentRegex =
       objPrefix +
-      "(" +
+      '(' +
       searchRegex +
-      "(" +
+      '(' +
       ofRegex +
-      "|" +
+      '|' +
       accrueRegex +
-      ")" +
+      ')' +
       AMOUNT_RATE_REGEX +
       operatorRegex +
-      ")+;";
+      ')+;';
 
     return objectAssignmentRegex;
   }
 
   function getFunctionPattern() {
-    var functionNameRegex = "(\\w+\\.)+GetData = function\\(\\) \\{";
-    var variableAssignmentRegex = "(\\s+var \\w+ = [_A-z0-9.(){}]+;)+";
+    var functionNameRegex = '(\\w+\\.)+GetData = function\\s*\\(\\) \\{';
+    var variableAssignmentRegex = '(\\s+var \\w+ = [_A-z0-9.(){}]+;)+';
     var objectAssignmentRegex = getObjectAssignmentPattern();
-    var multiobjectAssignmentRegex = "(\\s+" + objectAssignmentRegex + ")+";
-    var returnRegex = "\\s+return [_A-z0-9.(){}]+;";
+    var multiobjectAssignmentRegex = '(\\s+' + objectAssignmentRegex + ')+';
+    var returnRegex = '\\s+return [_A-z0-9.(){}]+;';
 
     var functionRegex =
       functionNameRegex +
@@ -166,65 +185,65 @@ exports.convertToSummaries = (fileContents) => {
   function convertToSummarySchema(block) {
     var objectAssignments = getObjectAssignmentsFromFunction(block);
     var outputJSON = SUMMARY_JSON_TEMPLATE;
-
-    objectAssignments.forEach(function (objectAssignment, index) {
-      var boxNamePattern = "obj.(\\w+)";
-      var boxName = getBoxName(objectAssignment, boxNamePattern);
-      var ofSchemas = getOfSchemas({
-        boxName: boxName,
-        objectAssignment: objectAssignment,
-      });
-      var accrueSchemas = getAccrueSchemas({
-        boxName: boxName,
-        objectAssignment: objectAssignment,
-      });
-      var allSchemas = ofSchemas.concat(accrueSchemas);
-      var boxExpression = "";
-      var boxRegex = new RegExp('"id": "(\\w+)"');
-      var reportData = [];
-
-      if (allSchemas.length > 1) {
-        allSchemas.forEach(function (schema, index) {
-          var operator = index === allSchemas.length - 1 ? "" : " + ";
-          allSchemas[index] = schema.replace(
-            boxRegex,
-            '"id": "$1_' + (index + 1) + '"'
-          );
-          var childBox = schema.match(boxRegex)[1] + "_" + (index + 1);
-          boxExpression += childBox + operator;
+    if (objectAssignments.length > 0) {
+      objectAssignments.forEach(function (objectAssignment, index) {
+        var boxNamePattern = 'obj.(\\w+)';
+        var boxName = getBoxName(objectAssignment, boxNamePattern);
+        var ofSchemas = getOfSchemas({
+          boxName: boxName,
+          objectAssignment: objectAssignment
         });
+        var accrueSchemas = getAccrueSchemas({
+          boxName: boxName,
+          objectAssignment: objectAssignment
+        });
+        var allSchemas = ofSchemas.concat(accrueSchemas);
+        var boxExpression = '';
+        var boxRegex = new RegExp('"id": "(\\w+)"');
+        var reportData = [];
 
-        var boxReportData = REPORT_DATA_TEMPLATE.replace("${box}", boxName);
-        boxReportData = boxReportData.replace("${expression}", boxExpression);
-        reportData.push(boxReportData);
-      } else {
-        var childBox = allSchemas[0].match(boxRegex)[1];
-        boxExpression = childBox;
-        var boxReportData = REPORT_DATA_TEMPLATE.replace("${box}", childBox);
-        boxReportData = boxReportData.replace("${expression}", boxExpression);
-        reportData.push(boxReportData);
-      }
+        if (allSchemas.length > 1) {
+          allSchemas.forEach(function (schema, index) {
+            var operator = index === allSchemas.length - 1 ? '' : ' + ';
+            allSchemas[index] = schema.replace(
+              boxRegex,
+              '"id": "$1_' + (index + 1) + '"'
+            );
+            var childBox = schema.match(boxRegex)[1] + '_' + (index + 1);
+            boxExpression += childBox + operator;
+          });
+        } else {
+          boxName = allSchemas[0].match(boxRegex)[1];
+          boxExpression = boxName;
+        }
 
-      var outputReportData = reportData.join(" ") + "${report_data}";
-      var outputSchemas = allSchemas.join(" ") + "${schemas}";
-      outputJSON = outputJSON.replace("${schemas}", outputSchemas);
-      outputJSON = outputJSON.replace("${report_data}", outputReportData);
-    });
+        var boxReportData = createBoxReportData({
+          box: boxName,
+          expression: boxExpression
+        });
+        reportData = reportData.concat(boxReportData);
+
+        var outputReportData = reportData.join(' ') + '${report_data}';
+        var outputSchemas = allSchemas.join(' ') + '${schemas}';
+        outputJSON = outputJSON.replace('${schemas}', outputSchemas);
+        outputJSON = outputJSON.replace('${report_data}', outputReportData);
+      });
+    }
     outputJSON = cleanupForWriting(outputJSON);
     return outputJSON;
   }
 
   function getOfSchemas(options) {
     var schemas = [];
-    var pattern = "\\w+\\.Of\\([\"'](\\w+)[\"']\\)" + AMOUNT_RATE_REGEX;
-    var regex = new RegExp(pattern, "g");
+    var pattern = '\\w+\\.Of\\(["\'](\\w+)["\']\\)' + AMOUNT_RATE_REGEX;
+    var regex = new RegExp(pattern, 'g');
     var objects = options.objectAssignment.match(regex);
 
     if (objects) {
       objects.forEach(function (obj, index) {
         var schema = getOfSchema({
           box: options.boxName,
-          block: obj,
+          block: obj
         });
         schemas.push(schema);
       });
@@ -235,9 +254,9 @@ exports.convertToSummaries = (fileContents) => {
 
   function getOfSchema(options) {
     var FIELD_INDEX = 3;
-    var schema = "";
+    var schema = '';
 
-    var pattern = "(\\w+)\\.Of\\([\"'](\\w+)[\"']\\)" + AMOUNT_RATE_REGEX;
+    var pattern = '(\\w+)\\.Of\\(["\'](\\w+)["\']\\)' + AMOUNT_RATE_REGEX;
     var regex = new RegExp(pattern);
     var components = options.block.match(regex);
     if (components) {
@@ -245,7 +264,7 @@ exports.convertToSummaries = (fileContents) => {
         template: OF_SCHEMA_TEMPLATE,
         components: components,
         box: options.box,
-        fieldIndex: FIELD_INDEX,
+        fieldIndex: FIELD_INDEX
       });
     }
 
@@ -255,16 +274,15 @@ exports.convertToSummaries = (fileContents) => {
   function getAccrueSchemas(options) {
     var schemas = [];
     var pattern =
-      "\\w+\\.Accrue\\(\\[[\"']\\w+[\"'](, [\"']\\w+[\"'])*\\]\\)" +
+      '\\w+\\.Accrue\\(\\[\\s*["\']\\w+["\'](\\s*,\\s*["\']\\w+["\'])*(,|)\\s*\\]\\)' +
       AMOUNT_RATE_REGEX;
-    var objRegex = new RegExp(pattern, "g");
+    var objRegex = new RegExp(pattern, 'g');
     var objects = options.objectAssignment.match(objRegex);
-
     if (objects) {
       objects.forEach(function (obj, index) {
         var schema = getAccrueSchema({
           box: options.boxName,
-          block: obj,
+          block: obj
         });
         schemas.push(schema);
       });
@@ -275,10 +293,10 @@ exports.convertToSummaries = (fileContents) => {
 
   function getAccrueSchema(options) {
     var FIELD_INDEX = 4;
-    var schema = "";
+    var schema = '';
 
     var pattern =
-      "(\\w+)\\.Accrue\\((\\[[\"']\\w+[\"'](, [\"']\\w+[\"'])*\\])\\)" +
+      '(\\w+)\\.Accrue\\((\\[\\s*["\']\\w+["\'](\\s*,\\s*["\']\\w+["\'])*(,|)\\s*\\])\\)' +
       AMOUNT_RATE_REGEX;
     var regex = new RegExp(pattern);
     var components = options.block.match(regex);
@@ -287,7 +305,7 @@ exports.convertToSummaries = (fileContents) => {
         template: ACCRUE_SCHEMA_TEMPLATE,
         components: components,
         box: options.box,
-        fieldIndex: FIELD_INDEX,
+        fieldIndex: FIELD_INDEX
       });
     }
 
@@ -298,27 +316,63 @@ exports.convertToSummaries = (fileContents) => {
     var template = options.template;
     var components = options.components;
     var fieldIndex = options.fieldIndex;
-    var taxcodeRegex = new RegExp("\\$\\{taxcode\\}", "g");
-    var fieldRegex = new RegExp("\\$\\{field\\}", "g");
+    var taxcodeRegex = new RegExp('\\$\\{taxcode\\}', 'g');
+    var fieldRegex = new RegExp('\\$\\{field\\}', 'g');
 
     var search = components[SEARCH_INDEX].toLowerCase();
-    var box = options.box.toLowerCase();
+    var box = options.box;
     var taxcode = components[TAXCODE_INDEX];
     var field = components[fieldIndex].toLowerCase();
 
-    var replacedSchema = template.replace("${search}", search);
-    replacedSchema = replacedSchema.replace("${box}", box);
+    var replacedSchema = template.replace('${search}', search);
+    replacedSchema = replacedSchema.replace(BOX_REGEX, box);
     replacedSchema = replacedSchema.replace(taxcodeRegex, taxcode);
-    replacedSchema = replacedSchema.replace(fieldRegex, field);
+    replacedSchema =
+      field !== 'netamount' && field !== 'taxamount'
+        ? replacedSchema.replace(fieldRegex, field)
+        : replacedSchema;
 
     return replacedSchema;
   }
 
   function getObjectAssignmentsFromFunction(block) {
     var objectAssignmentPattern = getObjectAssignmentPattern();
-    var objectAssignmentRegex = new RegExp(objectAssignmentPattern, "gm");
+    var objectAssignmentRegex = new RegExp(objectAssignmentPattern, 'gm');
     var objectAssignments = block.match(objectAssignmentRegex);
     return objectAssignments;
+  }
+
+  function createBoxReportData(options) {
+    let boxReportData = [];
+    let boxPattern = new RegExp(options.box + '(_\\d+)?', 'g');
+
+    let totalBox = REPORT_DATA_TEMPLATE.replace(BOX_REGEX, options.box);
+    totalBox = totalBox.replace('${expression}', options.expression);
+    boxReportData.push(totalBox);
+
+    let taxamountBox = REPORT_DATA_TEMPLATE.replace(
+      BOX_REGEX,
+      options.box + '_taxamount'
+    );
+    let taxamountExpression = options.expression.replace(
+      boxPattern,
+      options.box + '.taxamount'
+    );
+    taxamountBox = taxamountBox.replace('${expression}', taxamountExpression);
+    boxReportData.push(taxamountBox);
+
+    let netamountBox = REPORT_DATA_TEMPLATE.replace(
+      BOX_REGEX,
+      options.box + '_netamount'
+    );
+    let netamountExpression = options.expression.replace(
+      boxPattern,
+      options.box + '.netamount'
+    );
+    netamountBox = netamountBox.replace('${expression}', netamountExpression);
+    boxReportData.push(netamountBox);
+
+    return boxReportData;
   }
 };
 
@@ -331,45 +385,43 @@ exports.convertToDetails = (fileContents) => {
       convertedContents.push(convertToDetailsSchema(block));
     });
   } else {
-    console.log("converter:  No reports to parse");
+    console.log('converter:  No reports to parse');
   }
   return convertedContents;
 
   function getFunctionPattern() {
     var functionNamePattern =
-      "(\\w+\\.)+GetDrilldownData = function\\(\\w+(, \\w+)?\\) \\{";
-    var variableAssignmentPattern = "(\\s+var \\w+ = [_A-z0-9.(){}]+;)*";
-    var switchPattern = "\\s+switch \\(boxNumber\\) \\{";
+      '(\\w+\\.)+GetDrilldownData = function\\s*\\(\\w+(, \\w+)?\\) \\{';
+    var variableAssignmentPattern = '(\\s+var \\w+ = [_A-z0-9.(){}]+;)*';
+    var loopPattern = getLoopPattern();
+    var switchPattern = '\\s+switch \\(boxNumber\\) \\{';
     var dataAssignmentPattern = getDataAssignmentPattern();
-    var multiDataAssignmentPattern = "(" + dataAssignmentPattern + ")+";
-    var returnPattern = "\\s+return [_A-z0-9.(){}]+;";
+    var multiDataAssignmentPattern = '(' + dataAssignmentPattern + ')+';
+    var returnPattern = '\\s+return [_A-z0-9.(){}]+;';
     var closingPattern =
-      "\\s+\\}" +
+      '\\s+\\}' +
       variableAssignmentPattern +
-      "\\s+ds\\.ReportData = data;" +
+      '\\s+ds\\.ReportData = data;' +
       returnPattern;
 
     var functionPattern =
       functionNamePattern +
       variableAssignmentPattern +
+      loopPattern +
       switchPattern +
       multiDataAssignmentPattern +
       closingPattern;
     return functionPattern;
   }
 
-  function getDataAssignmentPattern() {
-    var dataAssignmentPattern = "\\s+case '(\\w+)':(\\s|\\n|\\r)*data =";
-    var detailsPattern =
-      "(\\s|\\n|\\r)*_DR\\.Get(Sales|Purchase)Details(\\w+)?\\(\\['\\w+'(,'\\w+')*\\](, '\\w+')?\\)";
-    var fullDataAssignmentPattern =
-      dataAssignmentPattern +
-      detailsPattern +
-      "(\\.concat\\(" +
-      detailsPattern +
-      "\\))*;(\\s|\\n|\\r)*break;";
+  function getLoopPattern() {
+    const catchAllCharacter = "[_A-z0-9.(){} +,']";
+    const keywordPattern =
+      '(\\s+(for|if)\\s\\(' + catchAllCharacter + '+\\) \\{';
+    const linePattern =
+      '(\\s+' + catchAllCharacter + '+=' + catchAllCharacter + '+;)+';
 
-    return fullDataAssignmentPattern;
+    return keywordPattern + linePattern + '\\s+})*';
   }
 
   function convertToDetailsSchema(block) {
@@ -377,14 +429,14 @@ exports.convertToDetails = (fileContents) => {
     var outputJSON = DETAILS_JSON_TEMPLATE;
 
     dataAssignments.forEach(function (dataAssignment) {
-      var boxNamePattern = "obj.(\\w+)";
+      var boxNamePattern = 'obj.(\\w+)';
       var boxName = getBoxName(dataAssignment, boxNamePattern);
       var schemas = getDetailSchemas({
         box: boxName,
-        dataAssignment: dataAssignment,
+        dataAssignment: dataAssignment
       });
-      var outputSchemas = schemas.join(" ") + "${schemas}";
-      outputJSON = outputJSON.replace("${schemas}", outputSchemas);
+      var outputSchemas = schemas.join(' ') + '${schemas}';
+      outputJSON = outputJSON.replace('${schemas}', outputSchemas);
     });
 
     outputJSON = cleanupForWriting(outputJSON);
@@ -393,22 +445,21 @@ exports.convertToDetails = (fileContents) => {
 
   function getDataAssignmentsFromFunction(block) {
     var dataAssignmentPattern = getDataAssignmentPattern();
-    var dataAssignmentRegex = new RegExp(dataAssignmentPattern, "gm");
+    var dataAssignmentRegex = new RegExp(dataAssignmentPattern, 'gm');
     var dataAssignments = block.match(dataAssignmentRegex);
-
     return dataAssignments;
   }
 
   function getDataAssignmentPattern() {
-    var dataAssignmentPattern = "\\s+case '(\\w+)':(\\s|\\n|\\r)*data =";
+    var dataAssignmentPattern = "\\s+case '(\\w+)':\\s*data =";
     var detailsPattern =
-      "(\\s|\\n|\\r)*_DR\\.Get(Sales|Purchase)Details(\\w+)?\\(\\['\\w+'(,'\\w+')*\\](, '\\w+')?\\)";
+      "\\s*_DR\\s*\\.Get(Sales|Purchase)Details(\\w+)?\\(\\s*\\[\\s*'\\w+'(,\\s*'\\w+'(,|)\\s*)*\\](,\\s*'\\w+')?\\s*\\)";
     var fullDataAssignmentPattern =
       dataAssignmentPattern +
       detailsPattern +
-      "(\\.concat\\(" +
+      '(\\s*\\.concat\\(' +
       detailsPattern +
-      "\\))*;(\\s|\\n|\\r)*break;";
+      '\\s*\\))*;\\s*break;';
 
     return fullDataAssignmentPattern;
   }
@@ -424,31 +475,37 @@ exports.convertToDetails = (fileContents) => {
   function getDetailSchemas(options) {
     var schemas = [];
     var pattern =
-      "_DR\\.Get(Sales|Purchase)Details(\\w+)?\\(\\['\\w+'(,'\\w+')*\\](, '\\w+')?\\)";
-    var regex = new RegExp(pattern, "g");
+      "_DR\\s*\\.Get(Sales|Purchase)Details(\\w+)?\\(\\s*\\[\\s*'\\w+'(,\\s*'\\w+'(,|)\\s*)*\\](,\\s*'\\w+')?\\s*\\)";
+    var regex = new RegExp(pattern, 'g');
     var details = options.dataAssignment.match(regex);
-
-    details.forEach(function (detail) {
-      var schema = createDetailSchema({
-        box: options.box,
-        detail: detail,
+    if (details) {
+      details.forEach(function (detail, index) {
+        var schema = createDetailSchema({
+          box: options.box + '_' + index,
+          detail: detail
+        });
+        schemas.push(schema);
       });
-      schemas.push(schema);
-    });
+      var concatDetailsBox = createConcatDetailsBox({
+        box: options.box,
+        details: details
+      });
+      schemas.push(concatDetailsBox);
+    }
     return schemas;
   }
 
   function createDetailSchema(options) {
-    var schema = "";
+    var schema = '';
     var pattern =
-      "_DR\\.Get((Sales|Purchase)Details(\\w+)?)\\((\\[('\\w+')(,'\\w+')*\\])(, '\\w+')?\\)";
+      "_DR\\s*.Get((Sales|Purchase)Details(\\w+)?)\\(\\s*(\\[\\s*('\\w+')(,\\s*'\\w+'(,|)\\s*)*\\])(,\\s*'\\w+')?\\s*\\)";
     var regex = new RegExp(pattern);
     var components = options.detail.match(regex);
 
     if (components) {
       schema = replaceInDetailsSchema({
         components: components,
-        box: options.box,
+        box: options.box
       });
     }
 
@@ -461,21 +518,37 @@ exports.convertToDetails = (fileContents) => {
 
     var template = DETAILS_SCHEMA_TEMPLATE;
     var components = options.components;
-    var taxcodeRegex = new RegExp("\\$\\{taxcode\\}", "g");
+    var taxcodeRegex = new RegExp('\\$\\{taxcode\\}', 'g');
 
     var search = components[searchIndex].toLowerCase();
-    var box = options.box.toLowerCase();
+    var box = options.box;
     var taxcode = components[taxcodeIndex];
 
-    var replacedSchema = template.replace("${search}", search);
-    replacedSchema = replacedSchema.replace("${box}", box);
+    var replacedSchema = template.replace('${search}', search);
+    replacedSchema = replacedSchema.replace(BOX_REGEX, box);
     replacedSchema = replacedSchema.replace(taxcodeRegex, taxcode);
 
     return replacedSchema;
+  }
+
+  function createConcatDetailsBox(options) {
+    let concatDetailsBox = DETAILS_CONCAT_BOX_TEMPLATE.replace(
+      BOX_REGEX,
+      options.box
+    );
+    let boxes = options.details.map(
+      (detail, index) => options.box + '_' + index
+    );
+    concatDetailsBox = concatDetailsBox.replace('${boxes}', boxes.join('","'));
+    return concatDetailsBox;
   }
 };
 
 exports.getTaxDefs = (contents) => {
   const matches = contents.match(/^.*?this.TaxDefinition = (\{[\s\S]*?\});/m);
-  return matches ? matches[1] : null;
+  var taxDefs = null;
+  if (matches) {
+    taxDefs = matches[1].replace(/nlapiStringToDate/g, 'new Date');
+  }
+  return taxDefs;
 };

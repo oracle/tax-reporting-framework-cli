@@ -16,19 +16,19 @@
       "recordtype": "subsidiary",
       "recordid": "context.report.subsidiary",
       "features": ["SUBSIDIARIES"],
-      "fields": ["name", "federalidnumber"]
+      "fields": ["legalname", "name", "federalidnumber", "currency"]
     },
     {
       "id": "company",
       "type": "config",
       "recordtype": "companyinformation",
-      "fields": ["employerid", "companyname"]
+      "fields": ["legalname", "employerid", "companyname", "basecurrency"]
     },
     {
-      "id": "vat_salesdetails",
+      "id": "vat_salessummary",
       "type": "savedsearch",
-      "internalid": "customsearch_str_salesbytaxcode_sum",
-      "filters": "STR_BASE_TRANSACTION_FILTERS",
+      "internalid": "customsearch_str_salesbytaxcode_sum_countryLowercase",
+      "filters": "LEGACY_VAT_TRANSACTION_FILTERS",
       "processor": {
         "type": "scheduled",
         "script": "SuiteApps/com.netsuite.PROJECT/src/processors/pre/VATSearchProcessor",
@@ -39,14 +39,42 @@
       }
     },
     {
+      "id": "vat_purchasesummary",
+      "type": "savedsearch",
+      "internalid": "customsearch_str_purcbytaxcode_sum_countryLowercase",
+      "filters": "LEGACY_VAT_TRANSACTION_FILTERS",
+      "processor": {
+        "type": "scheduled",
+        "script": "SuiteApps/com.netsuite.PROJECT/src/processors/pre/VATSearchProcessor",
+        "limits": {
+          "searchresult": 100000,
+          "period": "monthly"
+        }
+      }
+    },
+    {
+      "id": "vat_nondeductiblesummary",
+      "type": "savedsearch",
+      "internalid": "customsearch_str_nd_stc_sum_countryLowercase",
+      "filters": "LEGACY_VAT_TRANSACTION_FILTERS",
+      "processor": {
+          "type": "scheduled",
+          "script": "SuiteApps/com.netsuite.PROJECT/src/processors/pre/VATSearchNonDeductibleProcessor",
+          "limits": {
+              "searchresult": 100000,
+              "period": "monthly"
+          }
+      }
+  },
+    {
       "id": "taxcode_mapping",
       "type": "savedsearch",
-      "internalid": "customsearch_trf_taxcode_mapping",
+      "internalid": "customsearch_trf_taxcode_mapping_countryLowercase",
       "filters": [
         {
           "name": "country",
           "operator": "is",
-          "values": "PH",
+          "values": "COUNTRY",
           "useRawValues": true
         }
       ],

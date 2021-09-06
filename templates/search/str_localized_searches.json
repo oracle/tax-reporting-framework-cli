@@ -4,6 +4,7 @@
       "title": "TAF SEARCH",
       "id": "customsearch_taf_template",
       "type": "transaction",
+      "islegacy": true,
       "columns": [
         {
           "name": "trandate",
