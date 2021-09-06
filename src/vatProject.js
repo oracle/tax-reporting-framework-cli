@@ -1,5 +1,6 @@
 /**
- * Copyright (c) 2021, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2021, Oracle and/or its affiliates.
+ * Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl/
  */
 'use strict';
 
@@ -18,9 +19,9 @@ class vatProject extends project {
   }
 
   async create(options) {
-    const prettierFormat = { "tabWidth": 4, "singleQuote": true, parser: "babel" }
+    const prettierFormat = { tabWidth: 4, singleQuote: true, parser: 'babel' };
     this.contents = await this._fs.readFile(options.srcReportFile);
-    this.contents = await prettier.format(this.contents, prettierFormat)
+    this.contents = await prettier.format(this.contents, prettierFormat);
     super.create(options);
     this.createVATReportsRecord(options);
     this.createVATSearchesRecord(options);
@@ -34,20 +35,20 @@ class vatProject extends project {
     let schemaDetails = [];
     const convertedSummaries = convertToSummaries(this.contents);
     convertedSummaries.forEach(async (content, idx) => {
-      const schemaName = `VAT_` + options.country + `_SUMMARY_${idx}.json`
+      const schemaName = `VAT_` + options.country + `_SUMMARY_${idx}.json`;
       schemaDetails.push({
-        "type": "Summary",
-        "schema": schemaName
-      })
-    })
+        type: 'Summary',
+        schema: schemaName
+      });
+    });
     const convertedDetails = convertToDetails(this.contents);
     convertedDetails.forEach(async (content, idx) => {
-      const schemaName = `VAT_` + options.country + `_DETAILS_${idx}.json`
+      const schemaName = `VAT_` + options.country + `_DETAILS_${idx}.json`;
       schemaDetails.push({
-        "type": "Details",
-        "schema": schemaName
-      })
-    })
+        type: 'Details',
+        schema: schemaName
+      });
+    });
 
     const opts = {
       srcFile: 'vat/' + filename,
@@ -117,7 +118,12 @@ class vatProject extends project {
     });
 
     const folder = 'schemas/';
-    this.createScriptFile(options, `VAT_META.json`, `VAT_${options.country}_META.json`, folder);
+    this.createScriptFile(
+      options,
+      `VAT_META.json`,
+      `VAT_${options.country}_META.json`,
+      folder
+    );
   }
 
   async createProcessors(options) {
