@@ -38,15 +38,14 @@ class project {
     this.createDeploy(options);
   }
 
-  createUUIDFile(path, uuid) {
-    this._fs.createFile(path + uuid);
+  async createUUIDFile(path, uuid) {
+    await this._fs.createFile(path + uuid);
   }
 
   async createComponents(options) {
-    const filename = 'SchemaInstaller.js';
     const opts = {
-      srcFile: filename,
-      filename: filename,
+      srcFile: `SDFinstaller.js`,
+      filename: `${options.projectName}_installer.js`,
       folder: options.srcPath + 'components/',
       replaceContents: [[/UUID/g, options.uuid]]
     };
@@ -69,10 +68,9 @@ class project {
   }
 
   async createObjects(options) {
-    const filename = 'customscript_schema_installer.xml';
     const opts = {
-      srcFile: filename,
-      filename: filename,
+      srcFile: `customscript_sdfinstaller.xml`,
+      filename: `customscript_${options.projectName}_installer.xml`,
       folder: options.projectPath + 'Objects/',
       replaceContents: [
         [/UUID/g, options.uuid],

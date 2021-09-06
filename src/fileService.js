@@ -17,7 +17,7 @@ module.exports = class fileService {
   }
 
   async createFile(name, contents) {
-    await fs.writeFile(name, contents).catch((err) => {
+    await fs.writeFile(name, contents || '').catch((err) => {
       // console.log(`Failed to write file: ${name}, Error: ${err}`);
       throw err;
     });

@@ -45,7 +45,6 @@ Commands:
 - [x] prettier: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3018&rectype=2933&whence=
 - [x] path: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3015&rectype=2933&whence=
 whence=
-- [x] node-fs-extra: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3016&rectype=2933&whence=
 - [x] uuid: https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3017&rectype=2933&whence=
 - [x] inquirer-fuzzy-path https://nlcorp.app.netsuite.com/app/common/custom/custrecordentry.nl?id=3095&rectype=2933&whence= 
 
