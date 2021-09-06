@@ -1,18 +1,18 @@
-<sdfinstallationscript scriptid="customscript_schema_installer">
+<sdfinstallationscript scriptid="customscript_PROJECT_installer">
   <description></description>
   <isinactive>F</isinactive>
-  <name>Schema Installer</name>
+  <name>PROJECT Schema Installer</name>
   <notifyadmins>F</notifyadmins>
   <notifyemails></notifyemails>
   <notifyowner>T</notifyowner>
   <notifyuser>F</notifyuser>
-  <scriptfile>[/SuiteApps/com.netsuite.PROJECT/src/components/SchemaInstaller.js]</scriptfile>
+  <scriptfile>[/SuiteApps/com.netsuite.PROJECT/src/components/PROJECT_installer.js]</scriptfile>
   <scriptdeployments>
-    <scriptdeployment scriptid="customdeploy_schema_installer">
+    <scriptdeployment scriptid="customdeploy_PROJECT_installer">
       <isdeployed>T</isdeployed>
       <loglevel>ERROR</loglevel>
       <status>RELEASED</status>
-      <title>Schema Installer</title>
+      <title>PROJECT Schema Installer</title>
     </scriptdeployment>
   </scriptdeployments>
 </sdfinstallationscript>

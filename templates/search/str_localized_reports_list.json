@@ -5,6 +5,7 @@
       "country": "COUNTRY",
       "report": "TAF",
       "isCountryDefault": true,
+      "islegacy": true,
       "uuid": "UUID",
       "createdBy": "com.netsuite.PROJECT",
       "translations": {
