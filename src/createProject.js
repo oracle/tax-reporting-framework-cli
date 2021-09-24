@@ -52,7 +52,7 @@ module.exports = async (options) => {
             },
             itemType: 'file',
             rootPath: './',
-            message: 'Select VAT report file.',
+            message: 'Select VAT report file. ',
             suggestOnly: false
           },
           {
@@ -64,7 +64,7 @@ module.exports = async (options) => {
             excludeFilter: (nodePath) => nodePath == '.',
             itemType: 'directory',
             rootPath: './',
-            message: 'Select VAT template directory.',
+            message: 'Select VAT template directory. ',
             suggestOnly: false
           }
         );
@@ -72,7 +72,7 @@ module.exports = async (options) => {
         questions.unshift({
           type: 'list',
           name: 'searchType',
-          message: 'Select search type',
+          message: 'Select search type. ',
           choices: ['search', 'suiteql']
         });
       }

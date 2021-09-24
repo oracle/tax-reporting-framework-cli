@@ -3,7 +3,7 @@
 ## Command line interface for creating reports in TRF with ease!
 ```
 ? Select project type.  TAF
-? Select search type suiteql
+? Select search type.  suiteql
 ? Enter project name. (The project ID must not be empty and can contain only lowercase alphabetic and numeric characters)
  localization-ireland
 ? Enter report country.  IE
@@ -13,7 +13,7 @@
 Project Name:  localization-ireland
 Project Type:  TAF
 Country:  IE
-✨ Done in 0.003s!
+✨ Done in 0.005s!
 ```
 
 ## Installation
