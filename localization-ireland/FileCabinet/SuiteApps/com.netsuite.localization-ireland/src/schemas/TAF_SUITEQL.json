@@ -1,0 +1,108 @@
+{
+    "name": "TAF SUITEQL REPORT",
+    "id": "TAF_SUITEQL_REPORT",
+    "type": "TAF",
+    "context": {
+        "report": {
+            "nexus": "reportparam.nexus",
+            "subsidiary": "reportparam.subsidiary"
+        }
+    },
+    "source": [
+        {
+            "id": "transactions_raw",
+            "type": "query",
+            "querybuilder": {
+                "type": "suiteql",
+                "script": "SuiteApps/com.netsuite.localization-ireland/src/builders/SuiteQLBuilder"
+            },
+            "processor": {
+                "type": "scheduled",
+                "script": "SuiteApps/com.netsuite.localization-ireland/src/processors/pre/SuiteQLPreProcessor"
+            }
+        }
+    ],
+    "data": [
+        {
+            "id": "transactions",
+            "source": ["transactions_raw"],
+            "field": [
+                {
+                    "id": "type",
+                    "value": "type",
+                    "type": "string"
+                },
+                {
+                    "id": "typetext",
+                    "value": "typetext",
+                    "type": "string"
+                },
+                {
+                    "id": "glnumber",
+                    "value": "glnumber",
+                    "type": "string"
+                },
+                {
+                    "id": "glnumberdate",
+                    "value": "glnumberdate",
+                    "type": "date"
+                },
+                {
+                    "id": "accnumber",
+                    "value": "accnumber",
+                    "type": "string"
+                },
+                {
+                    "id": "accname",
+                    "value": "accname",
+                    "type": "string"
+                },
+                {
+                    "id": "entityId",
+                    "value": "entityId",
+                    "type": "string"
+                },
+                {
+                    "id": "entityName",
+                    "value": "entityName",
+                    "type": "string"
+                },
+                {
+                    "id": "tranid",
+                    "value": "tranid",
+                    "type": "string"
+                },
+                {
+                    "id": "memo",
+                    "value": "memo",
+                    "type": "string"
+                },
+                {
+                    "id": "debit",
+                    "value": "debit",
+                    "type": "number"
+                },
+                {
+                    "id": "credit",
+                    "value": "credit",
+                    "type": "number"
+                },
+                {
+                    "id": "trandate",
+                    "value": "trandate",
+                    "type": "date"
+                },
+                {
+                    "id": "fxamount",
+                    "value": "fxamount",
+                    "type": "number"
+                },
+                {
+                    "id": "currencytext",
+                    "value": "currencytext",
+                    "type": "string"
+                }
+            ]
+        }
+    ]
+}

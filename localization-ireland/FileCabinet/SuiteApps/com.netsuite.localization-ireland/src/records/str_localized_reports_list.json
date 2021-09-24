@@ -1,0 +1,26 @@
+{
+    "list": [
+        {
+            "name": "TAF SuiteQL Report",
+            "country": "IE",
+            "report": "TAF",
+            "isCountryDefault": true,
+            "islegacy": true,
+            "uuid": "00187e15-742a-43ce-b856-d0d6f32cb8d2",
+            "createdBy": "com.netsuite.localization-ireland",
+            "translations": {
+                "en_US": "TAF SuiteQL Report"
+            },
+            "details": [
+                {
+                    "type": "Summary",
+                    "schema": "TAF_SUITEQL.json"
+                },
+                {
+                    "type": "META",
+                    "schema": "TAF_SUITEQL_META.json"
+                }
+            ]
+        }
+    ]
+}
