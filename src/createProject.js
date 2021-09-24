@@ -30,7 +30,7 @@ const questions = [
   }
 ];
 
-module.exports = async () => {
+module.exports = async (options) => {
   inquirer.registerPrompt('fuzzypath', require('inquirer-fuzzy-path'));
   await inquirer
     .prompt([
@@ -38,7 +38,7 @@ module.exports = async () => {
         type: 'list',
         name: 'projectType',
         message: 'Select project type. ',
-        choices: ['VAT', 'TAF']
+        choices: options && options.localization ? ['VAT', 'TAF'] : ['TAF'] 
       }
     ])
     .then(function (answers) {
