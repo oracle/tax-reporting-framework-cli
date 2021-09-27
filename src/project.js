@@ -45,7 +45,7 @@ class project {
 
   async createComponents(options) {
     const opts = {
-      srcFile: `SDFinstaller.js`,
+      srcFile: `SDFInstaller.js`,
       filename: `${options.projectName}_installer.js`,
       folder: options.srcPath + 'components/',
       replaceContents: [[/UUID/g, options.uuid]]

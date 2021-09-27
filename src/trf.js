@@ -6,7 +6,7 @@
 
 'use strict';
 
-const program = require('commander');
+const {program, Option} = require('commander');
 const chalk = require('chalk');
 const createProject = require('./createProject');
 
@@ -16,11 +16,12 @@ class trfCLI {
     try {
       program
         .version('1.0.0')
+        .addOption(new Option('-loc, --localization').hideHelp())
         .description(chalk.redBright('🚀 TRF CLI 🚀'))
         .command('create')
         .description('create new TRF project 😎')
         .action(function () {
-          createProject();
+          createProject(program.opts());
         });
       program.parse(process.argv);
 
