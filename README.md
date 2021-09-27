@@ -2,19 +2,18 @@
 
 ## Command line interface for creating reports in TRF with ease!
 ```
-? Select project type.  VAT
-? Find src VAT report file vat.IE.Report.js
-? Enter project name.  Localization-Ireland
+? Select project type.  TAF
+? Select search type.  suiteql
+? Enter project name. (The project ID must not be empty and can contain only lowercase alphabetic and numeric characters)
+ localization-ireland
 ? Enter report country.  IE
 ------------------
 🚀 TRF CLI 🚀
 ------------------
-Project Name:  Localization-Ireland
-Project Type:  VAT
+Project Name:  localization-ireland
+Project Type:  TAF
 Country:  IE
-VAT Source Report:  vat.IE.Report.js
-Creating your project...🚀🚀🚀
-✨ Done in 0.002s!
+✨ Done in 0.005s!
 ```
 
 ## Installation

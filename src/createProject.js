@@ -30,7 +30,7 @@ const questions = [
   }
 ];
 
-module.exports = async () => {
+module.exports = async (options) => {
   inquirer.registerPrompt('fuzzypath', require('inquirer-fuzzy-path'));
   await inquirer
     .prompt([
@@ -38,7 +38,7 @@ module.exports = async () => {
         type: 'list',
         name: 'projectType',
         message: 'Select project type. ',
-        choices: ['VAT', 'TAF']
+        choices: options && options.localization ? ['VAT', 'TAF'] : ['TAF'] 
       }
     ])
     .then(function (answers) {
@@ -52,7 +52,7 @@ module.exports = async () => {
             },
             itemType: 'file',
             rootPath: './',
-            message: 'Select VAT report file.',
+            message: 'Select VAT report file. ',
             suggestOnly: false
           },
           {
@@ -64,7 +64,7 @@ module.exports = async () => {
             excludeFilter: (nodePath) => nodePath == '.',
             itemType: 'directory',
             rootPath: './',
-            message: 'Select VAT template directory.',
+            message: 'Select VAT template directory. ',
             suggestOnly: false
           }
         );
@@ -72,7 +72,7 @@ module.exports = async () => {
         questions.unshift({
           type: 'list',
           name: 'searchType',
-          message: 'Select search type',
+          message: 'Select search type. ',
           choices: ['search', 'suiteql']
         });
       }

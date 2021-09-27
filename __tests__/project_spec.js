@@ -43,13 +43,12 @@ describe('project', function () {
 
   test('project.createComponents > expect > opts are correct', () => {
     jest
-      .spyOn(project.prototype, 'createFileFromTemplate')
+      .spyOn(project.prototype, 'createFileFromTemplate') 
       .mockImplementation(() => {});
-    const filename = 'SchemaInstaller.js';
-    this.aut.createComponents(this.options);
+   this.aut.createComponents(this.options);
     expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
-      srcFile: filename,
-      filename: filename,
+      srcFile: 'SDFInstaller.js',
+      filename: 'someproject_installer.js',
       folder: this.options.srcPath + 'components/',
       replaceContents: [[/UUID/g, this.options.uuid]]
     });
@@ -77,11 +76,10 @@ describe('project', function () {
     jest
       .spyOn(project.prototype, 'createFileFromTemplate')
       .mockImplementation(() => {});
-    const filename = 'customscript_schema_installer.xml';
     this.aut.createObjects(this.options);
     expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
-      srcFile: filename,
-      filename: filename,
+      srcFile: 'customscript_sdfinstaller.xml',
+      filename: 'customscript_someproject_installer.xml',
       folder: this.options.projectPath + 'Objects/',
       replaceContents: [
         [/UUID/g, this.options.uuid],
