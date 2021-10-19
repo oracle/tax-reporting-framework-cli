@@ -1,7 +1,31 @@
 # Tax Reporting Framework CLI
+Tax Reporting Framework CLI is a tool for generating boilerplate codes to quickly setup and deploy your reports using Tax Reporting Framework SuiteApp in NetSuite.
 
-## Command line interface for creating reports in TRF with ease!
+## What is Tax Reporting Framework?
+Tax Reporting Framework is a powerful reporting framework that uses JSON schema for report definition, freemarker templates for report output and supports Saved Searches and SuiteQL as data source. It was previously named *SuiteTax Reports* but with the recent support for Legacy environment it was renamed to **Tax Reporting Framework**. 
+
+## Installation
 ```
+npm install -g @oracle/tax-reporting-framework-cli
+```
+
+## Usage
+```
+Usage: trf [options] [command]
+
+🚀 TRF CLI 🚀
+
+Options:
+  -V, --version  output the version number
+  -h, --help     output usage information
+
+Commands:
+  create         create new TRF project 😎
+```
+
+## Sample
+```
+trf create
 ? Select project type.  TAF
 ? Select search type.  suiteql
 ? Enter project name. (The project ID must not be empty and can contain only lowercase alphabetic and numeric characters)
@@ -16,23 +40,8 @@ Country:  IE
 ✨ Done in 0.005s!
 ```
 
-## Installation
-```
-git clone https://gitlab.eng.netsuite.com/localization-prod/shared-components/tax-reporting-framework-cli
-cd tax-reporting-framework-cli
-npm install -g ./
-trf create
-```
-## Commands
-```
-Usage: trf [options] [command]
+## [Contributing](./CONTRIBUTING.md)
+Tax Reporting Framework CLI is an open source project. Pull Requests are currently not being accepted. See [CONTRIBUTING](./CONTRIBUTING.md) for details.
 
-🚀 TRF CLI 🚀
-
-Options:
-  -V, --version  output the version number
-  -h, --help     output usage information
-
-Commands:
-  create         create new TRF project 😎
-```
+## License
+Copyright (c) 2021 Oracle and/or its affiliates The Universal Permissive License (UPL), Version 1.0.

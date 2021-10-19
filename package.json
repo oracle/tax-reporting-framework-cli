@@ -1,8 +1,8 @@
 {
-  "name": "tax-reporting-framework-cli",
+  "name": "@oracle/tax-reporting-framework-cli",
   "version": "1.0.0",
-  "license": "MIT",
-  "description": "Tax Reporting Framework CLI for Node.js",
+  "license": "UPL-1.0",
+  "description": "Tax Reporting Framework CLI",
   "keywords": [
     "NetSuite",
     "TRF",
@@ -17,7 +17,7 @@
     "fs-extra": "^9.1.0",
     "inquirer": "^8.0.0",
     "inquirer-fuzzy-path": "^2.3.0",
-    "jest": "^26.6.3",
+    "jest": "^27.3.0",
     "prettier": "^2.2.1",
     "uuid": "^8.3.2"
   },
@@ -27,10 +27,5 @@
   },
   "scripts": {
     "test": "jest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://gitlab.eng.netsuite.com/ksamsin/tax-reporting-framework-cli.git"
-  },
-  "author": "ksamsin"
+  }
 }
