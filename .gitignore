@@ -3,3 +3,4 @@ yarn.lock
 ie-report
 coverage
 .vscode
+package-lock.json
