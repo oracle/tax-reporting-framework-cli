@@ -40,7 +40,7 @@ Country:  IE
 ✨ Done in 0.005s!
 ```
 
-## [Contributing](./CONTRIBUTING.md)
+## [Contributing](./CONTRIBUTING.MD)
 Tax Reporting Framework CLI is an open source project. Pull Requests are currently not being accepted. See [CONTRIBUTING](./CONTRIBUTING.md) for details.
 
 ## [License](./LICENSE.txt)

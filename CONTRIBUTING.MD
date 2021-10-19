@@ -1,7 +1,7 @@
 # Contributing to Tax Reporting Framework CLI
 *Copyright (c) 2021 Oracle and/or its affiliates The Universal Permissive License (UPL), Version 1.0*
 
-**Pull requests are currently not being accepted for SuiteCloud SDK project.**
+**Pull requests are currently not being accepted for Tax Reporting Framework CLI project.**
 
 We plan to provide this functionality in the future. At that time, you will need to follow [The Oracle Contributor Agreement (OCA)](https://www.oracle.com/technetwork/community/oca-486395.html).
 
