@@ -43,5 +43,5 @@ Country:  IE
 ## [Contributing](./CONTRIBUTING.md)
 Tax Reporting Framework CLI is an open source project. Pull Requests are currently not being accepted. See [CONTRIBUTING](./CONTRIBUTING.md) for details.
 
-## License
+## [License](./LICENSE.txt)
 Copyright (c) 2021 Oracle and/or its affiliates The Universal Permissive License (UPL), Version 1.0.
