@@ -25,6 +25,13 @@
   "bin": {
     "trf": "./src/trf.js"
   },
+  "publishConfig": {
+		"access": "public"
+	},
+	"bugs": {
+		"url": "https://github.com/oracle/tax-reporting-framework-cli/issues"
+	},
+	"repository": "https://github.com/oracle/tax-reporting-framework-cli",
   "scripts": {
     "test": "jest"
   }
