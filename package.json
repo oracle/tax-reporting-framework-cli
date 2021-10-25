@@ -21,18 +21,16 @@
     "prettier": "^2.2.1",
     "uuid": "^8.3.2"
   },
-  "main": "trf.js",
+  "main": "./src/trf.js",
   "bin": {
     "trf": "./src/trf.js"
   },
-  "publishConfig": {
-		"access": "public"
-	},
-	"bugs": {
-		"url": "https://github.com/oracle/tax-reporting-framework-cli/issues"
-	},
-	"repository": "https://github.com/oracle/tax-reporting-framework-cli",
+  "bugs": {
+    "url": "https://github.com/oracle/tax-reporting-framework-cli/issues"
+  },
+  "repository": "https://github.com/oracle/tax-reporting-framework-cli",
   "scripts": {
     "test": "jest"
-  }
+  },
+  "homepage": "https://github.com/oracle/tax-reporting-framework-cli#readme"
 }
