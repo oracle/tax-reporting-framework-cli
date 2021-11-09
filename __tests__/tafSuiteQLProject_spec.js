@@ -1,5 +1,3 @@
-'use strict';
-
 const project = require('../src/project');
 const tafSuiteQLProject = require('../src/tafSuiteQLProject');
 
@@ -14,7 +12,8 @@ describe('tafSuiteQLProject', function () {
       srcPath: 'path/',
       uuid: 'uuid',
       country: 'PH',
-      projectName: 'someproject'
+      projectName: 'someproject',
+      sdfProjectFolder: 'SuiteApp'
     };
   });
 
@@ -48,6 +47,7 @@ describe('tafSuiteQLProject', function () {
         replaceContents: [
           [/UUID/g, this.options.uuid],
           [/COUNTRY/g, this.options.country],
+          [/SDFPROJECTFOLDER/g, this.options.sdfProjectFolder],
           [/PROJECT/g, this.options.projectName]
         ]
       });

@@ -9,8 +9,7 @@
 const fileService = require('./fileService');
 const { v4: uuidv4 } = require('uuid');
 const prettier = require('prettier');
-
-const FILECABINET_FOLDER = 'FileCabinet/SuiteApps/com.netsuite.';
+const FILECABINET_FOLDER = 'FileCabinet/sdfProjectFolder/com.netsuite.';
 const SRC_FOLDER = 'src/';
 
 class project {
@@ -21,7 +20,7 @@ class project {
 
   async create(options) {
     const projectPath = options.projectName + '/';
-    const fileCabinetPath = projectPath + FILECABINET_FOLDER + projectPath;
+    const fileCabinetPath = projectPath + FILECABINET_FOLDER.replace('sdfProjectFolder', options.sdfProjectFolder) + projectPath;
     const srcPath = fileCabinetPath + SRC_FOLDER;
 
     options.uuid = this._uuid;
@@ -31,12 +30,18 @@ class project {
 
     await this._fs.createFolder(projectPath);
     await this._fs.createFolder(srcPath);
-    await this._fs.createFolder(fileCabinetPath);
     this.createUUIDFile(fileCabinetPath, this._uuid);
-    this.createComponents(options);
     this.createBundleRecord(options);
-    this.createObjects(options);
-    this.createDeploy(options);
+    
+    if (options.sdfProjectType === 'SuiteApp') {
+      this.createComponents(options);
+      this.createObjects(options);
+      this.createDeploySuiteApp(options);
+    } else if (options.sdfProjectType === 'Account Customization') {
+      this._fs.createFolder(srcPath + 'components/');
+      this._fs.createFolder(projectPath + 'Objects/');
+      this.createDeployAccountCustomization(options);
+    }
   }
 
   async createUUIDFile(path, uuid) {
@@ -82,12 +87,29 @@ class project {
     await this.createFileFromTemplate(opts);
   }
 
-  async createDeploy(options) {
+  async createDeploySuiteApp(options) {
     const files = ['deploy.xml', 'manifest.xml'];
     files.forEach(async (file) => {
       const opts = {
         srcFile: file,
         filename: file,
+        folder: options.projectPath,
+        replaceContents: [
+          [/UUID/g, options.uuid],
+          [/COUNTRY/g, options.country],
+          [/PROJECT/g, options.projectName]
+        ]
+      };
+      await this.createFileFromTemplate(opts);
+    });
+  }
+
+  async createDeployAccountCustomization(options) {
+    const files = ['deployAccountCustomization.xml', 'manifestAccountCustomization.xml'];
+    files.forEach(async (file) => {
+      const opts = {
+        srcFile: file,
+        filename: file.replace('AccountCustomization', ''),
         folder: options.projectPath,
         replaceContents: [
           [/UUID/g, options.uuid],

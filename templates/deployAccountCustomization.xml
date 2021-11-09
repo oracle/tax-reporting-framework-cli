@@ -1,0 +1,8 @@
+<deploy>
+    <files>
+        <path>~/FileCabinet/SuiteScripts/com.netsuite.PROJECT/*</path>
+    </files>
+    <objects>
+        <path>~/Objects/*</path>
+    </objects>
+</deploy>
