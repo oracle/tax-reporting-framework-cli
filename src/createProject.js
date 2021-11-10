@@ -29,6 +29,12 @@ const questions = [
     default: 'PH'
   }
 ];
+const questionSDFProjectType = {
+  type: 'list',
+  name: 'sdfProjectType',
+  message: 'Select SDF project type. ',
+  choices: ['SuiteApp', 'Account Customization'] 
+}
 
 module.exports = async (options) => {
   inquirer.registerPrompt('fuzzypath', require('inquirer-fuzzy-path'));
@@ -38,7 +44,7 @@ module.exports = async (options) => {
         type: 'list',
         name: 'projectType',
         message: 'Select project type. ',
-        choices: options && options.localization ? ['VAT', 'TAF'] : ['TAF'] 
+        choices: options && options.localization ? ['VAT', 'TAF'] : ['TAF']
       }
     ])
     .then(function (answers) {
@@ -69,12 +75,15 @@ module.exports = async (options) => {
           }
         );
       } else {
-        questions.unshift({
-          type: 'list',
-          name: 'searchType',
-          message: 'Select search type. ',
-          choices: ['search', 'suiteql']
-        });
+        questions.unshift(
+          questionSDFProjectType,
+          {
+            type: 'list',
+            name: 'searchType',
+            message: 'Select search type. ',
+            choices: ['search', 'suiteql']
+          }
+        );
       }
       promptProjectInfo(answers.projectType);
     });
@@ -90,6 +99,7 @@ const promptProjectInfo = async (projectType) => {
     console.log(chalk.gray('Country: '), chalk.blue(answers.country));
 
     const start = new Date().getTime();
+    answers.sdfProjectFolder = projectType === 'VAT' || answers.sdfProjectType === 'SuiteApp' ? 'SuiteApps' : 'SuiteScripts';
     if (projectType === 'VAT') {
       console.log(
         chalk.gray('VAT src report: '),

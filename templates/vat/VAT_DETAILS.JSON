@@ -13,7 +13,7 @@
     {
       "id": "vat_salesdetails",
       "type": "savedsearch",
-      "internalid": "customsearch_str_salesbytaxcode_dtls_countryLowercase",
+      "internalid": "customsearch_str_salesbytaxcode_dtls_COUNTRYLOWERCASE",
       "filters": "LEGACY_VAT_TRANSACTION_FILTERS",
       "processor": {
         "type": "scheduled",
@@ -30,7 +30,7 @@
     {
       "id": "vat_purchasedetails",
       "type": "savedsearch",
-      "internalid": "customsearch_str_purcbytaxcode_dtls_countryLowercase",
+      "internalid": "customsearch_str_purcbytaxcode_dtls_COUNTRYLOWERCASE",
       "filters": "LEGACY_VAT_TRANSACTION_FILTERS",
       "processor": {
         "type": "scheduled",
@@ -64,7 +64,7 @@
     {
       "id": "taxcode_mapping",
       "type": "savedsearch",
-      "internalid": "customsearch_trf_taxcode_mapping_countryLowercase",
+      "internalid": "customsearch_trf_taxcode_mapping_COUNTRYLOWERCASE",
       "filters": [
         {
           "name": "country",

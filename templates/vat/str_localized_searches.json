@@ -2,7 +2,7 @@
   "list": [
     {
       "title": "Sales by Tax Code (Summary) COUNTRY",
-      "id": "customsearch_trf_salesbytaxcode_sum_countryLowercase",
+      "id": "customsearch_trf_salesbytaxcode_sum_COUNTRYLOWERCASE",
       "islegacy": true,
       "type": "transaction",
       "columns": [
@@ -58,7 +58,7 @@
     },
     {
       "title": "Sales by Tax Code (Details) COUNTRY",
-      "id": "customsearch_str_salesbytaxcode_dtls_countryLowercase",
+      "id": "customsearch_str_salesbytaxcode_dtls_COUNTRYLOWERCASE",
       "islegacy": true,
       "type": "transaction",
       "columns": [
@@ -159,7 +159,7 @@
     },
     {
       "title": "Purchases By Tax Code (Summary) COUNTRY",
-      "id": "customsearch_str_purcbytaxcode_sum_countryLowercase",
+      "id": "customsearch_str_purcbytaxcode_sum_COUNTRYLOWERCASE",
       "islegacy": true,
       "type": "transaction",
       "columns": [
@@ -215,7 +215,7 @@
     },
     {
       "title": "Purchases By Tax Code (Details) COUNTRY",
-      "id": "customsearch_str_purcbytaxcode_dtls_countryLowercase",
+      "id": "customsearch_str_purcbytaxcode_dtls_COUNTRYLOWERCASE",
       "islegacy": true,
       "type": "transaction",
       "columns": [
@@ -316,7 +316,7 @@
     },
     {
       "title": "Non-Deductible STC (Summary) COUNTRY",
-      "id": "customsearch_str_nd_stc_sum_countryLowercase",
+      "id": "customsearch_str_nd_stc_sum_COUNTRYLOWERCASE",
       "islegacy": true,
       "type": "transaction",
       "columns": [
@@ -369,7 +369,7 @@
     },
     {
       "title": "Non-Deductible STC (Details) COUNTRY",
-      "id": "customsearch_str_nd_stc_dtls_countryLowercase",
+      "id": "customsearch_str_nd_stc_dtls_COUNTRYLOWERCASE",
       "islegacy": true,
       "type": "transaction",
       "columns": [
@@ -471,7 +471,7 @@
     },
     {
       "title": "TRF Tax Code Mapping COUNTRY",
-      "id": "customsearch_trf_taxcode_mapping_countryLowercase",
+      "id": "customsearch_trf_taxcode_mapping_COUNTRYLOWERCASE",
       "islegacy": true,
       "type": "salestaxitem",
       "columns": [
@@ -700,7 +700,7 @@
     },
     {
       "title": "Non-Deductible STC Summary COUNTRY",
-      "id": "customsearch_trf_nd_stc_summary_countryLowercase",
+      "id": "customsearch_trf_nd_stc_summary_COUNTRYLOWERCASE",
       "islegacy": true,
       "type": "transaction",
       "columns": [
@@ -723,7 +723,7 @@
     },
     {
       "title": "Non-Deductible STC Details COUNTRY",
-      "id": "customsearch_trf_nd_stc_details_countryLowercase",
+      "id": "customsearch_trf_nd_stc_details_COUNTRYLOWERCASE",
       "islegacy": true,
       "type": "transaction",
       "columns": [
@@ -837,7 +837,7 @@
     },
     {
       "title": "Non-Deductible STC Summary COUNTRY",
-      "id": "customsearch_trf_nd_stc_summary_countryLowercase",
+      "id": "customsearch_trf_nd_stc_summary_COUNTRYLOWERCASE",
       "islegacy": true,
       "type": "transaction",
       "columns": [
@@ -860,7 +860,7 @@
     },
     {
       "title": "Non-Deductible STC Details COUNTRY",
-      "id": "customsearch_trf_nd_stc_details_countryLowercase",
+      "id": "customsearch_trf_nd_stc_details_COUNTRYLOWERCASE",
       "islegacy": true,
       "type": "transaction",
       "columns": [

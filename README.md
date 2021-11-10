@@ -43,6 +43,43 @@ Project Type:  TAF
 Country:  IE
 ✨ Done in 0.005s!
 ```
+## Account Customization Project Additional steps to replace SDF Installer
+Since **run** tag in **deploy.xml** is not supported in SDF Account Customization Project
+
+Manually run the installation scripts to install the localization Bundle, Report, SavedSearch in TRF
+
+#### Account Customization Project Manual Bundle Record Installation
+Go to **Customization** > **Scripting** > **Scripts**  
+
+1. Go to filters type select **Scheduled** 
+2. View **STR Bundle Installer SS**
+3. Go to **Deployments** tab
+4. Select 1 deployment and edit
+5. Go to **Parameters tab**
+6. Populate the parameters as follows: GUID: Project GUID, Filename: str_localized_bundle.json
+7. Trigger **Save and Execute**
+
+#### Account Customization Project Manual Report Installation
+Go to **Customization** > **Scripting** > **Scripts**  
+
+1. Go to filters type select **Map/Reduce** 
+2. View **ReportSchema Installer MR**
+3. Go to **Deployments** tab
+4. Select 1 deployment and edit
+5. Go to **Parameters tab**
+6. Populate the parameters as follows: UUID: Project GUID, Filename: str_localized_report_list.json
+7. Trigger **Save and Execute**
+
+#### Account Customization Project Manual SavedSearch Installation
+Go to **Customization** > **Scripting** > **Scripts**  
+
+1. Go to filters type select **Map/Reduce** 
+2. View **STR Search Installer MR**
+3. Go to **Deployments** tab
+4. Select 1 deployment and edit
+5. Go to **Parameters tab**
+6. Populate the parameters as follows: UUID: Project GUID, Filename: str_localized_searches.json
+7. Trigger **Save and Execute**
 
 ## [Contributing](./CONTRIBUTING.MD)
 Tax Reporting Framework CLI is an open source project. Pull Requests are currently not being accepted. See [CONTRIBUTING](./CONTRIBUTING.md) for details.

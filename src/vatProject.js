@@ -72,8 +72,8 @@ class vatProject extends project {
       folder: options.srcPath + 'records/',
       replaceContents: [
         [/UUID/g, options.uuid],
+        [/COUNTRYLOWERCASE/g, options.country.toLowerCase()],
         [/COUNTRY/g, options.country],
-        [/countryLowercase/g, options.country.toLowerCase()],
         [/PROJECT/g, options.projectName]
       ]
     };
@@ -90,9 +90,9 @@ class vatProject extends project {
         folder: options.srcPath + 'schemas/',
         replaceContents: [
           [/UUID/g, options.uuid],
+          [/COUNTRYLOWERCASE/g, options.country.toLowerCase()],
           [/COUNTRY/g, options.country],
           [/PROJECT/g, options.projectName],
-          [/countryLowercase/g, options.country.toLowerCase()],
           ['DATA', content.replace(/'/g, '"')]
         ]
       };
@@ -108,9 +108,9 @@ class vatProject extends project {
         folder: options.srcPath + 'schemas/',
         replaceContents: [
           [/UUID/g, options.uuid],
+          [/COUNTRYLOWERCASE/g, options.country.toLowerCase()],
           [/COUNTRY/g, options.country],
           [/PROJECT/g, options.projectName],
-          [/countryLowercase/g, options.country.toLowerCase()],
           ['DATA', content.replace(/'/g, '"')]
         ]
       };

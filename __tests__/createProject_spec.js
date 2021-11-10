@@ -1,5 +1,3 @@
-'use strict';
-
 const inquirer = require('inquirer');
 const createProject = require('../src/createProject');
 const vatProject = require('../src/vatProject');

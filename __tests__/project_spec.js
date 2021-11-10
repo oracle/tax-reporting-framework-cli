@@ -1,5 +1,3 @@
-'use strict';
-
 const { v4: uuidv4 } = require('uuid');
 const prettier = require('prettier');
 const project = require('../src/project');
@@ -89,15 +87,35 @@ describe('project', function () {
     });
   });
 
-  test('project.createDeploy > expect > opts are correct', () => {
+  test('project.createDeploySuiteApp > expect > opts are correct', () => {
     jest
       .spyOn(project.prototype, 'createFileFromTemplate')
       .mockImplementation(() => {});
     const files = ['deploy.xml', 'manifest.xml'];
-    this.aut.createDeploy(this.options);
+    this.aut.createDeploySuiteApp(this.options);
     files.forEach((file) => {
       expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
-        srcFile: file,
+        srcFile: 'suiteapp/' + file,
+        filename: file,
+        folder: this.options.projectPath,
+        replaceContents: [
+          [/UUID/g, this.options.uuid],
+          [/COUNTRY/g, this.options.country],
+          [/PROJECT/g, this.options.projectName]
+        ]
+      });
+    });
+  });
+
+  test('project.createDeployAccountCustomization > expect > opts are correct', () => {
+    jest
+      .spyOn(project.prototype, 'createFileFromTemplate')
+      .mockImplementation(() => {});
+    const files = ['deploy.xml', 'manifest.xml'];
+    this.aut.createDeployAccountCustomization(this.options);
+    files.forEach((file) => {
+      expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
+        srcFile: 'accountcustomization/' + file,
         filename: file,
         folder: this.options.projectPath,
         replaceContents: [
@@ -172,7 +190,7 @@ describe('project', function () {
     expect(prettier.format).toBeCalledWith(input, formatterOptions);
   });
 
-  test('project.create > expect > create folder and files', () => {
+  test('project.create sdfProjectType is SuiteApp > expect > create folder and files and call createDeploySuiteApp', () => {
     jest
       .spyOn(fileService.prototype, 'createFolder')
       .mockImplementation(() => {});
@@ -186,17 +204,15 @@ describe('project', function () {
       .spyOn(project.prototype, 'createBundleRecord')
       .mockImplementation(() => {});
     jest.spyOn(project.prototype, 'createObjects').mockImplementation(() => {});
-    jest.spyOn(project.prototype, 'createDeploy').mockImplementation(() => {});
-
+    jest.spyOn(project.prototype, 'createDeploySuiteApp').mockImplementation(() => {});
+    this.options.sdfProjectType = 'SuiteApp'
+    this.options.sdfProjectFolder = 'SuiteApps'
     this.aut.create(this.options).then(() => {
       expect(fileService.prototype.createFolder).toHaveBeenCalledWith(
         this.options.projectPath
       );
       expect(fileService.prototype.createFolder).toHaveBeenCalledWith(
         this.options.srcPath
-      );
-      expect(fileService.prototype.createFolder).toHaveBeenCalledWith(
-        this.options.fileCabinetPath
       );
       expect(project.prototype.createUUIDFile).toHaveBeenCalledWith(
         this.options.fileCabinetPath,
@@ -211,7 +227,44 @@ describe('project', function () {
       expect(project.prototype.createObjects).toHaveBeenCalledWith(
         this.options
       );
-      expect(project.prototype.createDeploy).toHaveBeenCalledWith(this.options);
+      expect(project.prototype.createDeploySuiteApp).toHaveBeenCalledWith(this.options);
+    });
+  });
+
+  test('project.create sdfProjectType is Account Customization > expect > create folder and files and call createDeployAccountCustomization', () => {
+    jest
+      .spyOn(fileService.prototype, 'createFolder')
+      .mockImplementation(() => {});
+    jest
+      .spyOn(project.prototype, 'createUUIDFile')
+      .mockImplementation(() => {});
+    jest
+      .spyOn(project.prototype, 'createBundleRecord')
+      .mockImplementation(() => {});
+    jest.spyOn(project.prototype, 'createDeployAccountCustomization').mockImplementation(() => {});
+    this.options.sdfProjectType = 'Account Customization'
+    this.options.sdfProjectFolder = 'SuiteScripts'
+    this.aut.create(this.options).then(() => {
+      expect(fileService.prototype.createFolder).toHaveBeenCalledWith(
+        this.options.projectPath
+      );
+      expect(fileService.prototype.createFolder).toHaveBeenCalledWith(
+        this.options.srcPath
+      );
+      expect(fileService.prototype.createFolder).toHaveBeenCalledWith(
+        this.options.srcPath + 'components/'
+      );
+      expect(fileService.prototype.createFolder).toHaveBeenCalledWith(
+        this.options.projectPath  + 'Objects/'
+      );
+      expect(project.prototype.createUUIDFile).toHaveBeenCalledWith(
+        this.options.fileCabinetPath,
+        this.aut._uuid
+      );
+      expect(project.prototype.createBundleRecord).toHaveBeenCalledWith(
+        this.options
+      );
+      expect(project.prototype.createDeployAccountCustomization).toHaveBeenCalledWith(this.options);
     });
   });
 });
