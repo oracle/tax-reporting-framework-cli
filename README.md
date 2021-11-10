@@ -43,21 +43,6 @@ Project Type:  TAF
 Country:  IE
 ✨ Done in 0.005s!
 ```
-## Account Customization Project Manual Bundle Record Installation
-Since **run** tag in **deployment.xml** is not supported in SDF Account Customization Project
-
-Manually run the installation scripts to install the localization bundle in TRF
-
-Go to **Customization** > **Scripting** > **Scripts**  
-
-1. Go to filters type select **Scheduled** 
-2. View **STR Bundle Installer SS**
-3. Go to **Deployments** tab
-4. Select 1 deployment and edit
-5. Go to **Parameters tab**
-6. Paste the GUID and str_localized_bundle.json from the generated project
-7. Trigger **Save and Execute**
-
 ## Account Customization Project Additional steps to replace SDF Installer
 Since **run** tag in **deploy.xml** is not supported in SDF Account Customization Project
 
