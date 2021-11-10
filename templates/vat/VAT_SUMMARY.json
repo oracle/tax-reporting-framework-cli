@@ -31,7 +31,7 @@
       "filters": "LEGACY_VAT_TRANSACTION_FILTERS",
       "processor": {
         "type": "scheduled",
-        "script": "SDFPROJECTFOLDER/com.netsuite.PROJECT/src/processors/pre/VATSearchProcessor",
+        "script": "SuiteApps/com.netsuite.PROJECT/src/processors/pre/VATSearchProcessor",
         "limits": {
           "searchresult": 100000,
           "period": "monthly"
@@ -45,7 +45,7 @@
       "filters": "LEGACY_VAT_TRANSACTION_FILTERS",
       "processor": {
         "type": "scheduled",
-        "script": "SDFPROJECTFOLDER/com.netsuite.PROJECT/src/processors/pre/VATSearchProcessor",
+        "script": "SuiteApps/com.netsuite.PROJECT/src/processors/pre/VATSearchProcessor",
         "limits": {
           "searchresult": 100000,
           "period": "monthly"
@@ -59,7 +59,7 @@
       "filters": "LEGACY_VAT_TRANSACTION_FILTERS",
       "processor": {
           "type": "scheduled",
-          "script": "SDFPROJECTFOLDER/com.netsuite.PROJECT/src/processors/pre/VATSearchNonDeductibleProcessor",
+          "script": "SuiteApps/com.netsuite.PROJECT/src/processors/pre/VATSearchNonDeductibleProcessor",
           "limits": {
               "searchresult": 100000,
               "period": "monthly"
@@ -80,7 +80,7 @@
       ],
       "processor": {
         "type": "scheduled",
-        "script": "SDFPROJECTFOLDER/com.netsuite.PROJECT/src/processors/pre/COUNTRYTaxCodeMapper"
+        "script": "SuiteApps/com.netsuite.PROJECT/src/processors/pre/COUNTRYTaxCodeMapper"
       }
     }
   ],

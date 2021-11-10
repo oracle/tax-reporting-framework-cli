@@ -50,7 +50,6 @@ module.exports = async (options) => {
     .then(function (answers) {
       if (answers.projectType === 'VAT') {
         questions.unshift(
-          questionSDFProjectType,
           {
             type: 'fuzzypath',
             name: 'srcReportFile',
@@ -100,7 +99,7 @@ const promptProjectInfo = async (projectType) => {
     console.log(chalk.gray('Country: '), chalk.blue(answers.country));
 
     const start = new Date().getTime();
-    answers.sdfProjectFolder = answers.sdfProjectType === 'SuiteApp' ? 'SuiteApps' : 'SuiteScripts'
+    answers.sdfProjectFolder = projectType === 'VAT' || answers.sdfProjectType === 'SuiteApp' ? 'SuiteApps' : 'SuiteScripts';
     if (projectType === 'VAT') {
       console.log(
         chalk.gray('VAT src report: '),

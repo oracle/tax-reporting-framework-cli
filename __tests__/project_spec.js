@@ -95,7 +95,27 @@ describe('project', function () {
     this.aut.createDeploySuiteApp(this.options);
     files.forEach((file) => {
       expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
-        srcFile: file,
+        srcFile: 'suiteapp/' + file,
+        filename: file,
+        folder: this.options.projectPath,
+        replaceContents: [
+          [/UUID/g, this.options.uuid],
+          [/COUNTRY/g, this.options.country],
+          [/PROJECT/g, this.options.projectName]
+        ]
+      });
+    });
+  });
+
+  test('project.createDeployAccountCustomization > expect > opts are correct', () => {
+    jest
+      .spyOn(project.prototype, 'createFileFromTemplate')
+      .mockImplementation(() => {});
+    const files = ['deploy.xml', 'manifest.xml'];
+    this.aut.createDeployAccountCustomization(this.options);
+    files.forEach((file) => {
+      expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
+        srcFile: 'accountcustomization/' + file,
         filename: file,
         folder: this.options.projectPath,
         replaceContents: [

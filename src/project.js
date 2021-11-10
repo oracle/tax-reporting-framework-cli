@@ -32,12 +32,11 @@ class project {
     await this._fs.createFolder(srcPath);
     this.createUUIDFile(fileCabinetPath, this._uuid);
     this.createBundleRecord(options);
-    
-    if (options.sdfProjectType === 'SuiteApp') {
+    if (options.sdfProjectFolder === 'SuiteApps') {
       this.createComponents(options);
       this.createObjects(options);
       this.createDeploySuiteApp(options);
-    } else if (options.sdfProjectType === 'Account Customization') {
+    } else if (options.sdfProjectFolder === 'SuiteScripts') {
       this._fs.createFolder(srcPath + 'components/');
       this._fs.createFolder(projectPath + 'Objects/');
       this.createDeployAccountCustomization(options);
@@ -91,7 +90,7 @@ class project {
     const files = ['deploy.xml', 'manifest.xml'];
     files.forEach(async (file) => {
       const opts = {
-        srcFile: file,
+        srcFile: 'suiteapp/' + file,
         filename: file,
         folder: options.projectPath,
         replaceContents: [
@@ -105,11 +104,11 @@ class project {
   }
 
   async createDeployAccountCustomization(options) {
-    const files = ['deployAccountCustomization.xml', 'manifestAccountCustomization.xml'];
+    const files = ['deploy.xml', 'manifest.xml'];
     files.forEach(async (file) => {
       const opts = {
-        srcFile: file,
-        filename: file.replace('AccountCustomization', ''),
+        srcFile: 'accountcustomization/' + file,
+        filename: file,
         folder: options.projectPath,
         replaceContents: [
           [/UUID/g, options.uuid],

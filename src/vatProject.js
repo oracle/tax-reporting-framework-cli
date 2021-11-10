@@ -92,7 +92,6 @@ class vatProject extends project {
           [/UUID/g, options.uuid],
           [/COUNTRYLOWERCASE/g, options.country.toLowerCase()],
           [/COUNTRY/g, options.country],
-          [/SDFPROJECTFOLDER/g, options.sdfProjectFolder],
           [/PROJECT/g, options.projectName],
           ['DATA', content.replace(/'/g, '"')]
         ]
@@ -111,7 +110,6 @@ class vatProject extends project {
           [/UUID/g, options.uuid],
           [/COUNTRYLOWERCASE/g, options.country.toLowerCase()],
           [/COUNTRY/g, options.country],
-          [/SDFPROJECTFOLDER/g, options.sdfProjectFolder],
           [/PROJECT/g, options.projectName],
           ['DATA', content.replace(/'/g, '"')]
         ]
