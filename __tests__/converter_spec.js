@@ -1,12 +1,13 @@
-const {
-  convertToSummaries,
-  convertToDetails,
-  getTaxDefs,
-} = require("../src/converter");
+import { convertToSummaries, convertToDetails, getTaxDefs} from "../src/converter";
+
+let correctFileContents,
+    incorrectFileContents,
+    correctTaxDefs,
+    incorrectTaxDefs;
 
 describe("converter", function () {
   beforeEach(() => {
-    this.correctFileContents = `
+    correctFileContents = `
       VAT.IE.Report.Data.prototype.GetData = function() {
         var _DR = this.DataReader;
 
@@ -74,7 +75,7 @@ describe("converter", function () {
       };
     `;
 
-    this.incorrectFileContents = `
+    incorrectFileContents = `
       VAT.IE.Report.Data.prototype.GetTheData = function() {
         var _DR = this.DataReader;
 
@@ -119,7 +120,7 @@ describe("converter", function () {
       };
     
     `;
-    this.correctTaxDefs = `
+    correctTaxDefs = `
       this.TaxDefinition = {
           S1: function(taxcode) {
               return taxcode.CountryCode == _CountryCode && taxcode.Rate > 0 && !taxcode.IsExempt && !taxcode.IsForExport &&
@@ -224,7 +225,7 @@ describe("converter", function () {
     };
     `;
 
-    this.incorrectTaxDefs = `
+    incorrectTaxDefs = `
       this.INCORRECTTaxDefinition = {
           S1: function(taxcode) {
               return taxcode.CountryCode == _CountryCode && taxcode.Rate > 0 && !taxcode.IsExempt && !taxcode.IsForExport &&
@@ -333,34 +334,34 @@ describe("converter", function () {
   afterEach(() => {});
 
   test("converter.convertToSummaries with correct input > expect > correctly generated output", () => {
-    let summaries = convertToSummaries(this.correctFileContents);
+    let summaries = convertToSummaries(correctFileContents);
     expect(summaries.length).toBeGreaterThan(0);
     expect(summaries[0]).not.toBeNull();
   });
 
   test("converter.convertToSummaries with incorrect input > expect > empty output", () => {
-    let summaries = convertToSummaries(this.incorrectFileContents);
+    let summaries = convertToSummaries(incorrectFileContents);
     expect(summaries.length).toEqual(0);
   });
 
   test("converter.convertToDetails with correct input > expect > correctly generated output", () => {
-    let details = convertToDetails(this.correctFileContents);
+    let details = convertToDetails(correctFileContents);
     expect(details.length).toBeGreaterThan(0);
     expect(details[0]).not.toBeNull();
   });
 
   test("converter.convertToDetails with incorrect input > expect > empty output", () => {
-    let details = convertToDetails(this.incorrectFileContents);
+    let details = convertToDetails(incorrectFileContents);
     expect(details.length).toEqual(0);
   });
 
   test("converter.getTaxDefs with regex-passing input > expect > correctly get tax definitions", () => {
-    let taxDefs = getTaxDefs(this.correctTaxDefs);
+    let taxDefs = getTaxDefs(correctTaxDefs);
     expect(taxDefs).not.toBeNull();
   });
 
   test("converter.getTaxDefs with regex-failing input > expect > null output", () => {
-    let taxDefs = getTaxDefs(this.incorrectTaxDefs);
+    let taxDefs = getTaxDefs(incorrectTaxDefs);
     expect(taxDefs).toBeNull();
   });
 });

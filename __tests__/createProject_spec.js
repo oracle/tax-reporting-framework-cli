@@ -1,8 +1,9 @@
-const inquirer = require('inquirer');
-const createProject = require('../src/createProject');
-const vatProject = require('../src/vatProject');
-const tafSearchProject = require('../src/tafSearchProject');
-const tafSuiteQLProject = require('../src/tafSuiteQLProject');
+import {jest} from '@jest/globals';
+import inquirer from 'inquirer';
+import createProject from '../src/createProject.js';
+import vatProject from '../src/vatProject.js';
+import tafSearchProject from '../src/tafSearchProject.js';
+import tafSuiteQLProject from '../src/tafSuiteQLProject.js';
 
 jest.mock('inquirer');
 

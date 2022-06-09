@@ -4,16 +4,12 @@
  */
 'use strict';
 
-const fs = require('fs-extra');
-const prettier = require('prettier');
-const project = require('./project');
-const {
-  convertToSummaries,
-  convertToDetails,
-  getTaxDefs
-} = require('./converter');
+import fs from 'fs-extra';
+import prettier from 'prettier';
+import project from './project.js';
+import { convertToSummaries, convertToDetails, getTaxDefs } from './converter.js';
 
-class vatProject extends project {
+export default class vatProject extends project {
   constructor() {
     super();
   }
@@ -173,4 +169,3 @@ class vatProject extends project {
     });
   }
 }
-module.exports = vatProject;

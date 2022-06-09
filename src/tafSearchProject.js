@@ -4,9 +4,9 @@
  */
 'use strict';
 
-const project = require('./project');
+import project from './project.js';
 
-class tafSearchProject extends project {
+export default class tafSearchProject extends project {
   constructor() {
     super();
   }
@@ -91,4 +91,3 @@ class tafSearchProject extends project {
     await this.createFileFromTemplate(opts);
   }
 }
-module.exports = tafSearchProject;
