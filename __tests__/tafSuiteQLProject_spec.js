@@ -1,5 +1,8 @@
-const project = require('../src/project');
-const tafSuiteQLProject = require('../src/tafSuiteQLProject');
+import {jest} from '@jest/globals';
+import project from '../src/project.js';
+import tafSuiteQLProject from '../src/tafSuiteQLProject.js';
+
+let aut, options;
 
 describe('tafSuiteQLProject', function () {
   beforeEach(() => {
@@ -7,8 +10,8 @@ describe('tafSuiteQLProject', function () {
       .spyOn(project.prototype, 'createFileFromTemplate')
       .mockImplementation(() => {});
 
-    this.aut = new tafSuiteQLProject();
-    this.options = {
+    aut = new tafSuiteQLProject();
+    options = {
       srcPath: 'path/',
       uuid: 'uuid',
       country: 'PH',
@@ -23,32 +26,32 @@ describe('tafSuiteQLProject', function () {
 
   test('tafSuiteQLProject.createRecords > expect > opts are correct', () => {
     const filename = 'str_localized_reports_list.json';
-    this.aut.createRecords(this.options);
+    aut.createRecords(options);
     expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
       srcFile: 'suiteql/' + filename,
       filename: filename,
-      folder: this.options.srcPath + 'records/',
+      folder: options.srcPath + 'records/',
       replaceContents: [
-        [/UUID/g, this.options.uuid],
-        [/COUNTRY/g, this.options.country],
-        [/PROJECT/g, this.options.projectName]
+        [/UUID/g, options.uuid],
+        [/COUNTRY/g, options.country],
+        [/PROJECT/g, options.projectName]
       ]
     });
   });
 
   test('tafSuiteQLProject.createSchemas > expect > opts are correct', () => {
     const files = ['TAF_SUITEQL_META.json', 'TAF_SUITEQL.json'];
-    this.aut.createSchemas(this.options);
+    aut.createSchemas(options);
     files.forEach((file) => {
       expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
         srcFile: 'suiteql/' + file,
         filename: file,
-        folder: this.options.srcPath + 'schemas/',
+        folder: options.srcPath + 'schemas/',
         replaceContents: [
-          [/UUID/g, this.options.uuid],
-          [/COUNTRY/g, this.options.country],
-          [/SDFPROJECTFOLDER/g, this.options.sdfProjectFolder],
-          [/PROJECT/g, this.options.projectName]
+          [/UUID/g, options.uuid],
+          [/COUNTRY/g, options.country],
+          [/SDFPROJECTFOLDER/g, options.sdfProjectFolder],
+          [/PROJECT/g, options.projectName]
         ]
       });
     });
@@ -56,33 +59,33 @@ describe('tafSuiteQLProject', function () {
 
   test('tafSuiteQLProject.createProcessors > expect > opts are correct', () => {
     const filename = 'SuiteQLPreProcessor.js';
-    this.aut.createProcessors(this.options);
+    aut.createProcessors(options);
     expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
       srcFile: 'suiteql/' + filename,
       filename: filename,
-      folder: this.options.srcPath + 'processors/pre/',
+      folder: options.srcPath + 'processors/pre/',
       replaceContents: []
     });
   });
 
   test('tafSuiteQLProject.createTemplates > expect > opts are correct', () => {
     const filename = 'TAF_TEMPLATE.ftl';
-    this.aut.createTemplates(this.options);
+    aut.createTemplates(options);
     expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
       srcFile: 'suiteql/' + filename,
       filename: filename,
-      folder: this.options.srcPath + 'templates/',
+      folder: options.srcPath + 'templates/',
       replaceContents: []
     });
   });
 
   test('tafSuiteQLProject.createBuilders > expect > opts are correct', () => {
     const filename = 'SuiteQLBuilder.js';
-    this.aut.createBuilders(this.options);
+    aut.createBuilders(options);
     expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
       srcFile: 'suiteql/' + filename,
       filename: filename,
-      folder: this.options.srcPath + 'builders/',
+      folder: options.srcPath + 'builders/',
       replaceContents: []
     });
   });
@@ -105,7 +108,7 @@ describe('tafSuiteQLProject', function () {
       .spyOn(tafSuiteQLProject.prototype, 'createTemplates')
       .mockImplementation(() => {});
 
-    this.aut.create(this.options);
+    aut.create(options);
     expect(tafSuiteQLProject.prototype.createRecords).toBeCalled();
     expect(tafSuiteQLProject.prototype.createSchemas).toBeCalled();
     expect(tafSuiteQLProject.prototype.createProcessors).toBeCalled();
@@ -120,11 +123,11 @@ describe('tafSuiteQLProject', function () {
 
     const filename = 'file.js';
     const folder = 'folder';
-    this.aut.createScriptFile(this.options, filename, folder);
+    aut.createScriptFile(options, filename, folder);
     expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
       srcFile: 'suiteql/' + filename,
       filename: filename,
-      folder: this.options.srcPath + folder,
+      folder: options.srcPath + folder,
       replaceContents: []
     });
   });

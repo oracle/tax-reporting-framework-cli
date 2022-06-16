@@ -130,7 +130,7 @@ const getBoxName = (objectAssignment, boxNamePattern) => {
   return boxName;
 };
 
-exports.convertToSummaries = (fileContents) => {
+export const convertToSummaries = (fileContents) => {
   var functionBlocks = getFunctionBlocks(fileContents, getFunctionPattern());
   var convertedContents = [];
 
@@ -376,7 +376,7 @@ exports.convertToSummaries = (fileContents) => {
   }
 };
 
-exports.convertToDetails = (fileContents) => {
+export const convertToDetails = (fileContents) => {
   var functionBlocks = getFunctionBlocks(fileContents, getFunctionPattern());
   var convertedContents = [];
 
@@ -544,7 +544,7 @@ exports.convertToDetails = (fileContents) => {
   }
 };
 
-exports.getTaxDefs = (contents) => {
+export const getTaxDefs = (contents) => {
   const matches = contents.match(/^.*?this.TaxDefinition = (\{[\s\S]*?\});/m);
   var taxDefs = null;
   if (matches) {

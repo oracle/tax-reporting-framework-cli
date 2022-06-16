@@ -6,9 +6,9 @@
 
 'use strict';
 
-const {program, Option} = require('commander');
-const chalk = require('chalk');
-const createProject = require('./createProject');
+import {program, Option} from 'commander';
+import chalk from 'chalk';
+import createProject from './createProject.js';
 
 class trfCLI {
   constructor() {}

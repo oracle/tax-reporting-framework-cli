@@ -6,13 +6,13 @@
  */
 'use strict';
 
-const fileService = require('./fileService');
-const { v4: uuidv4 } = require('uuid');
-const prettier = require('prettier');
+import fileService from './fileService.js';
+import { v4 as uuidv4 } from 'uuid';
+import prettier from 'prettier';
 const FILECABINET_FOLDER = 'FileCabinet/sdfProjectFolder/com.netsuite.';
 const SRC_FOLDER = 'src/';
 
-class project {
+export default class project {
   constructor() {
     this._uuid = uuidv4();
     this._fs = new fileService();
@@ -155,5 +155,3 @@ class project {
     return contents;
   }
 }
-
-module.exports = project;

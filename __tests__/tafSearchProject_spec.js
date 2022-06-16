@@ -1,13 +1,16 @@
-const project = require('../src/project');
-const tafSearchProject = require('../src/tafSearchProject');
+import {jest} from '@jest/globals';
+import project from '../src/project.js';
+import tafSearchProject from '../src/tafSearchProject.js';
+
+let aut, options;
 
 describe('tafSearchProject', function () {
   beforeEach(() => {
     jest
       .spyOn(project.prototype, 'createFileFromTemplate')
       .mockImplementation(() => {});
-    this.aut = new tafSearchProject();
-    this.options = {
+    aut = new tafSearchProject();
+    options = {
       srcPath: 'path/',
       uuid: 'uuid',
       country: 'PH',
@@ -22,47 +25,47 @@ describe('tafSearchProject', function () {
 
   test('tafSearchProject.createReports > expect > opts are correct', () => {
     const filename = 'str_localized_reports_list.json';
-    this.aut.createReports(this.options);
+    aut.createReports(options);
     expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
       srcFile: 'search/' + filename,
       filename: filename,
-      folder: this.options.srcPath + 'records/',
+      folder: options.srcPath + 'records/',
       replaceContents: [
-        [/UUID/g, this.options.uuid],
-        [/COUNTRY/g, this.options.country],
-        [/PROJECT/g, this.options.projectName]
+        [/UUID/g, options.uuid],
+        [/COUNTRY/g, options.country],
+        [/PROJECT/g, options.projectName]
       ]
     });
   });
 
   test('tafSearchProject.createSearches > expect > opts are correct', () => {
     const filename = 'str_localized_searches.json';
-    this.aut.createSearches(this.options);
+    aut.createSearches(options);
     expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
       srcFile: 'search/' + filename,
       filename: filename,
-      folder: this.options.srcPath + 'records/',
+      folder: options.srcPath + 'records/',
       replaceContents: [
-        [/UUID/g, this.options.uuid],
-        [/COUNTRY/g, this.options.country],
-        [/PROJECT/g, this.options.projectName]
+        [/UUID/g, options.uuid],
+        [/COUNTRY/g, options.country],
+        [/PROJECT/g, options.projectName]
       ]
     });
   });
 
   test('tafSearchProject.createSchemas > expect > opts are correct', () => {
     const files = ['TAF_SEARCH_META.json', 'TAF_SEARCH.json'];
-    this.aut.createSchemas(this.options);
+    aut.createSchemas(options);
     files.forEach((file) => {
       expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
         srcFile: 'search/' + file,
         filename: file,
-        folder: this.options.srcPath + 'schemas/',
+        folder: options.srcPath + 'schemas/',
         replaceContents: [
-          [/UUID/g, this.options.uuid],
-          [/COUNTRY/g, this.options.country],
-          [/SDFPROJECTFOLDER/g, this.options.sdfProjectFolder],
-          [/PROJECT/g, this.options.projectName]
+          [/UUID/g, options.uuid],
+          [/COUNTRY/g, options.country],
+          [/SDFPROJECTFOLDER/g, options.sdfProjectFolder],
+          [/PROJECT/g, options.projectName]
         ]
       });
     });
@@ -70,22 +73,22 @@ describe('tafSearchProject', function () {
 
   test('tafSearchProject.createProcessors > expect > opts are correct', () => {
     const filename = 'SearchPreProcessor.js';
-    this.aut.createProcessors(this.options);
+    aut.createProcessors(options);
     expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
       srcFile: 'search/' + filename,
       filename: filename,
-      folder: this.options.srcPath + 'processors/pre/',
+      folder: options.srcPath + 'processors/pre/',
       replaceContents: []
     });
   });
 
   test('tafSearchProject.createTemplates > expect > opts are correct', () => {
     const filename = 'TAF_TEMPLATE.ftl';
-    this.aut.createTemplates(this.options);
+    aut.createTemplates(options);
     expect(project.prototype.createFileFromTemplate).toHaveBeenCalledWith({
       srcFile: 'search/' + filename,
       filename: filename,
-      folder: this.options.srcPath + 'templates/',
+      folder: options.srcPath + 'templates/',
       replaceContents: []
     });
   });
@@ -108,7 +111,7 @@ describe('tafSearchProject', function () {
       .spyOn(tafSearchProject.prototype, 'createTemplates')
       .mockImplementation(() => {});
 
-    this.aut.create(this.options);
+    aut.create(options);
     expect(tafSearchProject.prototype.createReports).toBeCalled();
     expect(tafSearchProject.prototype.createSearches).toBeCalled();
     expect(tafSearchProject.prototype.createSchemas).toBeCalled();

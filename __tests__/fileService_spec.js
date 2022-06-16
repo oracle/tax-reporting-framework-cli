@@ -1,19 +1,23 @@
-const fs = require('fs').promises;
-const path = require('path');
-const fileService = require('../src/fileService');
+import {jest} from '@jest/globals';
+import fs from 'fs/promises';
 
-jest.mock('fs', () => ({
-  promises: {
-    writeFile: jest.fn().mockResolvedValue(),
-    readFile: jest.fn().mockResolvedValue(),
-    mkdir: jest.fn().mockResolvedValue()
-  }
-}));
-jest.mock('path');
+jest.mock('fs/promises');
+
+fs.mkdir = jest.fn().mockResolvedValue();
+fs.readFile = jest.fn().mockResolvedValue();
+fs.writeFile = jest.fn().mockResolvedValue();
+
+import fileService from '../src/fileService';
+
+let aut;
 
 describe('fileService', () => {
   beforeEach(() => {
-    this.aut = new fileService();
+    aut = new fileService();
+
+    fs.mkdir = jest.fn().mockResolvedValue();
+    fs.readFile = jest.fn().mockResolvedValue();
+    fs.writeFile = jest.fn().mockResolvedValue();
   });
   afterEach(() => {
     jest.restoreAllMocks();
@@ -21,7 +25,7 @@ describe('fileService', () => {
 
   test('fileService.createFolder > expect > params are correct', async () => {
     const filename = 'folder';
-    await this.aut.createFolder(filename);
+    await aut.createFolder(filename);
     expect(fs.mkdir).toHaveBeenCalledWith(filename, { recursive: true });
   });
 
@@ -29,7 +33,7 @@ describe('fileService', () => {
     const expected = new Error('some error');
     const filename = 'folder';
     fs.mkdir.mockRejectedValueOnce(expected);
-    await expect(this.aut.createFolder(filename)).rejects.toMatchObject(
+    await expect(aut.createFolder(filename)).rejects.toMatchObject(
       expected
     );
   });
@@ -37,7 +41,7 @@ describe('fileService', () => {
   test('fileService.createFile > expect > params are correct', async () => {
     const filename = 'folder';
     const contents = 'abc123';
-    await this.aut.createFile(filename, contents);
+    await aut.createFile(filename, contents);
     expect(fs.writeFile).toHaveBeenCalledWith(filename, contents);
   });
 
@@ -46,7 +50,7 @@ describe('fileService', () => {
     const filename = 'folder';
     const contents = 'abc123';
     fs.writeFile.mockRejectedValueOnce(expected);
-    await expect(this.aut.createFile(filename, contents)).rejects.toMatchObject(
+    await expect(aut.createFile(filename, contents)).rejects.toMatchObject(
       expected
     );
   });
@@ -55,22 +59,24 @@ describe('fileService', () => {
     const expected = 'abc123';
     const filename = 'folder';
     fs.readFile.mockResolvedValue(expected);
-    var contents = await this.aut.readFile(filename);
+    var contents = await aut.readFile(filename);
     expect(contents).toEqual(expected);
   });
 
   test('fileService.readFile > empty string > expect > return empty string', async () => {
     const expected = '';
     const filename = 'folder';
-    fs.readFile.mockResolvedValue(expected);
-    var contents = await this.aut.readFile(filename);
+    fs.readFile = jest.fn().mockResolvedValue(expected);
+    var contents = await aut.readFile(filename);
     expect(contents).toEqual(expected);
   });
 
   test('fileService.readFile > throw error > expect > catch error', async () => {
     const expected = new Error('some error');
     const filename = 'folder';
-    fs.readFile.mockRejectedValueOnce(expected);
-    await expect(this.aut.readFile(filename)).rejects.toMatchObject(expected);
+
+    fs.readFile = jest.fn().mockRejectedValueOnce(expected)
+
+    await expect(aut.readFile(filename)).rejects.toMatchObject(expected);
   });
 });

@@ -5,11 +5,14 @@
  */
 
 'use strict';
-const inquirer = require('inquirer');
-const chalk = require('chalk');
-const tafSuiteQLProject = require('./tafSuiteQLProject');
-const tafSearchProject = require('./tafSearchProject');
-const vatProject = require('./vatProject');
+import inquirer from 'inquirer';
+import {createRequire} from 'node:module';
+import chalk from 'chalk';
+import tafSuiteQLProject from './tafSuiteQLProject.js';
+import tafSearchProject from './tafSearchProject.js';
+import vatProject from './vatProject.js';
+
+const require = createRequire(import.meta.url);
 
 const questions = [
   {
@@ -36,7 +39,7 @@ const questionSDFProjectType = {
   choices: ['SuiteApp', 'Account Customization'] 
 }
 
-module.exports = async (options) => {
+export default async (options) => {
   inquirer.registerPrompt('fuzzypath', require('inquirer-fuzzy-path'));
   await inquirer
     .prompt([

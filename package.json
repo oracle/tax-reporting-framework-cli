@@ -12,14 +12,17 @@
   ],
   "preferGlobal": true,
   "dependencies": {
-    "chalk": "^4.1.0",
-    "commander": "^7.2.0",
-    "fs-extra": "^10.0.0",
+    "chalk": "^5.0.1",
+    "commander": "^9.3.0",
+    "fs-extra": "^10.1.0",
     "inquirer": "^8.0.0",
     "inquirer-fuzzy-path": "^2.3.0",
-    "jest": "^27.3.0",
+    "jest": "^28.1.0",
     "prettier": "^2.2.1",
     "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   },
   "main": "./src/trf.js",
   "bin": {
@@ -29,8 +32,16 @@
     "url": "https://github.com/oracle/tax-reporting-framework-cli/issues"
   },
   "repository": "https://github.com/oracle/tax-reporting-framework-cli",
-  "scripts": {
-    "test": "jest"
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {},
+    "moduleNameMapper": {
+      "#(.*)": "<rootDir>/node_modules/$1"
+    }
   },
+  "scripts": {
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest"
+  },
+  "type": "module",
   "homepage": "https://github.com/oracle/tax-reporting-framework-cli#readme"
 }

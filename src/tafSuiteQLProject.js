@@ -4,9 +4,9 @@
  */
 'use strict';
 
-const project = require('./project');
+import project from './project.js';
 
-class tafSuiteQLProject extends project {
+export default class tafSuiteQLProject extends project {
   constructor() {
     super();
   }
@@ -97,4 +97,3 @@ class tafSuiteQLProject extends project {
     await this.createFileFromTemplate(opts);
   }
 }
-module.exports = tafSuiteQLProject;
