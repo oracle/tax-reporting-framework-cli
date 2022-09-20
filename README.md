@@ -44,7 +44,7 @@ Country:  IE
 ✨ Done in 0.005s!
 ```
 ## Account Customization Project Additional steps to replace SDF Installer
-Since **run** tag in **deploy.xml** is not supported in SDF Account Customization Project
+Since **run** tag in **deploy.xml** is not supported in SuiteCloud Account Customization Project
 
 Manually run the installation scripts to install the localization Bundle, Report, SavedSearch in TRF
 

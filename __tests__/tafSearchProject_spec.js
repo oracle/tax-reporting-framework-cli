@@ -15,7 +15,7 @@ describe('tafSearchProject', function () {
       uuid: 'uuid',
       country: 'PH',
       projectName: 'someproject',
-      sdfProjectFolder: 'SuiteApp'
+      suiteCloudProjectFolder: 'SuiteApp'
     };
   });
 
@@ -64,7 +64,7 @@ describe('tafSearchProject', function () {
         replaceContents: [
           [/UUID/g, options.uuid],
           [/COUNTRY/g, options.country],
-          [/SDFPROJECTFOLDER/g, options.sdfProjectFolder],
+          [/SUITECLOUDPROJECTFOLDER/g, options.suiteCloudProjectFolder],
           [/PROJECT/g, options.projectName]
         ]
       });

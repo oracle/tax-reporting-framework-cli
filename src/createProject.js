@@ -32,10 +32,10 @@ const questions = [
     default: 'PH'
   }
 ];
-const questionSDFProjectType = {
+const questionSuiteCloudProjectType = {
   type: 'list',
-  name: 'sdfProjectType',
-  message: 'Select SDF project type. ',
+  name: 'suiteCloudProjectType',
+  message: 'Select SuiteCloud project type. ',
   choices: ['SuiteApp', 'Account Customization'] 
 }
 
@@ -79,7 +79,7 @@ export default async (options) => {
         );
       } else {
         questions.unshift(
-          questionSDFProjectType,
+          questionSuiteCloudProjectType,
           {
             type: 'list',
             name: 'searchType',
@@ -102,7 +102,7 @@ const promptProjectInfo = async (projectType) => {
     console.log(chalk.gray('Country: '), chalk.blue(answers.country));
 
     const start = new Date().getTime();
-    answers.sdfProjectFolder = projectType === 'VAT' || answers.sdfProjectType === 'SuiteApp' ? 'SuiteApps' : 'SuiteScripts';
+    answers.suiteCloudProjectFolder = projectType === 'VAT' || answers.suiteCloudProjectType === 'SuiteApp' ? 'SuiteApps' : 'SuiteScripts';
     if (projectType === 'VAT') {
       console.log(
         chalk.gray('VAT src report: '),

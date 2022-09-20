@@ -72,7 +72,7 @@ export default class tafSearchProject extends project {
         replaceContents: [
           [/UUID/g, options.uuid],
           [/COUNTRY/g, options.country],
-          [/SDFPROJECTFOLDER/g, options.sdfProjectFolder],
+          [/SUITECLOUDPROJECTFOLDER/g, options.suiteCloudProjectFolder],
           [/PROJECT/g, options.projectName]
         ]
       };

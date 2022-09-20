@@ -14,11 +14,11 @@
       "type": "query",
       "querybuilder": {
         "type": "suiteql",
-        "script": "SDFPROJECTFOLDER/com.netsuite.PROJECT/src/builders/SuiteQLBuilder"
+        "script": "SUITECLOUDPROJECTFOLDER/com.netsuite.PROJECT/src/builders/SuiteQLBuilder"
       },
       "processor": {
         "type": "scheduled",
-        "script": "SDFPROJECTFOLDER/com.netsuite.PROJECT/src/processors/pre/SuiteQLPreProcessor"
+        "script": "SUITECLOUDPROJECTFOLDER/com.netsuite.PROJECT/src/processors/pre/SuiteQLPreProcessor"
       }
     }
   ],
