@@ -9,7 +9,7 @@
 import fileService from './fileService.js';
 import { v4 as uuidv4 } from 'uuid';
 import prettier from 'prettier';
-const FILECABINET_FOLDER = 'FileCabinet/sdfProjectFolder/com.netsuite.';
+const FILECABINET_FOLDER = 'FileCabinet/suiteCloudProjectFolder/com.netsuite.';
 const SRC_FOLDER = 'src/';
 
 export default class project {
@@ -20,7 +20,7 @@ export default class project {
 
   async create(options) {
     const projectPath = options.projectName + '/';
-    const fileCabinetPath = projectPath + FILECABINET_FOLDER.replace('sdfProjectFolder', options.sdfProjectFolder) + projectPath;
+    const fileCabinetPath = projectPath + FILECABINET_FOLDER.replace('suiteCloudProjectFolder', options.suiteCloudProjectFolder) + projectPath;
     const srcPath = fileCabinetPath + SRC_FOLDER;
 
     options.uuid = this._uuid;
@@ -32,11 +32,11 @@ export default class project {
     await this._fs.createFolder(srcPath);
     this.createUUIDFile(fileCabinetPath, this._uuid);
     this.createBundleRecord(options);
-    if (options.sdfProjectFolder === 'SuiteApps') {
+    if (options.suiteCloudProjectFolder === 'SuiteApps') {
       this.createComponents(options);
       this.createObjects(options);
       this.createDeploySuiteApp(options);
-    } else if (options.sdfProjectFolder === 'SuiteScripts') {
+    } else if (options.suiteCloudProjectFolder === 'SuiteScripts') {
       this._fs.createFolder(srcPath + 'components/');
       this._fs.createFolder(projectPath + 'Objects/');
       this.createDeployAccountCustomization(options);

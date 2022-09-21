@@ -30,7 +30,7 @@
       ],
       "processor": {
         "type": "scheduled",
-        "script": "SDFPROJECTFOLDER/com.netsuite.PROJECT/src/processors/pre/SearchPreProcessor"
+        "script": "SUITECLOUDPROJECTFOLDER/com.netsuite.PROJECT/src/processors/pre/SearchPreProcessor"
       }
     }
   ],

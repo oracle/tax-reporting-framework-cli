@@ -189,7 +189,7 @@ describe('project', function () {
     expect(prettier.format).toBeCalledWith(input, formatterOptions);
   });
 
-  test('project.create sdfProjectType is SuiteApp > expect > create folder and files and call createDeploySuiteApp', () => {
+  test('project.create suiteCLoudProjectType is SuiteApp > expect > create folder and files and call createDeploySuiteApp', () => {
     jest
       .spyOn(fileService.prototype, 'createFolder')
       .mockImplementation(() => {});
@@ -204,8 +204,8 @@ describe('project', function () {
       .mockImplementation(() => {});
     jest.spyOn(project.prototype, 'createObjects').mockImplementation(() => {});
     jest.spyOn(project.prototype, 'createDeploySuiteApp').mockImplementation(() => {});
-    options.sdfProjectType = 'SuiteApp'
-    options.sdfProjectFolder = 'SuiteApps'
+    options.suiteCLoudProjectType = 'SuiteApp'
+    options.suiteCloudProjectFolder = 'SuiteApps'
     aut.create(options).then(() => {
       expect(fileService.prototype.createFolder).toHaveBeenCalledWith(
         options.projectPath
@@ -230,7 +230,7 @@ describe('project', function () {
     });
   });
 
-  test('project.create sdfProjectType is Account Customization > expect > create folder and files and call createDeployAccountCustomization', () => {
+  test('project.create suiteCloudProjectType is Account Customization > expect > create folder and files and call createDeployAccountCustomization', () => {
     jest
       .spyOn(fileService.prototype, 'createFolder')
       .mockImplementation(() => {});
@@ -241,8 +241,8 @@ describe('project', function () {
       .spyOn(project.prototype, 'createBundleRecord')
       .mockImplementation(() => {});
     jest.spyOn(project.prototype, 'createDeployAccountCustomization').mockImplementation(() => {});
-    options.sdfProjectType = 'Account Customization'
-    options.sdfProjectFolder = 'SuiteScripts'
+    options.suiteCloudProjectType = 'Account Customization'
+    options.suiteCloudProjectFolder = 'SuiteScripts'
     aut.create(options).then(() => {
       expect(fileService.prototype.createFolder).toHaveBeenCalledWith(
         options.projectPath
