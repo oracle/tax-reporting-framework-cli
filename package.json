@@ -15,7 +15,7 @@
     "chalk": "^5.0.1",
     "commander": "^9.3.0",
     "fs-extra": "^10.1.0",
-    "inquirer": "^8.0.0",
+    "inquirer": "^9.0.0",
     "inquirer-fuzzy-path": "^2.3.0",
     "jest": "^28.1.0",
     "prettier": "^2.2.1",
