@@ -15,7 +15,7 @@ class trfCLI {
   start() {
     try {
       program
-        .version('1.1.0')
+        .version('1.1.4')
         .addOption(new Option('-loc, --localization').hideHelp())
         .description(chalk.redBright('🚀 TRF CLI 🚀'))
         .command('create')
