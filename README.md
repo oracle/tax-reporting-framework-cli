@@ -81,8 +81,12 @@ Go to **Customization** > **Scripting** > **Scripts**
 6. Populate the parameters as follows: UUID: Project GUID, Filename: str_localized_searches.json
 7. Trigger **Save and Execute**
 
-## [Contributing](./CONTRIBUTING.MD)
-Tax Reporting Framework CLI is an open source project. Pull Requests are currently not being accepted. See [CONTRIBUTING](./CONTRIBUTING.md) for details.
+## Contributing
+This project is not accepting external contributions at this time. For bugs or enhancement requests, please file a GitHub issue unless it’s security related. When filing a bug remember that the better written the bug is, the more likely it is to be fixed. If you think you’ve found a security vulnerability, do not raise a GitHub issue and follow the instructions in our [security policy](./SECURITY.md).
 
-## [License](./LICENSE.txt)
+## Security
+
+Please consult the [security guide](./SECURITY.md) for our responsible security vulnerability disclosure process
+
+## License
 Copyright (c) 2021 Oracle and/or its affiliates The Universal Permissive License (UPL), Version 1.0.
