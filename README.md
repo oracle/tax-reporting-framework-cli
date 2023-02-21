@@ -4,11 +4,12 @@ Tax Reporting Framework CLI is a tool for generating boilerplate codes to quickl
 ## What is Tax Reporting Framework?
 Tax Reporting Framework is a powerful reporting framework that uses JSON schema for report definition, freemarker templates for report output and supports Saved Searches and SuiteQL as data source. It was previously named *SuiteTax Reports* but with the recent support for Legacy environment it was renamed to **Tax Reporting Framework**. 
 
-## Installation using NPM
+##Installation
+### Installation using NPM
 ```
 npm install -g @oracle/tax-reporting-framework-cli
 ```
-## No installation required using NPX
+### No installation required using NPX
 ```
 npx @oracle/tax-reporting-framework-cli create
 ```
